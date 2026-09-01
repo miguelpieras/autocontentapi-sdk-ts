@@ -676,9 +676,9 @@ const registerLoops = (program: Command, runtime: Runtime): void => {
         rating: opts.goodTopic === true ? 'good_topic' : 'bad_topic'
       }, requestOptions(program)), outputMode(program, runtime));
     });
-  withMutation(loops.command('archive <loop-id>')).action(async (loopId: string, _options: unknown, command: Command) => {
+  loops.command('archive <loop-id>').action(async (loopId: string) => {
     const client = await clientFor(program, runtime);
-    writeResult(await client.contentLoops.archive(loopId, mutationOptions(program, command)), outputMode(program, runtime));
+    writeResult(await client.contentLoops.archive(loopId, requestOptions(program)), outputMode(program, runtime));
   });
 };
 

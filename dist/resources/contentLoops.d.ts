@@ -13,6 +13,6 @@ export declare class ContentLoopsResource {
     runs(loopId: string, options?: ContentLoopRunListOptions, requestOptions?: RequestOptions): Promise<Page<ContentLoopRun>>;
     getRun(runId: string, options?: RequestOptions): Promise<ContentLoopRun>;
     feedback(runId: string, input: ContentLoopRunFeedbackInput, options?: RequestOptions): Promise<ContentLoopRunFeedback>;
-    archive(loopId: string, options?: MutationOptions): Promise<ContentLoop>;
+    archive(loopId: string, options?: RequestOptions): Promise<ContentLoop>;
 }
 //# sourceMappingURL=contentLoops.d.ts.map

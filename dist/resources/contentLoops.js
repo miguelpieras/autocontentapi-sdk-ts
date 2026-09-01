@@ -83,7 +83,7 @@ export class ContentLoopsResource {
         return this.transport.request({
             method: 'DELETE',
             path: `/content-loops/${encodeURIComponent(loopId)}`,
-            mutation: true,
+            naturallyIdempotent: true,
             options
         });
     }

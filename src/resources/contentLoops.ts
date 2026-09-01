@@ -111,11 +111,11 @@ export class ContentLoopsResource {
     });
   }
 
-  archive(loopId: string, options: MutationOptions = {}): Promise<ContentLoop> {
+  archive(loopId: string, options: RequestOptions = {}): Promise<ContentLoop> {
     return this.transport.request({
       method: 'DELETE',
       path: `/content-loops/${encodeURIComponent(loopId)}`,
-      mutation: true,
+      naturallyIdempotent: true,
       options
     });
   }

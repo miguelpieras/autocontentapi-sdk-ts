@@ -53,6 +53,20 @@ test('keyed mutations retain an explicit idempotency key', async () => {
   assert.equal(requests[0]?.headers.get('idempotency-key'), 'workflow-one');
 });
 
+test('natural final-state mutations do not invent idempotency keys', async () => {
+  const requests: Request[] = [];
+  const client = new AutoContent({
+    apiKey: 'acp_test',
+    fetch: async (input, init) => {
+      requests.push(new Request(input, init));
+      return Response.json({ id: 'loop_one', status: 'archived' });
+    }
+  });
+  await client.contentLoops.archive('loop_one');
+  assert.equal(requests[0]?.method, 'DELETE');
+  assert.equal(requests[0]?.headers.get('idempotency-key'), null);
+});
+
 test('safe transport retries retain the same generated idempotency key', async () => {
   const keys: Array<string | null> = [];
   let attempts = 0;
