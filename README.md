@@ -47,6 +47,9 @@ scope. Upload a request-only file Source with `keep_as_project_asset: false`; it
 expires after 24 hours unless claimed by a Generation. The CLI exposes the same
 flow as `sources add ./brief.pdf --project prj_acme --request-only`, followed by
 repeated `--attachment-source <source-id>` flags on preview and generate.
+Textual attachments can ground any Asset type. Product Visual attachments can
+guide Lead Magnets and Product Demo Videos only, and still require textual
+Project or request evidence for grounding.
 
 For browser account sessions, provide an OAuth callback instead of an API key:
 
