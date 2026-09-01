@@ -1,5 +1,6 @@
 node_modules/
-dist/
+# Keep the compiled package in Git so browser/server consumers can pin this
+# public repository without running lifecycle scripts during installation.
 .DS_Store
 *.log
 .env
