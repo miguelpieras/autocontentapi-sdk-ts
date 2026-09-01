@@ -40,6 +40,18 @@ test('simple generation flags reject duplicate Asset types', async () => {
   }), CLIUsageError);
 });
 
+test('request-only Source intake is limited to collectionless local files', async () => {
+  const stdout = new PassThrough();
+  const stderr = new PassThrough();
+  let output = '';
+  stderr.on('data', chunk => { output += chunk.toString(); });
+  const exitCode = await runCli([
+    'sources', 'add', 'https://example.com/brief', '--project', 'prj_one', '--request-only'
+  ], { stdout, stderr, environment: { AUTOCONTENT_API_KEY: 'acp_test' } });
+  assert.equal(exitCode, 2);
+  assert.match(output, /local file upload/u);
+});
+
 test('non-TTY generate requires an explicit maximum cost', async () => {
   const stdout = new PassThrough();
   const stderr = new PassThrough();

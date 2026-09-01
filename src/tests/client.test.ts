@@ -94,10 +94,12 @@ test('stream factories produce focused multipart bodies without buffering in the
       return Readable.from(['hello']);
     },
     filename: 'notes.txt',
-    title: 'Notes'
+    title: 'Notes',
+    keep_as_project_asset: false
   });
   assert.equal(factoryCalls, 1);
   assert.match(body, /name="title"\r\n\r\nNotes/u);
+  assert.match(body, /name="keep_as_project_asset"\r\n\r\nfalse/u);
   assert.match(body, /filename="notes.txt"/u);
   assert.match(body, /\r\n\r\nhello\r\n/u);
 });

@@ -70,7 +70,8 @@ export class SourcesResource {
           ...(input.content_type === undefined ? {} : { contentType: input.content_type }),
           fields: {
             collection_id: input.collection_id,
-            title: input.title
+            title: input.title,
+            keep_as_project_asset: input.keep_as_project_asset
           }
         },
         mutation: true,

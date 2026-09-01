@@ -43,8 +43,10 @@ const completed = await client.generations.wait(generation.id);
 
 `attachment_source_ids` can attach up to 20 ready Sources from the same Project
 to one preview and Generation without adding them to the reusable Knowledge
-scope. Upload files as Sources first; the CLI exposes the same field as repeated
-`--attachment-source <source-id>` flags.
+scope. Upload a request-only file Source with `keep_as_project_asset: false`; it
+expires after 24 hours unless claimed by a Generation. The CLI exposes the same
+flow as `sources add ./brief.pdf --project prj_acme --request-only`, followed by
+repeated `--attachment-source <source-id>` flags on preview and generate.
 
 For browser account sessions, provide an OAuth callback instead of an API key:
 

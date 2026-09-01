@@ -265,6 +265,7 @@ const registerKnowledge = (program: Command, runtime: Runtime): void => {
     .option('--product-visual <url>')
     .option('--collection <collection-id>')
     .option('--title <title>')
+    .option('--request-only', 'keep a file outside reusable Project Knowledge for one Generation')
     .action(async (input: string | undefined, _options: unknown, command: Command) => {
       const opts = command.opts();
       if ((input === undefined) === (opts.productVisual === undefined)) {
@@ -775,7 +776,14 @@ const sourceCreateInput = async (
   opts: Record<string, unknown>,
   stdin: NodeJS.ReadableStream
 ): Promise<Record<string, unknown>> => {
+  const requestOnly = opts.requestOnly === true;
   const common = compact({ collection_id: opts.collection, title: opts.title });
+  if (requestOnly && opts.collection !== undefined) {
+    throw new CLIUsageError('--request-only cannot be combined with --collection.');
+  }
+  if (requestOnly && (typeof opts.productVisual === 'string' || input === '-' || (input !== undefined && /^https?:\/\//iu.test(input)))) {
+    throw new CLIUsageError('--request-only is valid only for a local file upload.');
+  }
   if (typeof opts.productVisual === 'string') return { type: 'product_visual', url: opts.productVisual, ...common };
   if (input === '-') {
     if (typeof opts.title !== 'string') throw new CLIUsageError('Reading Source text from stdin requires --title.');
@@ -786,7 +794,12 @@ const sourceCreateInput = async (
     return { type: isYouTubeUrl(input) ? 'youtube' : 'url', url: input, ...common };
   }
   await access(input, constants.R_OK);
-  return { file: () => createReadStream(input), filename: basename(input), ...common };
+  return {
+    file: () => createReadStream(input),
+    filename: basename(input),
+    ...common,
+    ...(requestOnly ? { keep_as_project_asset: false } : {})
+  };
 };
 
 const readStream = async (stream: NodeJS.ReadableStream): Promise<string> => {

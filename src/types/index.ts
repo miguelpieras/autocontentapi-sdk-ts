@@ -140,7 +140,7 @@ export interface FileUpload {
 
 export type SourceCreateInput =
   | operations['createSource']['requestBody']['content']['application/json']
-  | (FileUpload & { collection_id?: string; title?: string });
+  | (FileUpload & { collection_id?: string; title?: string; keep_as_project_asset?: boolean });
 
 export type LogoInput =
   | FileUpload
