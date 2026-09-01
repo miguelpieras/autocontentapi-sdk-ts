@@ -26,6 +26,7 @@ const client = new AutoContent({
 const draft = {
   project_id: 'prj_acme',
   input: { type: 'knowledge' as const },
+  attachment_source_ids: ['src_request_brief'],
   assets: [
     { asset_type: 'lead_magnet' as const },
     { asset_type: 'podcast_episode' as const }
@@ -39,6 +40,11 @@ const generation = await client.generations.create({
 });
 const completed = await client.generations.wait(generation.id);
 ```
+
+`attachment_source_ids` can attach up to 20 ready Sources from the same Project
+to one preview and Generation without adding them to the reusable Knowledge
+scope. Upload files as Sources first; the CLI exposes the same field as repeated
+`--attachment-source <source-id>` flags.
 
 For browser account sessions, provide an OAuth callback instead of an API key:
 
@@ -127,6 +133,7 @@ autocontent preview \
 autocontent generate \
   --project prj_acme \
   --knowledge \
+  --attachment-source src_request_brief \
   --asset lead_magnet \
   --max-cost "$PREVIEW_TOTAL_USD" \
   --wait \

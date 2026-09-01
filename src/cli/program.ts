@@ -402,14 +402,14 @@ const registerMediaResource = (program: Command, runtime: Runtime, family: 'voic
 };
 
 const registerGenerationCommands = (program: Command, runtime: Runtime): void => {
-  const preview = addGenerationFlags(program.command('preview'));
+  const preview = addRequestAttachmentFlags(addGenerationFlags(program.command('preview')));
   preview.action(async (_options: unknown, command: Command) => {
     const draft = await buildGenerationDraft(command.opts() as GenerationFlags);
     const client = await clientFor(program, runtime);
     writeResult(await client.generations.preview(previewDraft(draft), requestOptions(program)), outputMode(program, runtime));
   });
 
-  const generate = withMutation(addGenerationFlags(program.command('generate')))
+  const generate = withMutation(addRequestAttachmentFlags(addGenerationFlags(program.command('generate'))))
     .option('--max-cost <usd>')
     .option('--yes', 'skip TTY confirmation')
     .option('--wait', 'wait for completion')
@@ -714,6 +714,9 @@ const addGenerationFlags = (command: Command): Command => command
   .option('--asset <asset-type>', 'add an Asset', collect, [])
   .option('--asset-config <@file>', 'add a detailed Asset request', collect, [])
   .option('--instructions <instructions>');
+
+const addRequestAttachmentFlags = (command: Command): Command => command
+  .option('--attachment-source <source-id>', 'attach a ready same-Project Source to this Generation', collect, []);
 
 const withPage = (command: Command): Command => command
   .option('--cursor <cursor>')

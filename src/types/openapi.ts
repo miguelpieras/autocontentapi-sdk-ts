@@ -782,6 +782,10 @@ export interface components {
                 height: number | null;
                 created_at: string | null;
             } | null;
+            /** @enum {string} */
+            retention_scope: "project" | "request";
+            expires_at: string | null;
+            claimed_generation_id: string | null;
             removed_at: string | null;
             /** Format: date-time */
             created_at: string;
@@ -836,7 +840,7 @@ export interface components {
             };
             pricing: {
                 /** @enum {string} */
-                basis: "output_second";
+                basis: "output_page" | "output_second";
                 /** @constant */
                 exact_price_via_preview: true;
                 rate_card_version: number;
@@ -2015,6 +2019,7 @@ export interface components {
                             collection_ids?: string[];
                             instructions?: string;
                         };
+                        attachment_source_ids?: string[];
                         instructions: string | null;
                         language: string | null;
                         assets: {
@@ -3521,6 +3526,11 @@ export interface operations {
                     file: string;
                     collection_id?: string;
                     title?: string;
+                    /**
+                     * @description Set false to keep the upload request-only; it expires after 24 hours unless claimed by a Generation.
+                     * @default true
+                     */
+                    keep_as_project_asset?: boolean;
                 };
             };
         };
@@ -3951,6 +3961,7 @@ export interface operations {
                         collection_ids?: string[];
                         instructions?: string;
                     };
+                    attachment_source_ids?: string[];
                     instructions?: string;
                     /** Format: bcp47 */
                     language?: string;
@@ -4055,6 +4066,7 @@ export interface operations {
                         collection_ids?: string[];
                         instructions?: string;
                     };
+                    attachment_source_ids?: string[];
                     instructions?: string;
                     /** Format: bcp47 */
                     language?: string;

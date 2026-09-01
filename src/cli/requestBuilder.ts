@@ -10,6 +10,7 @@ export interface GenerationFlags {
   lookbackDays?: number;
   source?: string[];
   collection?: string[];
+  attachmentSource?: string[];
   asset?: string[];
   assetConfig?: string[];
   instructions?: string;
@@ -81,6 +82,7 @@ export const buildGenerationDraft = async (flags: GenerationFlags): Promise<Gene
   return compact({
     project_id: flags.project,
     input,
+    attachment_source_ids: nonEmpty(flags.attachmentSource),
     instructions: flags.instructions,
     assets
   }) as GenerationDraft;
@@ -141,6 +143,7 @@ const assertNoBuilderFlags = (flags: GenerationFlags): void => {
     || flags.lookbackDays !== undefined
     || (flags.source?.length ?? 0) > 0
     || (flags.collection?.length ?? 0) > 0
+    || (flags.attachmentSource?.length ?? 0) > 0
     || (flags.asset?.length ?? 0) > 0
     || (flags.assetConfig?.length ?? 0) > 0
     || flags.instructions !== undefined;

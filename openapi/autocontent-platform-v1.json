@@ -1126,6 +1126,11 @@
                     "minLength": 1,
                     "maxLength": 500,
                     "x-max-utf8-bytes": 500
+                  },
+                  "keep_as_project_asset": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Set false to keep the upload request-only; it expires after 24 hours unless claimed by a Generation."
                   }
                 }
               }
@@ -2530,6 +2535,16 @@
                       }
                     ]
                   },
+                  "attachment_source_ids": {
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^src_[A-Za-z0-9_-]+$"
+                    },
+                    "uniqueItems": true
+                  },
                   "instructions": {
                     "type": "string",
                     "minLength": 1,
@@ -2894,6 +2909,16 @@
                         "additionalProperties": false
                       }
                     ]
+                  },
+                  "attachment_source_ids": {
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^src_[A-Za-z0-9_-]+$"
+                    },
+                    "uniqueItems": true
                   },
                   "instructions": {
                     "type": "string",
@@ -6092,6 +6117,9 @@
           "error",
           "visual_count",
           "current_revision",
+          "retention_scope",
+          "expires_at",
+          "claimed_generation_id",
           "removed_at",
           "created_at",
           "updated_at"
@@ -6278,6 +6306,35 @@
                     ]
                   }
                 }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "retention_scope": {
+            "type": "string",
+            "enum": [
+              "project",
+              "request"
+            ]
+          },
+          "expires_at": {
+            "oneOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "claimed_generation_id": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^gen_[A-Za-z0-9_-]+$"
               },
               {
                 "type": "null"
@@ -6537,6 +6594,7 @@
               "basis": {
                 "type": "string",
                 "enum": [
+                  "output_page",
                   "output_second"
                 ]
               },
@@ -11023,6 +11081,16 @@
                                 "additionalProperties": false
                               }
                             ]
+                          },
+                          "attachment_source_ids": {
+                            "minItems": 1,
+                            "maxItems": 20,
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "pattern": "^src_[A-Za-z0-9_-]+$"
+                            },
+                            "uniqueItems": true
                           },
                           "instructions": {
                             "oneOf": [

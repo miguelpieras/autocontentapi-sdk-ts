@@ -12,6 +12,7 @@ test('simple generation flags translate to the canonical request shape', async (
     lookbackDays: 7,
     source: ['src_one'],
     collection: ['col_one'],
+    attachmentSource: ['src_brief', 'src_screenshot'],
     asset: ['article', 'quiz'],
     instructions: 'Write for API developers.'
   });
@@ -25,6 +26,7 @@ test('simple generation flags translate to the canonical request shape', async (
       source_ids: ['src_one'],
       collection_ids: ['col_one']
     },
+    attachment_source_ids: ['src_brief', 'src_screenshot'],
     instructions: 'Write for API developers.',
     assets: [{ asset_type: 'article' }, { asset_type: 'quiz' }]
   });
