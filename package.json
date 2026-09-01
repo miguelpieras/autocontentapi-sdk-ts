@@ -1,0 +1,55 @@
+{
+  "name": "autocontentapi",
+  "version": "0.1.0",
+  "description": "TypeScript SDK and CLI for the AutoContent Platform API",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "autocontent": "./dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "!dist/tests",
+    "!dist/**/*.test.*",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "generate:types": "openapi-typescript openapi/autocontent-platform-v1.json -o src/types/openapi.ts",
+    "build": "npm run generate:types && tsc -p tsconfig.json",
+    "check": "npm run build && tsc --noEmit -p tsconfig.examples.json && node --test dist/tests/*.test.js",
+    "prepublishOnly": "npm run check"
+  },
+  "dependencies": {
+    "commander": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "openapi-typescript": "^7.9.1",
+    "typescript": "^5.9.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miguelpieras/autocontentapi-sdk-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/miguelpieras/autocontentapi-sdk-ts/issues"
+  },
+  "homepage": "https://platform.autocontentapi.com"
+}
