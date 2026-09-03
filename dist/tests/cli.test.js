@@ -1,4 +1,7 @@
 import assert from 'node:assert/strict';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { PassThrough } from 'node:stream';
 import test from 'node:test';
 import { runCli } from '../cli/program.js';
@@ -36,6 +39,32 @@ test('simple generation flags reject duplicate Asset types', async () => {
         knowledge: true,
         asset: ['article', 'article']
     }), CLIUsageError);
+});
+test('--asset-config preserves an exact nested narration script', async (t) => {
+    const directory = await mkdtemp(join(tmpdir(), 'autocontent-sdk-cli-'));
+    t.after(() => rm(directory, { recursive: true, force: true }));
+    const assetPath = join(directory, 'exact-short.json');
+    await writeFile(assetPath, JSON.stringify({
+        asset_type: 'short_video',
+        language: 'de-DE',
+        narration_script: {
+            speakers: [{ id: 'narrator' }],
+            segments: [{ speaker_id: 'narrator', text: 'Dieser Wortlaut bleibt exakt.' }]
+        }
+    }), 'utf8');
+    const draft = await buildGenerationDraft({
+        project: 'prj_one',
+        knowledge: true,
+        assetConfig: [`@${assetPath}`]
+    });
+    assert.deepEqual(draft.assets, [{
+            asset_type: 'short_video',
+            language: 'de-DE',
+            narration_script: {
+                speakers: [{ id: 'narrator' }],
+                segments: [{ speaker_id: 'narrator', text: 'Dieser Wortlaut bleibt exakt.' }]
+            }
+        }]);
 });
 test('request-only Source intake is limited to collectionless local files', async () => {
     const stdout = new PassThrough();

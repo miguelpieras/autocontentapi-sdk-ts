@@ -1,10 +1,17 @@
 import { createClient } from './_client.js';
+import type { AssetRequest } from 'autocontentapi';
 
 const client = createClient();
 const loopAssets = [
   { asset_type: 'lead_magnet' as const },
-  { asset_type: 'short_video' as const }
-];
+  {
+    asset_type: 'short_video' as const,
+    narration_script: {
+      speakers: [{ id: 'narrator' }],
+      segments: [{ speaker_id: 'narrator', text: 'This approved narration repeats unchanged on every Loop run.' }]
+    }
+  }
+] satisfies AssetRequest[];
 const preview = await client.generations.preview({
   project_id: 'prj_acme',
   input: { type: 'trend' },

@@ -506,7 +506,11 @@ const registerGenerationCommands = (program: Command, runtime: Runtime): void =>
       const client = await clientFor(program, runtime);
       let cap = typeof input.max_cost_usd === 'string' ? input.max_cost_usd : opts.maxCost;
       if (isInteractive(runtime)) {
-        const quote = await client.generations.previewEdit(generationId, omit(input, 'max_cost_usd') as GenerationEditDraft, requestOptions(program));
+        const quote = await client.generations.previewEdit(
+          generationId,
+          omit(input, 'max_cost_usd') as unknown as GenerationEditDraft,
+          requestOptions(program)
+        );
         cap ??= quote.total_cost_usd;
         if (opts.yes !== true && !await confirm(`Edit for up to $${cap}?`, runtime)) return;
       }

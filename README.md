@@ -83,6 +83,50 @@ const models = await client.models.list({ asset_type: 'explainer_video' });
 Use `extensionAsset('future_type', fields)` only for a newly activated live
 catalog type not known to this SDK version. It rejects all twelve known IDs.
 
+### Exact video narration
+
+All five Video Assets accept `narration_script`. Put Voice and Avatar IDs on
+each speaker; do not combine an exact script with root `voice_id` or
+`avatar_id`. A one-speaker script may use the Project default resources. Two
+speakers require a Voice for each, and Avatar presentation also requires an
+Avatar for each:
+
+```ts
+import type { GenerationDraft } from 'autocontentapi';
+
+const draft = {
+  project_id: 'prj_acme',
+  input: { type: 'knowledge' as const },
+  language: 'de-DE',
+  assets: [{
+    asset_type: 'explainer_video' as const,
+    options: { duration_seconds: 60, presentation_mode: 'avatar' as const },
+    narration_script: {
+      speakers: [
+        { id: 'host', voice_id: 'voice_host_de', avatar_id: 'avatar_host' },
+        { id: 'expert', voice_id: 'voice_expert_de', avatar_id: 'avatar_expert' }
+      ],
+      segments: [
+        { speaker_id: 'host', text: 'Dieser freigegebene Satz bleibt unverändert.' },
+        { speaker_id: 'expert', text: 'Auch dieser Satz bleibt unverändert.' }
+      ]
+    }
+  }]
+} satisfies GenerationDraft;
+```
+
+The API keeps accepted wording, Unicode, punctuation, speaker attribution, and
+turn order, while generating the visual plan around it. Preview rejects scripts
+that cannot conservatively fit the requested duration; unusually long
+synthesized speech can still fail safely at runtime instead of being cut. Short
+speech remains at natural pace and ends with silence. Content Loops reuse the
+same complete script on every run. In an edit, omit `narration_script` to retain
+it, replace the whole object to change it, or send `null` to return to generated
+narration. The guarantee is textual and structural; it is not ASR pronunciation
+or OCR certification.
+
+The CLI accepts the identical object through `--asset-config @video.json`.
+
 ## Complete resource surface
 
 The client exposes `projects`, `collections`, `sources`, `assetTypes`, `models`,

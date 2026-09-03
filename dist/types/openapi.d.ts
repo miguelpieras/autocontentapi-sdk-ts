@@ -809,6 +809,11 @@ export interface components {
             supports_model_pin: boolean;
             supports_voice: boolean;
             supports_avatar: boolean;
+            supports_narration_script: boolean;
+            /** @description The exact closed narration_script JSON Schema when supported; otherwise null. */
+            narration_script_schema: {
+                [key: string]: unknown;
+            } | null;
             typical_completion_seconds: number;
             pricing: {
                 basis: string;
@@ -825,7 +830,7 @@ export interface components {
             replacement_model: string | null;
             capabilities: {
                 presentation_modes: ("faceless" | "avatar")[];
-                aspect_ratios?: ("16:9" | "9:16" | "1:1")[];
+                aspect_ratios?: ("16:9" | "9:16" | "4:5" | "1:1")[];
                 minimum_duration_seconds?: number;
                 maximum_duration_seconds?: number;
             };
@@ -839,17 +844,29 @@ export interface components {
             };
             pricing: {
                 /** @enum {string} */
-                basis: "output_page" | "output_second";
+                basis: "output_page" | "output_pixel" | "output_second";
                 /** @constant */
                 exact_price_via_preview: true;
                 rate_card_version: number;
             };
         };
+        GenerationFunding: {
+            /** @enum {string} */
+            status: "sufficient" | "insufficient" | "restricted";
+            /** @description Maximum reservation required to accept the Generation. */
+            required_usd: string;
+            available_usd: string;
+            shortfall_usd: string;
+            /** @enum {string} */
+            action: "continue" | "add_funds" | "contact_support";
+        };
         GenerationPreview: {
             /** @constant */
             currency: "usd";
+            /** @description Maximum Generation reservation; successful Assets settle at measured COGS plus the frozen margin, capped by this reservation. */
             total_cost_usd: string;
             funding_sufficient: boolean;
+            funding: components["schemas"]["GenerationFunding"];
             price_version: string;
             input_contract_version: number;
             project_id: string;
@@ -1030,6 +1047,7 @@ export interface components {
                 normalized_model_options?: {
                     [key: string]: unknown;
                 };
+                /** @description Maximum reservation for this Asset. The final successful charge is based on measured COGS and cannot exceed this amount. */
                 cost_usd: string;
                 basis: string;
                 contract_version: number;
@@ -1037,6 +1055,7 @@ export interface components {
                 model_used: string;
                 effective_voice_id: string | null;
                 effective_avatar_id: string | null;
+                effective_speakers: components["schemas"]["EffectiveNarrationSpeaker"][];
                 logo: {
                     id: string;
                     revision: number;
@@ -1048,8 +1067,10 @@ export interface components {
         GenerationEditPreview: {
             /** @constant */
             currency: "usd";
+            /** @description Maximum Generation reservation; successful Assets settle at measured COGS plus the frozen margin, capped by this reservation. */
             total_cost_usd: string;
             funding_sufficient: boolean;
+            funding: components["schemas"]["GenerationFunding"];
             price_version: string;
             input_contract_version: number;
             project_id: string;
@@ -1231,6 +1252,7 @@ export interface components {
                 normalized_model_options?: {
                     [key: string]: unknown;
                 };
+                /** @description Maximum reservation for this Asset. The final successful charge is based on measured COGS and cannot exceed this amount. */
                 cost_usd: string;
                 basis: string;
                 contract_version: number;
@@ -1238,6 +1260,7 @@ export interface components {
                 model_used: string;
                 effective_voice_id: string | null;
                 effective_avatar_id: string | null;
+                effective_speakers: components["schemas"]["EffectiveNarrationSpeaker"][];
                 logo: {
                     id: string;
                     revision: number;
@@ -1298,9 +1321,13 @@ export interface components {
             } | null;
             /** @constant */
             currency: "usd";
+            /** @description Maximum amount still held for active Assets. */
             reserved_cost_usd?: string;
+            /** @description Final successful-Asset charges based on measured, allocated COGS plus the frozen margin. */
             settled_cost_usd?: string;
+            /** @description Reservation released by failures or because actual successful charges were below their maximums. */
             released_cost_usd?: string;
+            /** @description Caller-authorized maximum Generation reservation. */
             max_cost_usd?: string;
             error?: {
                 [key: string]: unknown;
@@ -1317,12 +1344,15 @@ export interface components {
             /** @enum {string} */
             status: "queued" | "generating" | "succeeded" | "failed" | "cancelled";
             title?: string | null;
+            /** @description Maximum amount still held while this Asset is active. */
             reserved_cost_usd?: string;
+            /** @description Final successful charge based on measured, allocated COGS plus the frozen margin. */
             cost_usd?: string;
             requested_model?: string | null;
             model_used?: string | null;
             voice_id?: string | null;
             avatar_id?: string | null;
+            effective_speakers?: components["schemas"]["EffectiveNarrationSpeaker"][];
             logo_revision_id?: string | null;
         };
         Asset: {
@@ -1493,13 +1523,18 @@ export interface components {
             presentation_mode?: ("faceless" | "avatar") | null;
             effective_voice_id?: string | null;
             effective_avatar_id?: string | null;
+            narration_script?: components["schemas"]["NarrationScript"] | null;
+            effective_speakers?: components["schemas"]["EffectiveNarrationSpeaker"][];
             logo_revision_id?: string | null;
             product_visual_source_revision_ids?: string[];
             resolved_subject?: string | null;
             /** @constant */
             currency?: "usd";
+            /** @description Maximum amount still held while this Asset is active. */
             reserved_cost_usd?: string;
+            /** @description Final successful charge based on measured, allocated COGS plus the frozen margin. */
             cost_usd?: string;
+            /** @description Unused reservation released after settlement, or the full reservation released after failure/cancellation. */
             released_cost_usd?: string;
             /** Format: date-time */
             created_at: string;
@@ -1583,7 +1618,7 @@ export interface components {
                 /** Format: iana-time-zone */
                 timezone: string;
             };
-            assets?: {
+            assets?: ({
                 /** @enum {string} */
                 asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
                 instructions?: string;
@@ -1745,7 +1780,168 @@ export interface components {
                 model_options?: {
                     [key: string]: unknown;
                 };
-            }[];
+            } | {
+                /** @enum {string} */
+                asset_type: "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+                instructions?: string;
+                /** Format: bcp47 */
+                language?: string;
+                /** @description One normalized first-class Asset options contract. Exact schemas are also discoverable from GET /asset-types. */
+                options?: {
+                    /** @default 1200 */
+                    target_words: number;
+                } | {
+                    /** @default 10 */
+                    page_count: number;
+                    /**
+                     * @default auto
+                     * @enum {string}
+                     */
+                    format: "auto" | "checklist" | "cheat_sheet" | "workbook" | "planner" | "tracker" | "scorecard" | "roadmap" | "challenge" | "swipe_file" | "resource_guide" | "comparison_guide" | "meal_plan";
+                } | {
+                    /** @default 6 */
+                    chapter_count: number;
+                    /** @default 30 */
+                    target_pages: number;
+                } | {
+                    /** @default 12 */
+                    slide_count: number;
+                    /**
+                     * @default 16:9
+                     * @enum {string}
+                     */
+                    aspect_ratio: "16:9" | "4:3";
+                } | {
+                    /**
+                     * @default 4:5
+                     * @enum {string}
+                     */
+                    aspect_ratio: "1:1" | "4:5" | "9:16" | "16:9";
+                    /**
+                     * @default standard
+                     * @enum {string}
+                     */
+                    resolution: "standard" | "high";
+                } | {
+                    /** @default 10 */
+                    question_count: number;
+                    /**
+                     * @default intermediate
+                     * @enum {string}
+                     */
+                    difficulty: "beginner" | "intermediate" | "advanced";
+                } | {
+                    /** @default 600 */
+                    duration_seconds: number;
+                } | {
+                    /** @default 30 */
+                    duration_seconds: number;
+                    /**
+                     * @default 9:16
+                     * @enum {string}
+                     */
+                    aspect_ratio: "9:16" | "1:1" | "16:9";
+                    /**
+                     * @default 1080p
+                     * @enum {string}
+                     */
+                    resolution: "720p" | "1080p";
+                    /** @default true */
+                    captions: boolean;
+                    /**
+                     * @default faceless
+                     * @enum {string}
+                     */
+                    presentation_mode: "faceless" | "avatar";
+                } | {
+                    /** @default 90 */
+                    duration_seconds: number;
+                    /**
+                     * @default 16:9
+                     * @enum {string}
+                     */
+                    aspect_ratio: "16:9" | "9:16" | "1:1";
+                    /**
+                     * @default 1080p
+                     * @enum {string}
+                     */
+                    resolution: "720p" | "1080p";
+                    /** @default true */
+                    captions: boolean;
+                    /**
+                     * @default faceless
+                     * @enum {string}
+                     */
+                    presentation_mode: "faceless" | "avatar";
+                } | {
+                    /** @default 60 */
+                    duration_seconds: number;
+                    /**
+                     * @default 16:9
+                     * @enum {string}
+                     */
+                    aspect_ratio: "16:9" | "9:16" | "1:1";
+                    /**
+                     * @default 1080p
+                     * @enum {string}
+                     */
+                    resolution: "720p" | "1080p";
+                    /** @default true */
+                    captions: boolean;
+                    /**
+                     * @default faceless
+                     * @enum {string}
+                     */
+                    presentation_mode: "faceless" | "avatar";
+                } | {
+                    /** @default 120 */
+                    duration_seconds: number;
+                    /**
+                     * @default 16:9
+                     * @enum {string}
+                     */
+                    aspect_ratio: "16:9" | "9:16" | "1:1";
+                    /**
+                     * @default 1080p
+                     * @enum {string}
+                     */
+                    resolution: "720p" | "1080p";
+                    /** @default true */
+                    captions: boolean;
+                    /**
+                     * @default faceless
+                     * @enum {string}
+                     */
+                    presentation_mode: "faceless" | "avatar";
+                    product_visual_source_ids?: string[];
+                } | {
+                    /** @default 30 */
+                    duration_seconds: number;
+                    /**
+                     * @default 9:16
+                     * @enum {string}
+                     */
+                    aspect_ratio: "9:16" | "1:1" | "16:9";
+                    /**
+                     * @default 1080p
+                     * @enum {string}
+                     */
+                    resolution: "720p" | "1080p";
+                    /** @default true */
+                    captions: boolean;
+                    /**
+                     * @default faceless
+                     * @enum {string}
+                     */
+                    presentation_mode: "faceless" | "avatar";
+                };
+                narration_script: components["schemas"]["NarrationScript"];
+                model?: string;
+                /** @description Validated by the exact versioned schema returned from GET /models for the pinned model. */
+                model_options?: {
+                    [key: string]: unknown;
+                };
+            })[];
             language?: string | null;
             max_cost_per_run_usd?: string;
             max_cost_per_month_usd?: string;
@@ -1754,7 +1950,9 @@ export interface components {
             consecutive_no_qualified_runs?: number;
             current_month_usage?: {
                 billing_period_id: string | null;
+                /** @description Actual settled charges in the current UTC billing period. */
                 settled_usd: string;
+                /** @description Maximum reservations still active in the current UTC billing period. */
                 reserved_usd: string;
             };
             last_run?: components["schemas"]["ContentLoopRun"] | null;
@@ -1824,169 +2022,7 @@ export interface components {
                         /** Format: iana-time-zone */
                         timezone: string;
                     };
-                    assets: {
-                        /** @enum {string} */
-                        asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
-                        instructions?: string;
-                        /** Format: bcp47 */
-                        language?: string;
-                        /** @description One normalized first-class Asset options contract. Exact schemas are also discoverable from GET /asset-types. */
-                        options?: {
-                            /** @default 1200 */
-                            target_words: number;
-                        } | {
-                            /** @default 10 */
-                            page_count: number;
-                            /**
-                             * @default auto
-                             * @enum {string}
-                             */
-                            format: "auto" | "checklist" | "cheat_sheet" | "workbook" | "planner" | "tracker" | "scorecard" | "roadmap" | "challenge" | "swipe_file" | "resource_guide" | "comparison_guide" | "meal_plan";
-                        } | {
-                            /** @default 6 */
-                            chapter_count: number;
-                            /** @default 30 */
-                            target_pages: number;
-                        } | {
-                            /** @default 12 */
-                            slide_count: number;
-                            /**
-                             * @default 16:9
-                             * @enum {string}
-                             */
-                            aspect_ratio: "16:9" | "4:3";
-                        } | {
-                            /**
-                             * @default 4:5
-                             * @enum {string}
-                             */
-                            aspect_ratio: "1:1" | "4:5" | "9:16" | "16:9";
-                            /**
-                             * @default standard
-                             * @enum {string}
-                             */
-                            resolution: "standard" | "high";
-                        } | {
-                            /** @default 10 */
-                            question_count: number;
-                            /**
-                             * @default intermediate
-                             * @enum {string}
-                             */
-                            difficulty: "beginner" | "intermediate" | "advanced";
-                        } | {
-                            /** @default 600 */
-                            duration_seconds: number;
-                        } | {
-                            /** @default 30 */
-                            duration_seconds: number;
-                            /**
-                             * @default 9:16
-                             * @enum {string}
-                             */
-                            aspect_ratio: "9:16" | "1:1" | "16:9";
-                            /**
-                             * @default 1080p
-                             * @enum {string}
-                             */
-                            resolution: "720p" | "1080p";
-                            /** @default true */
-                            captions: boolean;
-                            /**
-                             * @default faceless
-                             * @enum {string}
-                             */
-                            presentation_mode: "faceless" | "avatar";
-                        } | {
-                            /** @default 90 */
-                            duration_seconds: number;
-                            /**
-                             * @default 16:9
-                             * @enum {string}
-                             */
-                            aspect_ratio: "16:9" | "9:16" | "1:1";
-                            /**
-                             * @default 1080p
-                             * @enum {string}
-                             */
-                            resolution: "720p" | "1080p";
-                            /** @default true */
-                            captions: boolean;
-                            /**
-                             * @default faceless
-                             * @enum {string}
-                             */
-                            presentation_mode: "faceless" | "avatar";
-                        } | {
-                            /** @default 60 */
-                            duration_seconds: number;
-                            /**
-                             * @default 16:9
-                             * @enum {string}
-                             */
-                            aspect_ratio: "16:9" | "9:16" | "1:1";
-                            /**
-                             * @default 1080p
-                             * @enum {string}
-                             */
-                            resolution: "720p" | "1080p";
-                            /** @default true */
-                            captions: boolean;
-                            /**
-                             * @default faceless
-                             * @enum {string}
-                             */
-                            presentation_mode: "faceless" | "avatar";
-                        } | {
-                            /** @default 120 */
-                            duration_seconds: number;
-                            /**
-                             * @default 16:9
-                             * @enum {string}
-                             */
-                            aspect_ratio: "16:9" | "9:16" | "1:1";
-                            /**
-                             * @default 1080p
-                             * @enum {string}
-                             */
-                            resolution: "720p" | "1080p";
-                            /** @default true */
-                            captions: boolean;
-                            /**
-                             * @default faceless
-                             * @enum {string}
-                             */
-                            presentation_mode: "faceless" | "avatar";
-                            product_visual_source_ids?: string[];
-                        } | {
-                            /** @default 30 */
-                            duration_seconds: number;
-                            /**
-                             * @default 9:16
-                             * @enum {string}
-                             */
-                            aspect_ratio: "9:16" | "1:1" | "16:9";
-                            /**
-                             * @default 1080p
-                             * @enum {string}
-                             */
-                            resolution: "720p" | "1080p";
-                            /** @default true */
-                            captions: boolean;
-                            /**
-                             * @default faceless
-                             * @enum {string}
-                             */
-                            presentation_mode: "faceless" | "avatar";
-                        };
-                        voice_id?: string;
-                        avatar_id?: string;
-                        model?: string;
-                        /** @description Validated by the exact versioned schema returned from GET /models for the pinned model. */
-                        model_options?: {
-                            [key: string]: unknown;
-                        };
-                    }[];
+                    assets: components["schemas"]["AssetRequest"][];
                     language: string | null;
                     max_cost_per_run_usd: string;
                     max_cost_per_month_usd: string;
@@ -2021,169 +2057,7 @@ export interface components {
                         attachment_source_ids?: string[];
                         instructions: string | null;
                         language: string | null;
-                        assets: {
-                            /** @enum {string} */
-                            asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
-                            instructions?: string;
-                            /** Format: bcp47 */
-                            language?: string;
-                            /** @description One normalized first-class Asset options contract. Exact schemas are also discoverable from GET /asset-types. */
-                            options?: {
-                                /** @default 1200 */
-                                target_words: number;
-                            } | {
-                                /** @default 10 */
-                                page_count: number;
-                                /**
-                                 * @default auto
-                                 * @enum {string}
-                                 */
-                                format: "auto" | "checklist" | "cheat_sheet" | "workbook" | "planner" | "tracker" | "scorecard" | "roadmap" | "challenge" | "swipe_file" | "resource_guide" | "comparison_guide" | "meal_plan";
-                            } | {
-                                /** @default 6 */
-                                chapter_count: number;
-                                /** @default 30 */
-                                target_pages: number;
-                            } | {
-                                /** @default 12 */
-                                slide_count: number;
-                                /**
-                                 * @default 16:9
-                                 * @enum {string}
-                                 */
-                                aspect_ratio: "16:9" | "4:3";
-                            } | {
-                                /**
-                                 * @default 4:5
-                                 * @enum {string}
-                                 */
-                                aspect_ratio: "1:1" | "4:5" | "9:16" | "16:9";
-                                /**
-                                 * @default standard
-                                 * @enum {string}
-                                 */
-                                resolution: "standard" | "high";
-                            } | {
-                                /** @default 10 */
-                                question_count: number;
-                                /**
-                                 * @default intermediate
-                                 * @enum {string}
-                                 */
-                                difficulty: "beginner" | "intermediate" | "advanced";
-                            } | {
-                                /** @default 600 */
-                                duration_seconds: number;
-                            } | {
-                                /** @default 30 */
-                                duration_seconds: number;
-                                /**
-                                 * @default 9:16
-                                 * @enum {string}
-                                 */
-                                aspect_ratio: "9:16" | "1:1" | "16:9";
-                                /**
-                                 * @default 1080p
-                                 * @enum {string}
-                                 */
-                                resolution: "720p" | "1080p";
-                                /** @default true */
-                                captions: boolean;
-                                /**
-                                 * @default faceless
-                                 * @enum {string}
-                                 */
-                                presentation_mode: "faceless" | "avatar";
-                            } | {
-                                /** @default 90 */
-                                duration_seconds: number;
-                                /**
-                                 * @default 16:9
-                                 * @enum {string}
-                                 */
-                                aspect_ratio: "16:9" | "9:16" | "1:1";
-                                /**
-                                 * @default 1080p
-                                 * @enum {string}
-                                 */
-                                resolution: "720p" | "1080p";
-                                /** @default true */
-                                captions: boolean;
-                                /**
-                                 * @default faceless
-                                 * @enum {string}
-                                 */
-                                presentation_mode: "faceless" | "avatar";
-                            } | {
-                                /** @default 60 */
-                                duration_seconds: number;
-                                /**
-                                 * @default 16:9
-                                 * @enum {string}
-                                 */
-                                aspect_ratio: "16:9" | "9:16" | "1:1";
-                                /**
-                                 * @default 1080p
-                                 * @enum {string}
-                                 */
-                                resolution: "720p" | "1080p";
-                                /** @default true */
-                                captions: boolean;
-                                /**
-                                 * @default faceless
-                                 * @enum {string}
-                                 */
-                                presentation_mode: "faceless" | "avatar";
-                            } | {
-                                /** @default 120 */
-                                duration_seconds: number;
-                                /**
-                                 * @default 16:9
-                                 * @enum {string}
-                                 */
-                                aspect_ratio: "16:9" | "9:16" | "1:1";
-                                /**
-                                 * @default 1080p
-                                 * @enum {string}
-                                 */
-                                resolution: "720p" | "1080p";
-                                /** @default true */
-                                captions: boolean;
-                                /**
-                                 * @default faceless
-                                 * @enum {string}
-                                 */
-                                presentation_mode: "faceless" | "avatar";
-                                product_visual_source_ids?: string[];
-                            } | {
-                                /** @default 30 */
-                                duration_seconds: number;
-                                /**
-                                 * @default 9:16
-                                 * @enum {string}
-                                 */
-                                aspect_ratio: "9:16" | "1:1" | "16:9";
-                                /**
-                                 * @default 1080p
-                                 * @enum {string}
-                                 */
-                                resolution: "720p" | "1080p";
-                                /** @default true */
-                                captions: boolean;
-                                /**
-                                 * @default faceless
-                                 * @enum {string}
-                                 */
-                                presentation_mode: "faceless" | "avatar";
-                            };
-                            voice_id?: string;
-                            avatar_id?: string;
-                            model?: string;
-                            /** @description Validated by the exact versioned schema returned from GET /models for the pinned model. */
-                            model_options?: {
-                                [key: string]: unknown;
-                            };
-                        }[];
+                        assets: components["schemas"]["AssetRequest"][];
                     };
                 } | null;
             };
@@ -2233,8 +2107,11 @@ export interface components {
             } | null;
             /** @constant */
             currency: "usd";
+            /** @description Maximum amount still reserved for active Run Assets. */
             reserved_cost_usd?: string;
+            /** @description Actual successful-Asset charges for the Run. */
             settled_cost_usd?: string;
+            /** @description Run reservation released by failures or unused successful-Asset maximums. */
             released_cost_usd?: string;
             billing_period_id?: string;
             /** Format: date-time */
@@ -2358,6 +2235,842 @@ export interface components {
         };
         /** @enum {string} */
         AssetType: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+        AssetRequest: {
+            /** @enum {string} */
+            asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+            instructions?: string;
+            /** Format: bcp47 */
+            language?: string;
+            /** @description One normalized first-class Asset options contract. Exact schemas are also discoverable from GET /asset-types. */
+            options?: {
+                /** @default 1200 */
+                target_words: number;
+            } | {
+                /** @default 10 */
+                page_count: number;
+                /**
+                 * @default auto
+                 * @enum {string}
+                 */
+                format: "auto" | "checklist" | "cheat_sheet" | "workbook" | "planner" | "tracker" | "scorecard" | "roadmap" | "challenge" | "swipe_file" | "resource_guide" | "comparison_guide" | "meal_plan";
+            } | {
+                /** @default 6 */
+                chapter_count: number;
+                /** @default 30 */
+                target_pages: number;
+            } | {
+                /** @default 12 */
+                slide_count: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "4:3";
+            } | {
+                /**
+                 * @default 4:5
+                 * @enum {string}
+                 */
+                aspect_ratio: "1:1" | "4:5" | "9:16" | "16:9";
+                /**
+                 * @default standard
+                 * @enum {string}
+                 */
+                resolution: "standard" | "high";
+            } | {
+                /** @default 10 */
+                question_count: number;
+                /**
+                 * @default intermediate
+                 * @enum {string}
+                 */
+                difficulty: "beginner" | "intermediate" | "advanced";
+            } | {
+                /** @default 600 */
+                duration_seconds: number;
+            } | {
+                /** @default 30 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 90 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 60 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 120 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+                product_visual_source_ids?: string[];
+            } | {
+                /** @default 30 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            };
+            voice_id?: string;
+            avatar_id?: string;
+            model?: string;
+            /** @description Validated by the exact versioned schema returned from GET /models for the pinned model. */
+            model_options?: {
+                [key: string]: unknown;
+            };
+        } | {
+            /** @enum {string} */
+            asset_type: "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+            instructions?: string;
+            /** Format: bcp47 */
+            language?: string;
+            /** @description One normalized first-class Asset options contract. Exact schemas are also discoverable from GET /asset-types. */
+            options?: {
+                /** @default 1200 */
+                target_words: number;
+            } | {
+                /** @default 10 */
+                page_count: number;
+                /**
+                 * @default auto
+                 * @enum {string}
+                 */
+                format: "auto" | "checklist" | "cheat_sheet" | "workbook" | "planner" | "tracker" | "scorecard" | "roadmap" | "challenge" | "swipe_file" | "resource_guide" | "comparison_guide" | "meal_plan";
+            } | {
+                /** @default 6 */
+                chapter_count: number;
+                /** @default 30 */
+                target_pages: number;
+            } | {
+                /** @default 12 */
+                slide_count: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "4:3";
+            } | {
+                /**
+                 * @default 4:5
+                 * @enum {string}
+                 */
+                aspect_ratio: "1:1" | "4:5" | "9:16" | "16:9";
+                /**
+                 * @default standard
+                 * @enum {string}
+                 */
+                resolution: "standard" | "high";
+            } | {
+                /** @default 10 */
+                question_count: number;
+                /**
+                 * @default intermediate
+                 * @enum {string}
+                 */
+                difficulty: "beginner" | "intermediate" | "advanced";
+            } | {
+                /** @default 600 */
+                duration_seconds: number;
+            } | {
+                /** @default 30 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 90 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 60 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 120 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+                product_visual_source_ids?: string[];
+            } | {
+                /** @default 30 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            };
+            narration_script: components["schemas"]["NarrationScript"];
+            model?: string;
+            /** @description Validated by the exact versioned schema returned from GET /models for the pinned model. */
+            model_options?: {
+                [key: string]: unknown;
+            };
+        };
+        EditAssetOverride: {
+            asset_id: string;
+            instructions?: string;
+            /** Format: bcp47 */
+            language?: string;
+            /** @description One normalized first-class Asset options contract. Exact schemas are also discoverable from GET /asset-types. */
+            options?: {
+                /** @default 1200 */
+                target_words: number;
+            } | {
+                /** @default 10 */
+                page_count: number;
+                /**
+                 * @default auto
+                 * @enum {string}
+                 */
+                format: "auto" | "checklist" | "cheat_sheet" | "workbook" | "planner" | "tracker" | "scorecard" | "roadmap" | "challenge" | "swipe_file" | "resource_guide" | "comparison_guide" | "meal_plan";
+            } | {
+                /** @default 6 */
+                chapter_count: number;
+                /** @default 30 */
+                target_pages: number;
+            } | {
+                /** @default 12 */
+                slide_count: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "4:3";
+            } | {
+                /**
+                 * @default 4:5
+                 * @enum {string}
+                 */
+                aspect_ratio: "1:1" | "4:5" | "9:16" | "16:9";
+                /**
+                 * @default standard
+                 * @enum {string}
+                 */
+                resolution: "standard" | "high";
+            } | {
+                /** @default 10 */
+                question_count: number;
+                /**
+                 * @default intermediate
+                 * @enum {string}
+                 */
+                difficulty: "beginner" | "intermediate" | "advanced";
+            } | {
+                /** @default 600 */
+                duration_seconds: number;
+            } | {
+                /** @default 30 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 90 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 60 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 120 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+                product_visual_source_ids?: string[];
+            } | {
+                /** @default 30 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            };
+            voice_id?: string;
+            avatar_id?: string;
+            model?: string;
+            model_options?: {
+                [key: string]: unknown;
+            };
+        } | {
+            asset_id: string;
+            instructions?: string;
+            /** Format: bcp47 */
+            language?: string;
+            /** @description One normalized first-class Asset options contract. Exact schemas are also discoverable from GET /asset-types. */
+            options?: {
+                /** @default 1200 */
+                target_words: number;
+            } | {
+                /** @default 10 */
+                page_count: number;
+                /**
+                 * @default auto
+                 * @enum {string}
+                 */
+                format: "auto" | "checklist" | "cheat_sheet" | "workbook" | "planner" | "tracker" | "scorecard" | "roadmap" | "challenge" | "swipe_file" | "resource_guide" | "comparison_guide" | "meal_plan";
+            } | {
+                /** @default 6 */
+                chapter_count: number;
+                /** @default 30 */
+                target_pages: number;
+            } | {
+                /** @default 12 */
+                slide_count: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "4:3";
+            } | {
+                /**
+                 * @default 4:5
+                 * @enum {string}
+                 */
+                aspect_ratio: "1:1" | "4:5" | "9:16" | "16:9";
+                /**
+                 * @default standard
+                 * @enum {string}
+                 */
+                resolution: "standard" | "high";
+            } | {
+                /** @default 10 */
+                question_count: number;
+                /**
+                 * @default intermediate
+                 * @enum {string}
+                 */
+                difficulty: "beginner" | "intermediate" | "advanced";
+            } | {
+                /** @default 600 */
+                duration_seconds: number;
+            } | {
+                /** @default 30 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 90 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 60 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 120 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+                product_visual_source_ids?: string[];
+            } | {
+                /** @default 30 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            };
+            voice_id?: string;
+            avatar_id?: string;
+            /** @description Remove the accepted exact script and return this Asset to generated narration. */
+            narration_script: null;
+            model?: string;
+            model_options?: {
+                [key: string]: unknown;
+            };
+        } | {
+            asset_id: string;
+            instructions?: string;
+            /** Format: bcp47 */
+            language?: string;
+            /** @description One normalized first-class Asset options contract. Exact schemas are also discoverable from GET /asset-types. */
+            options?: {
+                /** @default 1200 */
+                target_words: number;
+            } | {
+                /** @default 10 */
+                page_count: number;
+                /**
+                 * @default auto
+                 * @enum {string}
+                 */
+                format: "auto" | "checklist" | "cheat_sheet" | "workbook" | "planner" | "tracker" | "scorecard" | "roadmap" | "challenge" | "swipe_file" | "resource_guide" | "comparison_guide" | "meal_plan";
+            } | {
+                /** @default 6 */
+                chapter_count: number;
+                /** @default 30 */
+                target_pages: number;
+            } | {
+                /** @default 12 */
+                slide_count: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "4:3";
+            } | {
+                /**
+                 * @default 4:5
+                 * @enum {string}
+                 */
+                aspect_ratio: "1:1" | "4:5" | "9:16" | "16:9";
+                /**
+                 * @default standard
+                 * @enum {string}
+                 */
+                resolution: "standard" | "high";
+            } | {
+                /** @default 10 */
+                question_count: number;
+                /**
+                 * @default intermediate
+                 * @enum {string}
+                 */
+                difficulty: "beginner" | "intermediate" | "advanced";
+            } | {
+                /** @default 600 */
+                duration_seconds: number;
+            } | {
+                /** @default 30 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 90 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 60 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 120 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @enum {string}
+                 */
+                aspect_ratio: "16:9" | "9:16" | "1:1";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+                product_visual_source_ids?: string[];
+            } | {
+                /** @default 30 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "720p" | "1080p";
+                /** @default true */
+                captions: boolean;
+                /**
+                 * @default faceless
+                 * @enum {string}
+                 */
+                presentation_mode: "faceless" | "avatar";
+            };
+            narration_script: components["schemas"]["NarrationScript"];
+            model?: string;
+            model_options?: {
+                [key: string]: unknown;
+            };
+        };
+        /** @description One or two speakers and 1-24 exact ordered narration turns. Text is used without model rewriting. */
+        NarrationScript: {
+            speakers: [
+                {
+                    id: string;
+                    voice_id?: string;
+                    avatar_id?: string;
+                }
+            ] | [
+                {
+                    id: string;
+                    voice_id?: string;
+                    avatar_id?: string;
+                },
+                {
+                    id: string;
+                    voice_id?: string;
+                    avatar_id?: string;
+                }
+            ];
+            segments: {
+                speaker_id: string;
+                text: string;
+            }[];
+        };
+        EffectiveNarrationSpeaker: {
+            id: string;
+            voice_id: string;
+            avatar_id: string | null;
+        };
         QuizV1: {
             /** @constant */
             schema_version: "quiz.v1";
@@ -3964,22 +4677,7 @@ export interface operations {
                     instructions?: string;
                     /** Format: bcp47 */
                     language?: string;
-                    assets: {
-                        /** @enum {string} */
-                        asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
-                        instructions?: string;
-                        /** Format: bcp47 */
-                        language?: string;
-                        options?: {
-                            [key: string]: unknown;
-                        };
-                        voice_id?: string;
-                        avatar_id?: string;
-                        model?: string;
-                        model_options?: {
-                            [key: string]: unknown;
-                        };
-                    }[];
+                    assets: components["schemas"]["AssetRequest"][];
                     metadata?: {
                         [key: string]: unknown;
                     };
@@ -4069,22 +4767,7 @@ export interface operations {
                     instructions?: string;
                     /** Format: bcp47 */
                     language?: string;
-                    assets: {
-                        /** @enum {string} */
-                        asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
-                        instructions?: string;
-                        /** Format: bcp47 */
-                        language?: string;
-                        options?: {
-                            [key: string]: unknown;
-                        };
-                        voice_id?: string;
-                        avatar_id?: string;
-                        model?: string;
-                        model_options?: {
-                            [key: string]: unknown;
-                        };
-                    }[];
+                    assets: components["schemas"]["AssetRequest"][];
                     metadata?: {
                         [key: string]: unknown;
                     };
@@ -4140,21 +4823,7 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": {
-                    assets: {
-                        asset_id: string;
-                        instructions?: string;
-                        /** Format: bcp47 */
-                        language?: string;
-                        options?: {
-                            [key: string]: unknown;
-                        };
-                        voice_id?: string;
-                        avatar_id?: string;
-                        model?: string;
-                        model_options?: {
-                            [key: string]: unknown;
-                        };
-                    }[];
+                    assets: components["schemas"]["EditAssetOverride"][];
                 };
             };
         };
@@ -4186,21 +4855,7 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": {
-                    assets: {
-                        asset_id: string;
-                        instructions?: string;
-                        /** Format: bcp47 */
-                        language?: string;
-                        options?: {
-                            [key: string]: unknown;
-                        };
-                        voice_id?: string;
-                        avatar_id?: string;
-                        model?: string;
-                        model_options?: {
-                            [key: string]: unknown;
-                        };
-                    }[];
+                    assets: components["schemas"]["EditAssetOverride"][];
                     max_cost_usd: string;
                 };
             };
@@ -4418,22 +5073,7 @@ export interface operations {
                         /** Format: iana-time-zone */
                         timezone: string;
                     };
-                    assets: {
-                        /** @enum {string} */
-                        asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
-                        instructions?: string;
-                        /** Format: bcp47 */
-                        language?: string;
-                        options?: {
-                            [key: string]: unknown;
-                        };
-                        voice_id?: string;
-                        avatar_id?: string;
-                        model?: string;
-                        model_options?: {
-                            [key: string]: unknown;
-                        };
-                    }[];
+                    assets: components["schemas"]["AssetRequest"][];
                     /** Format: bcp47 */
                     language?: string;
                     max_cost_per_run_usd: string;
@@ -4563,22 +5203,7 @@ export interface operations {
                         /** Format: iana-time-zone */
                         timezone: string;
                     };
-                    assets?: {
-                        /** @enum {string} */
-                        asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
-                        instructions?: string;
-                        /** Format: bcp47 */
-                        language?: string;
-                        options?: {
-                            [key: string]: unknown;
-                        };
-                        voice_id?: string;
-                        avatar_id?: string;
-                        model?: string;
-                        model_options?: {
-                            [key: string]: unknown;
-                        };
-                    }[];
+                    assets?: components["schemas"]["AssetRequest"][];
                     /** Format: bcp47 */
                     language?: string;
                     max_cost_per_run_usd?: string;

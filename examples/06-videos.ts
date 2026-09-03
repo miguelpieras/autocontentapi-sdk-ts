@@ -1,4 +1,5 @@
 import { createClient } from './_client.js';
+import type { GenerationDraft } from 'autocontentapi';
 
 const client = createClient();
 const productVisual = await client.sources.create('prj_acme', {
@@ -39,3 +40,48 @@ const pinnedDraft = {
 };
 const pinnedPreview = await client.generations.preview(pinnedDraft);
 await client.generations.create({ ...pinnedDraft, max_cost_usd: pinnedPreview.total_cost_usd });
+
+const exactNarrationDraft = {
+  project_id: 'prj_acme',
+  input: { type: 'knowledge' as const },
+  language: 'de-DE',
+  assets: [
+    {
+      asset_type: 'short_video' as const,
+      narration_script: {
+        speakers: [{ id: 'narrator' }],
+        segments: [{ speaker_id: 'narrator', text: 'Dieser freigegebene Wortlaut bleibt exakt.' }]
+      }
+    },
+    {
+      asset_type: 'launch_video' as const,
+      options: { presentation_mode: 'faceless' as const, duration_seconds: 30 },
+      narration_script: {
+        speakers: [
+          { id: 'host', voice_id: 'voice_host_de' },
+          { id: 'expert', voice_id: 'voice_expert_de' }
+        ],
+        segments: [
+          { speaker_id: 'host', text: 'Der erste Satz bleibt unverändert.' },
+          { speaker_id: 'expert', text: 'Auch der zweite Satz bleibt unverändert.' }
+        ]
+      }
+    },
+    {
+      asset_type: 'explainer_video' as const,
+      options: { presentation_mode: 'avatar' as const, duration_seconds: 60 },
+      narration_script: {
+        speakers: [
+          { id: 'host', voice_id: 'voice_host_de', avatar_id: 'avatar_host' },
+          { id: 'expert', voice_id: 'voice_expert_de', avatar_id: 'avatar_expert' }
+        ],
+        segments: [
+          { speaker_id: 'host', text: 'Wir beginnen mit dem geprüften Ausgangspunkt.' },
+          { speaker_id: 'expert', text: 'Danach folgt die ebenfalls geprüfte Erklärung.' }
+        ]
+      }
+    }
+  ]
+} satisfies GenerationDraft;
+const exactPreview = await client.generations.preview(exactNarrationDraft);
+await client.generations.create({ ...exactNarrationDraft, max_cost_usd: exactPreview.total_cost_usd });

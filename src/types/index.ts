@@ -15,6 +15,7 @@ export type AssetTypeDefinition = components['schemas']['AssetTypeDefinition'];
 export type Model = components['schemas']['Model'];
 export type Voice = components['schemas']['Voice'];
 export type Avatar = components['schemas']['Avatar'];
+export type EffectiveNarrationSpeaker = components['schemas']['EffectiveNarrationSpeaker'];
 export type Generation = components['schemas']['Generation'];
 export type GenerationPreview = components['schemas']['GenerationPreview'];
 export type GenerationEditPreview = components['schemas']['GenerationEditPreview'];
@@ -116,16 +117,12 @@ export type ProjectUpdateInput = operations['updateProject']['requestBody']['con
 export type CollectionCreateInput = operations['createCollection']['requestBody']['content']['application/json'];
 export type CollectionUpdateInput = operations['updateCollection']['requestBody']['content']['application/json'];
 export type AssetFeedbackInput = operations['recordAssetFeedback']['requestBody']['content']['application/json'];
-export type ContentLoopCreateInput = operations['createContentLoop']['requestBody']['content']['application/json'];
-export type ContentLoopUpdateInput = operations['updateContentLoop']['requestBody']['content']['application/json'];
 export type ContentLoopRunInput = operations['runContentLoop']['requestBody']['content']['application/json'];
 export type ContentLoopRunFeedbackInput = operations['recordContentLoopRunFeedback']['requestBody']['content']['application/json'];
 export type ApiKeyCreateInput = operations['createApiKey']['requestBody']['content']['application/json'];
 export type ApiKeyRevocation = components['schemas']['ApiKeyRevocation'];
 export type PrepaymentSessionCreateInput = operations['createPrepaymentSession']['requestBody']['content']['application/json'];
 export type WebhookCreateInput = operations['createWebhook']['requestBody']['content']['application/json'];
-export type GenerationEditDraft = operations['previewGenerationEdit']['requestBody']['content']['application/json'];
-export type GenerationEditRequest = operations['createGenerationEdit']['requestBody']['content']['application/json'];
 
 export type UploadStream = ReadableStream<Uint8Array> | AsyncIterable<Uint8Array | string>;
 export type UploadData = Blob | UploadStream;
@@ -230,11 +227,87 @@ export interface VideoOptions extends JsonObject {
   presentation_mode?: 'faceless' | 'avatar';
 }
 
-type VideoRequest<TAssetType extends string, TOptions extends VideoOptions = VideoOptions> =
-  AssetRequestBase<TAssetType, TOptions> & {
+export interface NarrationSpeaker {
+  id: string;
+  voice_id?: string;
+  avatar_id?: string;
+}
+
+export interface NarrationSegment {
+  speaker_id: string;
+  text: string;
+}
+
+type ScriptWithSpeakers<TSpeakers extends readonly NarrationSpeaker[]> = {
+  speakers: TSpeakers;
+  segments: NarrationSegment[];
+};
+
+type VoiceNarrationSpeaker = NarrationSpeaker & { voice_id: string };
+type AvatarNarrationSpeaker = VoiceNarrationSpeaker & { avatar_id: string };
+type FacelessNarrationSpeaker = Omit<NarrationSpeaker, 'avatar_id'> & { avatar_id?: never };
+type FacelessVoiceNarrationSpeaker = Omit<VoiceNarrationSpeaker, 'avatar_id'> & { avatar_id?: never };
+
+export type NarrationScript =
+  | ScriptWithSpeakers<[NarrationSpeaker]>
+  | ScriptWithSpeakers<[VoiceNarrationSpeaker, VoiceNarrationSpeaker]>;
+
+export type FacelessNarrationScript =
+  | ScriptWithSpeakers<[FacelessNarrationSpeaker]>
+  | ScriptWithSpeakers<[FacelessVoiceNarrationSpeaker, FacelessVoiceNarrationSpeaker]>;
+
+export type AvatarNarrationScript =
+  | ScriptWithSpeakers<[NarrationSpeaker]>
+  | ScriptWithSpeakers<[AvatarNarrationSpeaker, AvatarNarrationSpeaker]>;
+
+type VideoRequestBase<TAssetType extends string, TOptions extends VideoOptions> =
+  Omit<AssetRequestBase<TAssetType, TOptions>, 'options'>;
+
+type FacelessVideoOptions<TOptions extends VideoOptions> =
+  Omit<TOptions, 'presentation_mode'> & { presentation_mode?: 'faceless' };
+
+type AvatarVideoOptions<TOptions extends VideoOptions> =
+  Omit<TOptions, 'presentation_mode'> & { presentation_mode: 'avatar' };
+
+export type GeneratedVideoRequest<
+  TAssetType extends string,
+  TOptions extends VideoOptions = VideoOptions
+> = VideoRequestBase<TAssetType, TOptions> & (
+  | {
+    options?: FacelessVideoOptions<TOptions>;
+    voice_id?: string;
+    avatar_id?: never;
+    narration_script?: never;
+  }
+  | {
+    options: AvatarVideoOptions<TOptions>;
     voice_id?: string;
     avatar_id?: string;
-  };
+    narration_script?: never;
+  }
+);
+
+export type ExactVideoRequest<
+  TAssetType extends string,
+  TOptions extends VideoOptions = VideoOptions
+> = VideoRequestBase<TAssetType, TOptions> & (
+  | {
+    options?: FacelessVideoOptions<TOptions>;
+    voice_id?: never;
+    avatar_id?: never;
+    narration_script: FacelessNarrationScript;
+  }
+  | {
+    options: AvatarVideoOptions<TOptions>;
+    voice_id?: never;
+    avatar_id?: never;
+    narration_script: AvatarNarrationScript;
+  }
+);
+
+type VideoRequest<TAssetType extends string, TOptions extends VideoOptions = VideoOptions> =
+  | GeneratedVideoRequest<TAssetType, TOptions>
+  | ExactVideoRequest<TAssetType, TOptions>;
 
 export type ShortVideoRequest = VideoRequest<'short_video'>;
 export type ExplainerVideoRequest = VideoRequest<'explainer_video'>;
@@ -269,15 +342,62 @@ export interface ExtensionAssetRequest {
   options?: JsonObject;
   voice_id?: string;
   avatar_id?: string;
+  narration_script?: NarrationScript;
   model?: string;
   model_options?: JsonObject;
 }
 
 export type AssetRequest = KnownAssetRequest | ExtensionAssetRequest;
 
+type OpenApiContentLoopCreateInput = operations['createContentLoop']['requestBody']['content']['application/json'];
+type OpenApiContentLoopUpdateInput = operations['updateContentLoop']['requestBody']['content']['application/json'];
+
+export type ContentLoopCreateInput = Omit<OpenApiContentLoopCreateInput, 'assets'> & {
+  assets: AssetRequest[];
+};
+
+export type ContentLoopUpdateInput = Omit<OpenApiContentLoopUpdateInput, 'assets'> & {
+  assets?: AssetRequest[];
+};
+
+interface GenerationAssetEditBase {
+  asset_id: string;
+  instructions?: string;
+  language?: string;
+  options?: JsonObject;
+  model?: string;
+  model_options?: JsonObject;
+}
+
+export type GenerationAssetEdit =
+  | (GenerationAssetEditBase & {
+    voice_id?: string;
+    avatar_id?: string;
+    narration_script?: never;
+  })
+  | (GenerationAssetEditBase & {
+    voice_id?: string;
+    avatar_id?: string;
+    narration_script: null;
+  })
+  | (GenerationAssetEditBase & {
+    voice_id?: never;
+    avatar_id?: never;
+    narration_script: NarrationScript;
+  });
+
+export interface GenerationEditDraft {
+  assets: GenerationAssetEdit[];
+}
+
+export interface GenerationEditRequest extends GenerationEditDraft {
+  max_cost_usd: string;
+}
+
 export interface GenerationDraft {
   project_id: string;
   input: GenerationInput;
+  attachment_source_ids?: string[];
   instructions?: string;
   language?: string;
   assets: AssetRequest[];
