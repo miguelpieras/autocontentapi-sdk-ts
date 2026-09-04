@@ -116,10 +116,11 @@ const draft = {
 ```
 
 The API keeps accepted wording, Unicode, punctuation, speaker attribution, and
-turn order, while generating the visual plan around it. Preview rejects scripts
-that cannot conservatively fit the requested duration; unusually long
-synthesized speech can still fail safely at runtime instead of being cut. Short
-speech remains at natural pace and ends with silence. Content Loops reuse the
+turn order, while generating the visual plan around it. `duration_seconds` is
+an approximate target: preview rejects scripts that cannot conservatively fit
+it, while complete shorter narration ends the video naturally without synthetic
+trailing padding. Unusually long synthesized speech can still fail safely at
+runtime instead of being cut. Content Loops reuse the
 same complete script on every run. In an edit, omit `narration_script` to retain
 it, replace the whole object to change it, or send `null` to return to generated
 narration. The guarantee is textual and structural; it is not ASR pronunciation

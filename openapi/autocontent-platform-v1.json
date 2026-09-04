@@ -6747,6 +6747,7 @@
                       "properties": {
                         "duration_seconds": {
                           "default": 30,
+                          "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                           "type": "integer",
                           "minimum": 5,
                           "maximum": 180
@@ -6795,6 +6796,7 @@
                       "properties": {
                         "duration_seconds": {
                           "default": 90,
+                          "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                           "type": "integer",
                           "minimum": 30,
                           "maximum": 600
@@ -6843,6 +6845,7 @@
                       "properties": {
                         "duration_seconds": {
                           "default": 60,
+                          "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                           "type": "integer",
                           "minimum": 15,
                           "maximum": 180
@@ -6891,6 +6894,7 @@
                       "properties": {
                         "duration_seconds": {
                           "default": 120,
+                          "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                           "type": "integer",
                           "minimum": 30,
                           "maximum": 600
@@ -6951,6 +6955,7 @@
                       "properties": {
                         "duration_seconds": {
                           "default": 30,
+                          "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                           "type": "integer",
                           "minimum": 5,
                           "maximum": 120
@@ -7471,6 +7476,7 @@
                       "properties": {
                         "duration_seconds": {
                           "default": 30,
+                          "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                           "type": "integer",
                           "minimum": 5,
                           "maximum": 180
@@ -7519,6 +7525,7 @@
                       "properties": {
                         "duration_seconds": {
                           "default": 90,
+                          "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                           "type": "integer",
                           "minimum": 30,
                           "maximum": 600
@@ -7567,6 +7574,7 @@
                       "properties": {
                         "duration_seconds": {
                           "default": 60,
+                          "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                           "type": "integer",
                           "minimum": 15,
                           "maximum": 180
@@ -7615,6 +7623,7 @@
                       "properties": {
                         "duration_seconds": {
                           "default": 120,
+                          "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                           "type": "integer",
                           "minimum": 30,
                           "maximum": 600
@@ -7675,6 +7684,7 @@
                       "properties": {
                         "duration_seconds": {
                           "default": 30,
+                          "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                           "type": "integer",
                           "minimum": 5,
                           "maximum": 120
@@ -8544,6 +8554,7 @@
                 "properties": {
                   "duration_seconds": {
                     "default": 30,
+                    "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                     "type": "integer",
                     "minimum": 5,
                     "maximum": 180
@@ -8592,6 +8603,7 @@
                 "properties": {
                   "duration_seconds": {
                     "default": 90,
+                    "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                     "type": "integer",
                     "minimum": 30,
                     "maximum": 600
@@ -8640,6 +8652,7 @@
                 "properties": {
                   "duration_seconds": {
                     "default": 60,
+                    "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                     "type": "integer",
                     "minimum": 15,
                     "maximum": 180
@@ -8688,6 +8701,7 @@
                 "properties": {
                   "duration_seconds": {
                     "default": 120,
+                    "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                     "type": "integer",
                     "minimum": 30,
                     "maximum": 600
@@ -8748,6 +8762,7 @@
                 "properties": {
                   "duration_seconds": {
                     "default": 30,
+                    "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                     "type": "integer",
                     "minimum": 5,
                     "maximum": 120
@@ -9544,6 +9559,7 @@
                           "properties": {
                             "duration_seconds": {
                               "default": 30,
+                              "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                               "type": "integer",
                               "minimum": 5,
                               "maximum": 180
@@ -9592,6 +9608,7 @@
                           "properties": {
                             "duration_seconds": {
                               "default": 90,
+                              "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                               "type": "integer",
                               "minimum": 30,
                               "maximum": 600
@@ -9640,6 +9657,7 @@
                           "properties": {
                             "duration_seconds": {
                               "default": 60,
+                              "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                               "type": "integer",
                               "minimum": 15,
                               "maximum": 180
@@ -9688,6 +9706,7 @@
                           "properties": {
                             "duration_seconds": {
                               "default": 120,
+                              "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                               "type": "integer",
                               "minimum": 30,
                               "maximum": 600
@@ -9748,6 +9767,7 @@
                           "properties": {
                             "duration_seconds": {
                               "default": 30,
+                              "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                               "type": "integer",
                               "minimum": 5,
                               "maximum": 120
@@ -10018,6 +10038,7 @@
                           "properties": {
                             "duration_seconds": {
                               "default": 30,
+                              "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                               "type": "integer",
                               "minimum": 5,
                               "maximum": 180
@@ -10066,6 +10087,7 @@
                           "properties": {
                             "duration_seconds": {
                               "default": 90,
+                              "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                               "type": "integer",
                               "minimum": 30,
                               "maximum": 600
@@ -10114,6 +10136,7 @@
                           "properties": {
                             "duration_seconds": {
                               "default": 60,
+                              "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                               "type": "integer",
                               "minimum": 15,
                               "maximum": 180
@@ -10162,6 +10185,7 @@
                           "properties": {
                             "duration_seconds": {
                               "default": 120,
+                              "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                               "type": "integer",
                               "minimum": 30,
                               "maximum": 600
@@ -10222,6 +10246,7 @@
                           "properties": {
                             "duration_seconds": {
                               "default": 30,
+                              "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                               "type": "integer",
                               "minimum": 5,
                               "maximum": 120
@@ -12035,6 +12060,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 30,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
                         "maximum": 180
@@ -12083,6 +12109,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 90,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 30,
                         "maximum": 600
@@ -12131,6 +12158,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 60,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 15,
                         "maximum": 180
@@ -12179,6 +12207,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 120,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 30,
                         "maximum": 600
@@ -12239,6 +12268,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 30,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
                         "maximum": 120
@@ -12509,6 +12539,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 30,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
                         "maximum": 180
@@ -12557,6 +12588,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 90,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 30,
                         "maximum": 600
@@ -12605,6 +12637,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 60,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 15,
                         "maximum": 180
@@ -12653,6 +12686,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 120,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 30,
                         "maximum": 600
@@ -12713,6 +12747,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 30,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
                         "maximum": 120
@@ -12974,6 +13009,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 30,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
                         "maximum": 180
@@ -13022,6 +13058,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 90,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 30,
                         "maximum": 600
@@ -13070,6 +13107,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 60,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 15,
                         "maximum": 180
@@ -13118,6 +13156,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 120,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 30,
                         "maximum": 600
@@ -13178,6 +13217,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 30,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
                         "maximum": 120
@@ -13440,6 +13480,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 30,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
                         "maximum": 180
@@ -13488,6 +13529,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 90,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 30,
                         "maximum": 600
@@ -13536,6 +13578,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 60,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 15,
                         "maximum": 180
@@ -13584,6 +13627,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 120,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 30,
                         "maximum": 600
@@ -13644,6 +13688,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 30,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
                         "maximum": 120
@@ -13910,6 +13955,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 30,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
                         "maximum": 180
@@ -13958,6 +14004,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 90,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 30,
                         "maximum": 600
@@ -14006,6 +14053,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 60,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 15,
                         "maximum": 180
@@ -14054,6 +14102,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 120,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 30,
                         "maximum": 600
@@ -14114,6 +14163,7 @@
                     "properties": {
                       "duration_seconds": {
                         "default": 30,
+                        "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
                         "maximum": 120

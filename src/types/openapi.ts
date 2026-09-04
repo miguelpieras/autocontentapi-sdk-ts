@@ -943,7 +943,10 @@ export interface components {
                     /** @default 600 */
                     duration_seconds: number;
                 } | {
-                    /** @default 30 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 30
+                     */
                     duration_seconds: number;
                     /**
                      * @default 9:16
@@ -963,7 +966,10 @@ export interface components {
                      */
                     presentation_mode: "faceless" | "avatar";
                 } | {
-                    /** @default 90 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 90
+                     */
                     duration_seconds: number;
                     /**
                      * @default 16:9
@@ -983,7 +989,10 @@ export interface components {
                      */
                     presentation_mode: "faceless" | "avatar";
                 } | {
-                    /** @default 60 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 60
+                     */
                     duration_seconds: number;
                     /**
                      * @default 16:9
@@ -1003,7 +1012,10 @@ export interface components {
                      */
                     presentation_mode: "faceless" | "avatar";
                 } | {
-                    /** @default 120 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 120
+                     */
                     duration_seconds: number;
                     /**
                      * @default 16:9
@@ -1024,7 +1036,10 @@ export interface components {
                     presentation_mode: "faceless" | "avatar";
                     product_visual_source_ids?: string[];
                 } | {
-                    /** @default 30 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 30
+                     */
                     duration_seconds: number;
                     /**
                      * @default 9:16
@@ -1148,7 +1163,10 @@ export interface components {
                     /** @default 600 */
                     duration_seconds: number;
                 } | {
-                    /** @default 30 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 30
+                     */
                     duration_seconds: number;
                     /**
                      * @default 9:16
@@ -1168,7 +1186,10 @@ export interface components {
                      */
                     presentation_mode: "faceless" | "avatar";
                 } | {
-                    /** @default 90 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 90
+                     */
                     duration_seconds: number;
                     /**
                      * @default 16:9
@@ -1188,7 +1209,10 @@ export interface components {
                      */
                     presentation_mode: "faceless" | "avatar";
                 } | {
-                    /** @default 60 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 60
+                     */
                     duration_seconds: number;
                     /**
                      * @default 16:9
@@ -1208,7 +1232,10 @@ export interface components {
                      */
                     presentation_mode: "faceless" | "avatar";
                 } | {
-                    /** @default 120 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 120
+                     */
                     duration_seconds: number;
                     /**
                      * @default 16:9
@@ -1229,7 +1256,10 @@ export interface components {
                     presentation_mode: "faceless" | "avatar";
                     product_visual_source_ids?: string[];
                 } | {
-                    /** @default 30 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 30
+                     */
                     duration_seconds: number;
                     /**
                      * @default 9:16
@@ -1417,7 +1447,10 @@ export interface components {
                 /** @default 600 */
                 duration_seconds: number;
             } | {
-                /** @default 30 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 30
+                 */
                 duration_seconds: number;
                 /**
                  * @default 9:16
@@ -1437,7 +1470,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 90 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 90
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -1457,7 +1493,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 60 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 60
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -1477,7 +1516,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 120 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 120
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -1498,7 +1540,10 @@ export interface components {
                 presentation_mode: "faceless" | "avatar";
                 product_visual_source_ids?: string[];
             } | {
-                /** @default 30 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 30
+                 */
                 duration_seconds: number;
                 /**
                  * @default 9:16
@@ -1673,7 +1718,10 @@ export interface components {
                     /** @default 600 */
                     duration_seconds: number;
                 } | {
-                    /** @default 30 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 30
+                     */
                     duration_seconds: number;
                     /**
                      * @default 9:16
@@ -1693,7 +1741,10 @@ export interface components {
                      */
                     presentation_mode: "faceless" | "avatar";
                 } | {
-                    /** @default 90 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 90
+                     */
                     duration_seconds: number;
                     /**
                      * @default 16:9
@@ -1713,7 +1764,10 @@ export interface components {
                      */
                     presentation_mode: "faceless" | "avatar";
                 } | {
-                    /** @default 60 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 60
+                     */
                     duration_seconds: number;
                     /**
                      * @default 16:9
@@ -1733,7 +1787,10 @@ export interface components {
                      */
                     presentation_mode: "faceless" | "avatar";
                 } | {
-                    /** @default 120 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 120
+                     */
                     duration_seconds: number;
                     /**
                      * @default 16:9
@@ -1754,7 +1811,10 @@ export interface components {
                     presentation_mode: "faceless" | "avatar";
                     product_visual_source_ids?: string[];
                 } | {
-                    /** @default 30 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 30
+                     */
                     duration_seconds: number;
                     /**
                      * @default 9:16
@@ -1835,7 +1895,10 @@ export interface components {
                     /** @default 600 */
                     duration_seconds: number;
                 } | {
-                    /** @default 30 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 30
+                     */
                     duration_seconds: number;
                     /**
                      * @default 9:16
@@ -1855,7 +1918,10 @@ export interface components {
                      */
                     presentation_mode: "faceless" | "avatar";
                 } | {
-                    /** @default 90 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 90
+                     */
                     duration_seconds: number;
                     /**
                      * @default 16:9
@@ -1875,7 +1941,10 @@ export interface components {
                      */
                     presentation_mode: "faceless" | "avatar";
                 } | {
-                    /** @default 60 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 60
+                     */
                     duration_seconds: number;
                     /**
                      * @default 16:9
@@ -1895,7 +1964,10 @@ export interface components {
                      */
                     presentation_mode: "faceless" | "avatar";
                 } | {
-                    /** @default 120 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 120
+                     */
                     duration_seconds: number;
                     /**
                      * @default 16:9
@@ -1916,7 +1988,10 @@ export interface components {
                     presentation_mode: "faceless" | "avatar";
                     product_visual_source_ids?: string[];
                 } | {
-                    /** @default 30 */
+                    /**
+                     * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                     * @default 30
+                     */
                     duration_seconds: number;
                     /**
                      * @default 9:16
@@ -2290,7 +2365,10 @@ export interface components {
                 /** @default 600 */
                 duration_seconds: number;
             } | {
-                /** @default 30 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 30
+                 */
                 duration_seconds: number;
                 /**
                  * @default 9:16
@@ -2310,7 +2388,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 90 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 90
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2330,7 +2411,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 60 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 60
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2350,7 +2434,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 120 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 120
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2371,7 +2458,10 @@ export interface components {
                 presentation_mode: "faceless" | "avatar";
                 product_visual_source_ids?: string[];
             } | {
-                /** @default 30 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 30
+                 */
                 duration_seconds: number;
                 /**
                  * @default 9:16
@@ -2452,7 +2542,10 @@ export interface components {
                 /** @default 600 */
                 duration_seconds: number;
             } | {
-                /** @default 30 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 30
+                 */
                 duration_seconds: number;
                 /**
                  * @default 9:16
@@ -2472,7 +2565,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 90 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 90
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2492,7 +2588,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 60 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 60
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2512,7 +2611,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 120 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 120
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2533,7 +2635,10 @@ export interface components {
                 presentation_mode: "faceless" | "avatar";
                 product_visual_source_ids?: string[];
             } | {
-                /** @default 30 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 30
+                 */
                 duration_seconds: number;
                 /**
                  * @default 9:16
@@ -2613,7 +2718,10 @@ export interface components {
                 /** @default 600 */
                 duration_seconds: number;
             } | {
-                /** @default 30 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 30
+                 */
                 duration_seconds: number;
                 /**
                  * @default 9:16
@@ -2633,7 +2741,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 90 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 90
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2653,7 +2764,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 60 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 60
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2673,7 +2787,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 120 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 120
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2694,7 +2811,10 @@ export interface components {
                 presentation_mode: "faceless" | "avatar";
                 product_visual_source_ids?: string[];
             } | {
-                /** @default 30 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 30
+                 */
                 duration_seconds: number;
                 /**
                  * @default 9:16
@@ -2773,7 +2893,10 @@ export interface components {
                 /** @default 600 */
                 duration_seconds: number;
             } | {
-                /** @default 30 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 30
+                 */
                 duration_seconds: number;
                 /**
                  * @default 9:16
@@ -2793,7 +2916,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 90 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 90
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2813,7 +2939,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 60 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 60
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2833,7 +2962,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 120 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 120
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2854,7 +2986,10 @@ export interface components {
                 presentation_mode: "faceless" | "avatar";
                 product_visual_source_ids?: string[];
             } | {
-                /** @default 30 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 30
+                 */
                 duration_seconds: number;
                 /**
                  * @default 9:16
@@ -2935,7 +3070,10 @@ export interface components {
                 /** @default 600 */
                 duration_seconds: number;
             } | {
-                /** @default 30 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 30
+                 */
                 duration_seconds: number;
                 /**
                  * @default 9:16
@@ -2955,7 +3093,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 90 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 90
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2975,7 +3116,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 60 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 60
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -2995,7 +3139,10 @@ export interface components {
                  */
                 presentation_mode: "faceless" | "avatar";
             } | {
-                /** @default 120 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 120
+                 */
                 duration_seconds: number;
                 /**
                  * @default 16:9
@@ -3016,7 +3163,10 @@ export interface components {
                 presentation_mode: "faceless" | "avatar";
                 product_visual_source_ids?: string[];
             } | {
-                /** @default 30 */
+                /**
+                 * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
+                 * @default 30
+                 */
                 duration_seconds: number;
                 /**
                  * @default 9:16
