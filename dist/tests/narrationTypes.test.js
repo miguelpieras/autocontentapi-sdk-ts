@@ -10,7 +10,13 @@ const exactFaceless = {
 };
 const exactAvatar = {
     asset_type: 'explainer_video',
-    options: { presentation_mode: 'avatar', duration_seconds: 60 },
+    options: {
+        presentation_mode: 'avatar',
+        duration_seconds: 60,
+        caption_style: 'social_highlight',
+        caption_font: 'montserrat',
+        caption_position: 'bottom'
+    },
     narration_script: {
         speakers: [
             { id: 'host', voice_id: 'voice_host', avatar_id: 'avatar_host' },
@@ -36,6 +42,7 @@ const loop = {
 test('exact narration request, edit, and Content Loop types preserve the nested contract', () => {
     assert.equal(exactAvatar.narration_script.speakers.length, 2);
     assert.equal(exactAvatar.narration_script.speakers[1].avatar_id, 'avatar_expert');
+    assert.equal(exactAvatar.options.caption_style, 'social_highlight');
     assert.equal(edit.assets[0]?.narration_script, null);
     assert.equal(loop.assets[0]?.asset_type, 'short_video');
 });

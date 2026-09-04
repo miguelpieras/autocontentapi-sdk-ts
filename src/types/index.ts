@@ -219,13 +219,20 @@ export type PodcastEpisodeRequest = AssetRequestBase<'podcast_episode', { durati
   voice_id?: string;
 };
 
-export interface VideoOptions extends JsonObject {
+export type CaptionStyle = 'social_bold' | 'social_highlight' | 'clean';
+export type CaptionFont = 'inter' | 'montserrat' | 'oswald';
+export type CaptionPosition = 'top' | 'center' | 'bottom';
+
+export type VideoOptions = {
   duration_seconds?: number;
   aspect_ratio?: '16:9' | '9:16' | '1:1';
   resolution?: '720p' | '1080p';
   captions?: boolean;
+  caption_style?: CaptionStyle;
+  caption_font?: CaptionFont;
+  caption_position?: CaptionPosition;
   presentation_mode?: 'faceless' | 'avatar';
-}
+};
 
 export interface NarrationSpeaker {
   id: string;

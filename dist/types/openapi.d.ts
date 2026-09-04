@@ -960,6 +960,24 @@ export interface components {
                     /** @default true */
                     captions: boolean;
                     /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
+                    /**
                      * @default faceless
                      * @enum {string}
                      */
@@ -982,6 +1000,24 @@ export interface components {
                     resolution: "720p" | "1080p";
                     /** @default true */
                     captions: boolean;
+                    /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
                     /**
                      * @default faceless
                      * @enum {string}
@@ -1006,6 +1042,24 @@ export interface components {
                     /** @default true */
                     captions: boolean;
                     /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
+                    /**
                      * @default faceless
                      * @enum {string}
                      */
@@ -1028,6 +1082,24 @@ export interface components {
                     resolution: "720p" | "1080p";
                     /** @default true */
                     captions: boolean;
+                    /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
                     /**
                      * @default faceless
                      * @enum {string}
@@ -1052,6 +1124,24 @@ export interface components {
                     resolution: "720p" | "1080p";
                     /** @default true */
                     captions: boolean;
+                    /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
                     /**
                      * @default faceless
                      * @enum {string}
@@ -1180,6 +1270,24 @@ export interface components {
                     /** @default true */
                     captions: boolean;
                     /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
+                    /**
                      * @default faceless
                      * @enum {string}
                      */
@@ -1202,6 +1310,24 @@ export interface components {
                     resolution: "720p" | "1080p";
                     /** @default true */
                     captions: boolean;
+                    /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
                     /**
                      * @default faceless
                      * @enum {string}
@@ -1226,6 +1352,24 @@ export interface components {
                     /** @default true */
                     captions: boolean;
                     /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
+                    /**
                      * @default faceless
                      * @enum {string}
                      */
@@ -1248,6 +1392,24 @@ export interface components {
                     resolution: "720p" | "1080p";
                     /** @default true */
                     captions: boolean;
+                    /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
                     /**
                      * @default faceless
                      * @enum {string}
@@ -1272,6 +1434,24 @@ export interface components {
                     resolution: "720p" | "1080p";
                     /** @default true */
                     captions: boolean;
+                    /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
                     /**
                      * @default faceless
                      * @enum {string}
@@ -1464,6 +1644,24 @@ export interface components {
                 /** @default true */
                 captions: boolean;
                 /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
+                /**
                  * @default faceless
                  * @enum {string}
                  */
@@ -1486,6 +1684,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -1510,6 +1726,24 @@ export interface components {
                 /** @default true */
                 captions: boolean;
                 /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
+                /**
                  * @default faceless
                  * @enum {string}
                  */
@@ -1532,6 +1766,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -1556,6 +1808,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -1735,6 +2005,24 @@ export interface components {
                     /** @default true */
                     captions: boolean;
                     /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
+                    /**
                      * @default faceless
                      * @enum {string}
                      */
@@ -1757,6 +2045,24 @@ export interface components {
                     resolution: "720p" | "1080p";
                     /** @default true */
                     captions: boolean;
+                    /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
                     /**
                      * @default faceless
                      * @enum {string}
@@ -1781,6 +2087,24 @@ export interface components {
                     /** @default true */
                     captions: boolean;
                     /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
+                    /**
                      * @default faceless
                      * @enum {string}
                      */
@@ -1803,6 +2127,24 @@ export interface components {
                     resolution: "720p" | "1080p";
                     /** @default true */
                     captions: boolean;
+                    /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
                     /**
                      * @default faceless
                      * @enum {string}
@@ -1827,6 +2169,24 @@ export interface components {
                     resolution: "720p" | "1080p";
                     /** @default true */
                     captions: boolean;
+                    /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
                     /**
                      * @default faceless
                      * @enum {string}
@@ -1912,6 +2272,24 @@ export interface components {
                     /** @default true */
                     captions: boolean;
                     /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
+                    /**
                      * @default faceless
                      * @enum {string}
                      */
@@ -1934,6 +2312,24 @@ export interface components {
                     resolution: "720p" | "1080p";
                     /** @default true */
                     captions: boolean;
+                    /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
                     /**
                      * @default faceless
                      * @enum {string}
@@ -1958,6 +2354,24 @@ export interface components {
                     /** @default true */
                     captions: boolean;
                     /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
+                    /**
                      * @default faceless
                      * @enum {string}
                      */
@@ -1980,6 +2394,24 @@ export interface components {
                     resolution: "720p" | "1080p";
                     /** @default true */
                     captions: boolean;
+                    /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
                     /**
                      * @default faceless
                      * @enum {string}
@@ -2004,6 +2436,24 @@ export interface components {
                     resolution: "720p" | "1080p";
                     /** @default true */
                     captions: boolean;
+                    /**
+                     * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                     * @default social_bold
+                     * @enum {string}
+                     */
+                    caption_style: "social_bold" | "social_highlight" | "clean";
+                    /**
+                     * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                     * @default inter
+                     * @enum {string}
+                     */
+                    caption_font: "inter" | "montserrat" | "oswald";
+                    /**
+                     * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                     * @default bottom
+                     * @enum {string}
+                     */
+                    caption_position: "top" | "center" | "bottom";
                     /**
                      * @default faceless
                      * @enum {string}
@@ -2382,6 +2832,24 @@ export interface components {
                 /** @default true */
                 captions: boolean;
                 /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
+                /**
                  * @default faceless
                  * @enum {string}
                  */
@@ -2404,6 +2872,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -2428,6 +2914,24 @@ export interface components {
                 /** @default true */
                 captions: boolean;
                 /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
+                /**
                  * @default faceless
                  * @enum {string}
                  */
@@ -2450,6 +2954,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -2474,6 +2996,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -2559,6 +3099,24 @@ export interface components {
                 /** @default true */
                 captions: boolean;
                 /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
+                /**
                  * @default faceless
                  * @enum {string}
                  */
@@ -2581,6 +3139,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -2605,6 +3181,24 @@ export interface components {
                 /** @default true */
                 captions: boolean;
                 /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
+                /**
                  * @default faceless
                  * @enum {string}
                  */
@@ -2627,6 +3221,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -2651,6 +3263,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -2735,6 +3365,24 @@ export interface components {
                 /** @default true */
                 captions: boolean;
                 /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
+                /**
                  * @default faceless
                  * @enum {string}
                  */
@@ -2757,6 +3405,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -2781,6 +3447,24 @@ export interface components {
                 /** @default true */
                 captions: boolean;
                 /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
+                /**
                  * @default faceless
                  * @enum {string}
                  */
@@ -2803,6 +3487,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -2827,6 +3529,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -2910,6 +3630,24 @@ export interface components {
                 /** @default true */
                 captions: boolean;
                 /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
+                /**
                  * @default faceless
                  * @enum {string}
                  */
@@ -2932,6 +3670,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -2956,6 +3712,24 @@ export interface components {
                 /** @default true */
                 captions: boolean;
                 /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
+                /**
                  * @default faceless
                  * @enum {string}
                  */
@@ -2978,6 +3752,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -3002,6 +3794,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -3087,6 +3897,24 @@ export interface components {
                 /** @default true */
                 captions: boolean;
                 /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
+                /**
                  * @default faceless
                  * @enum {string}
                  */
@@ -3109,6 +3937,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -3133,6 +3979,24 @@ export interface components {
                 /** @default true */
                 captions: boolean;
                 /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
+                /**
                  * @default faceless
                  * @enum {string}
                  */
@@ -3155,6 +4019,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}
@@ -3179,6 +4061,24 @@ export interface components {
                 resolution: "720p" | "1080p";
                 /** @default true */
                 captions: boolean;
+                /**
+                 * @description Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.
+                 * @default social_bold
+                 * @enum {string}
+                 */
+                caption_style: "social_bold" | "social_highlight" | "clean";
+                /**
+                 * @description Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.
+                 * @default inter
+                 * @enum {string}
+                 */
+                caption_font: "inter" | "montserrat" | "oswald";
+                /**
+                 * @description Vertical placement for burned-in captions. The default bottom position remains clear of the logo.
+                 * @default bottom
+                 * @enum {string}
+                 */
+                caption_position: "top" | "center" | "bottom";
                 /**
                  * @default faceless
                  * @enum {string}

@@ -16,7 +16,14 @@ const draft = {
   project_id: 'prj_acme',
   input: { type: 'knowledge' as const },
   assets: [
-    { asset_type: 'short_video' as const },
+    {
+      asset_type: 'short_video' as const,
+      options: {
+        caption_style: 'social_highlight' as const,
+        caption_font: 'montserrat' as const,
+        caption_position: 'bottom' as const
+      }
+    },
     { asset_type: 'explainer_video' as const },
     { asset_type: 'launch_video' as const },
     {
@@ -34,8 +41,7 @@ const pinnedDraft = {
   input: { type: 'knowledge' as const },
   assets: [{
     asset_type: 'explainer_video' as const,
-    model: 'veo-3.1-fast',
-    model_options: { camera_motion: 'slow_dolly' }
+    model: 'minimax-h3-max-turbo'
   }]
 };
 const pinnedPreview = await client.generations.preview(pinnedDraft);
@@ -55,7 +61,13 @@ const exactNarrationDraft = {
     },
     {
       asset_type: 'launch_video' as const,
-      options: { presentation_mode: 'faceless' as const, duration_seconds: 30 },
+      options: {
+        presentation_mode: 'faceless' as const,
+        duration_seconds: 30,
+        caption_style: 'clean' as const,
+        caption_font: 'inter' as const,
+        caption_position: 'bottom' as const
+      },
       narration_script: {
         speakers: [
           { id: 'host', voice_id: 'voice_host_de' },

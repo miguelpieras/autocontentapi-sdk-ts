@@ -46,9 +46,15 @@ type MissingSecondAvatar = {
   };
 };
 
+type InvalidCaptionStyle = {
+  asset_type: 'short_video';
+  options: { caption_style: 'dark_box' };
+};
+
 type _MixedRootAndScriptIsRejected = Assert<IsNotAssignable<MixedRootAndScript, ShortVideoRequest>>;
 type _MissingSecondVoiceIsRejected = Assert<IsNotAssignable<MissingSecondVoice, ShortVideoRequest>>;
 type _MissingSecondAvatarIsRejected = Assert<IsNotAssignable<MissingSecondAvatar, ExplainerVideoRequest>>;
+type _InvalidCaptionStyleIsRejected = Assert<IsNotAssignable<InvalidCaptionStyle, ShortVideoRequest>>;
 
 const exactFaceless: ShortVideoRequest = {
   asset_type: 'short_video',
@@ -61,7 +67,13 @@ const exactFaceless: ShortVideoRequest = {
 
 const exactAvatar: ExplainerVideoRequest = {
   asset_type: 'explainer_video',
-  options: { presentation_mode: 'avatar', duration_seconds: 60 },
+  options: {
+    presentation_mode: 'avatar',
+    duration_seconds: 60,
+    caption_style: 'social_highlight',
+    caption_font: 'montserrat',
+    caption_position: 'bottom'
+  },
   narration_script: {
     speakers: [
       { id: 'host', voice_id: 'voice_host', avatar_id: 'avatar_host' },
@@ -90,6 +102,7 @@ const loop: ContentLoopCreateInput = {
 test('exact narration request, edit, and Content Loop types preserve the nested contract', () => {
   assert.equal(exactAvatar.narration_script.speakers.length, 2);
   assert.equal(exactAvatar.narration_script.speakers[1].avatar_id, 'avatar_expert');
+  assert.equal(exactAvatar.options.caption_style, 'social_highlight');
   assert.equal(edit.assets[0]?.narration_script, null);
   assert.equal(loop.assets[0]?.asset_type, 'short_video');
 });

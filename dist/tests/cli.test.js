@@ -47,6 +47,11 @@ test('--asset-config preserves an exact nested narration script', async (t) => {
     await writeFile(assetPath, JSON.stringify({
         asset_type: 'short_video',
         language: 'de-DE',
+        options: {
+            caption_style: 'social_highlight',
+            caption_font: 'montserrat',
+            caption_position: 'bottom'
+        },
         narration_script: {
             speakers: [{ id: 'narrator' }],
             segments: [{ speaker_id: 'narrator', text: 'Dieser Wortlaut bleibt exakt.' }]
@@ -60,6 +65,11 @@ test('--asset-config preserves an exact nested narration script', async (t) => {
     assert.deepEqual(draft.assets, [{
             asset_type: 'short_video',
             language: 'de-DE',
+            options: {
+                caption_style: 'social_highlight',
+                caption_font: 'montserrat',
+                caption_position: 'bottom'
+            },
             narration_script: {
                 speakers: [{ id: 'narrator' }],
                 segments: [{ speaker_id: 'narrator', text: 'Dieser Wortlaut bleibt exakt.' }]

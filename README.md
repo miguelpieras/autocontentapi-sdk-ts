@@ -100,7 +100,14 @@ const draft = {
   language: 'de-DE',
   assets: [{
     asset_type: 'explainer_video' as const,
-    options: { duration_seconds: 60, presentation_mode: 'avatar' as const },
+    options: {
+      duration_seconds: 60,
+      presentation_mode: 'avatar' as const,
+      captions: true,
+      caption_style: 'social_highlight' as const,
+      caption_font: 'montserrat' as const,
+      caption_position: 'bottom' as const
+    },
     narration_script: {
       speakers: [
         { id: 'host', voice_id: 'voice_host_de', avatar_id: 'avatar_host' },
@@ -127,6 +134,13 @@ narration. The guarantee is textual and structural; it is not ASR pronunciation
 or OCR certification.
 
 The CLI accepts the identical object through `--asset-config @video.json`.
+
+Burned captions use transparent overlays, never a full-width dark rectangle.
+Choose `caption_style` (`social_bold`, `social_highlight`, or `clean`),
+`caption_font` (`inter`, `montserrat`, or `oswald`), and `caption_position`
+(`top`, `center`, or `bottom`). Defaults are `social_bold`, `inter`, and
+`bottom`. Setting `captions: false` disables burn-in; the VTT Artifact remains
+available.
 
 ## Complete resource surface
 

@@ -2599,6 +2599,9 @@
                           "aspect_ratio": "9:16",
                           "resolution": "1080p",
                           "captions": true,
+                          "caption_style": "social_highlight",
+                          "caption_font": "montserrat",
+                          "caption_position": "bottom",
                           "presentation_mode": "faceless"
                         }
                       },
@@ -2610,6 +2613,9 @@
                           "aspect_ratio": "16:9",
                           "resolution": "1080p",
                           "captions": true,
+                          "caption_style": "clean",
+                          "caption_font": "inter",
+                          "caption_position": "bottom",
                           "presentation_mode": "faceless"
                         }
                       },
@@ -2622,6 +2628,9 @@
                           "aspect_ratio": "16:9",
                           "resolution": "1080p",
                           "captions": true,
+                          "caption_style": "social_bold",
+                          "caption_font": "oswald",
+                          "caption_position": "center",
                           "presentation_mode": "avatar"
                         }
                       },
@@ -2632,6 +2641,9 @@
                           "aspect_ratio": "16:9",
                           "resolution": "1080p",
                           "captions": true,
+                          "caption_style": "clean",
+                          "caption_font": "inter",
+                          "caption_position": "bottom",
                           "presentation_mode": "faceless",
                           "product_visual_source_ids": [
                             "src_dashboard"
@@ -2646,6 +2658,9 @@
                           "aspect_ratio": "9:16",
                           "resolution": "1080p",
                           "captions": true,
+                          "caption_style": "social_highlight",
+                          "caption_font": "montserrat",
+                          "caption_position": "top",
                           "presentation_mode": "avatar"
                         }
                       }
@@ -2667,6 +2682,9 @@
                           "aspect_ratio": "9:16",
                           "resolution": "1080p",
                           "captions": true,
+                          "caption_style": "social_bold",
+                          "caption_font": "inter",
+                          "caption_position": "bottom",
                           "presentation_mode": "avatar"
                         },
                         "narration_script": {
@@ -2999,6 +3017,9 @@
                           "aspect_ratio": "9:16",
                           "resolution": "1080p",
                           "captions": true,
+                          "caption_style": "social_highlight",
+                          "caption_font": "montserrat",
+                          "caption_position": "bottom",
                           "presentation_mode": "faceless"
                         },
                         "narration_script": {
@@ -6773,6 +6794,36 @@
                           "default": true,
                           "type": "boolean"
                         },
+                        "caption_style": {
+                          "default": "social_bold",
+                          "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                          "type": "string",
+                          "enum": [
+                            "social_bold",
+                            "social_highlight",
+                            "clean"
+                          ]
+                        },
+                        "caption_font": {
+                          "default": "inter",
+                          "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                          "type": "string",
+                          "enum": [
+                            "inter",
+                            "montserrat",
+                            "oswald"
+                          ]
+                        },
+                        "caption_position": {
+                          "default": "bottom",
+                          "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                          "type": "string",
+                          "enum": [
+                            "top",
+                            "center",
+                            "bottom"
+                          ]
+                        },
                         "presentation_mode": {
                           "default": "faceless",
                           "type": "string",
@@ -6787,6 +6838,9 @@
                         "aspect_ratio",
                         "resolution",
                         "captions",
+                        "caption_style",
+                        "caption_font",
+                        "caption_position",
                         "presentation_mode"
                       ],
                       "additionalProperties": false
@@ -6822,6 +6876,36 @@
                           "default": true,
                           "type": "boolean"
                         },
+                        "caption_style": {
+                          "default": "social_bold",
+                          "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                          "type": "string",
+                          "enum": [
+                            "social_bold",
+                            "social_highlight",
+                            "clean"
+                          ]
+                        },
+                        "caption_font": {
+                          "default": "inter",
+                          "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                          "type": "string",
+                          "enum": [
+                            "inter",
+                            "montserrat",
+                            "oswald"
+                          ]
+                        },
+                        "caption_position": {
+                          "default": "bottom",
+                          "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                          "type": "string",
+                          "enum": [
+                            "top",
+                            "center",
+                            "bottom"
+                          ]
+                        },
                         "presentation_mode": {
                           "default": "faceless",
                           "type": "string",
@@ -6836,6 +6920,9 @@
                         "aspect_ratio",
                         "resolution",
                         "captions",
+                        "caption_style",
+                        "caption_font",
+                        "caption_position",
                         "presentation_mode"
                       ],
                       "additionalProperties": false
@@ -6871,6 +6958,36 @@
                           "default": true,
                           "type": "boolean"
                         },
+                        "caption_style": {
+                          "default": "social_bold",
+                          "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                          "type": "string",
+                          "enum": [
+                            "social_bold",
+                            "social_highlight",
+                            "clean"
+                          ]
+                        },
+                        "caption_font": {
+                          "default": "inter",
+                          "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                          "type": "string",
+                          "enum": [
+                            "inter",
+                            "montserrat",
+                            "oswald"
+                          ]
+                        },
+                        "caption_position": {
+                          "default": "bottom",
+                          "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                          "type": "string",
+                          "enum": [
+                            "top",
+                            "center",
+                            "bottom"
+                          ]
+                        },
                         "presentation_mode": {
                           "default": "faceless",
                           "type": "string",
@@ -6885,6 +7002,9 @@
                         "aspect_ratio",
                         "resolution",
                         "captions",
+                        "caption_style",
+                        "caption_font",
+                        "caption_position",
                         "presentation_mode"
                       ],
                       "additionalProperties": false
@@ -6920,6 +7040,36 @@
                           "default": true,
                           "type": "boolean"
                         },
+                        "caption_style": {
+                          "default": "social_bold",
+                          "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                          "type": "string",
+                          "enum": [
+                            "social_bold",
+                            "social_highlight",
+                            "clean"
+                          ]
+                        },
+                        "caption_font": {
+                          "default": "inter",
+                          "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                          "type": "string",
+                          "enum": [
+                            "inter",
+                            "montserrat",
+                            "oswald"
+                          ]
+                        },
+                        "caption_position": {
+                          "default": "bottom",
+                          "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                          "type": "string",
+                          "enum": [
+                            "top",
+                            "center",
+                            "bottom"
+                          ]
+                        },
                         "presentation_mode": {
                           "default": "faceless",
                           "type": "string",
@@ -6946,6 +7096,9 @@
                         "aspect_ratio",
                         "resolution",
                         "captions",
+                        "caption_style",
+                        "caption_font",
+                        "caption_position",
                         "presentation_mode"
                       ],
                       "additionalProperties": false
@@ -6981,6 +7134,36 @@
                           "default": true,
                           "type": "boolean"
                         },
+                        "caption_style": {
+                          "default": "social_bold",
+                          "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                          "type": "string",
+                          "enum": [
+                            "social_bold",
+                            "social_highlight",
+                            "clean"
+                          ]
+                        },
+                        "caption_font": {
+                          "default": "inter",
+                          "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                          "type": "string",
+                          "enum": [
+                            "inter",
+                            "montserrat",
+                            "oswald"
+                          ]
+                        },
+                        "caption_position": {
+                          "default": "bottom",
+                          "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                          "type": "string",
+                          "enum": [
+                            "top",
+                            "center",
+                            "bottom"
+                          ]
+                        },
                         "presentation_mode": {
                           "default": "faceless",
                           "type": "string",
@@ -6995,6 +7178,9 @@
                         "aspect_ratio",
                         "resolution",
                         "captions",
+                        "caption_style",
+                        "caption_font",
+                        "caption_position",
                         "presentation_mode"
                       ],
                       "additionalProperties": false
@@ -7502,6 +7688,36 @@
                           "default": true,
                           "type": "boolean"
                         },
+                        "caption_style": {
+                          "default": "social_bold",
+                          "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                          "type": "string",
+                          "enum": [
+                            "social_bold",
+                            "social_highlight",
+                            "clean"
+                          ]
+                        },
+                        "caption_font": {
+                          "default": "inter",
+                          "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                          "type": "string",
+                          "enum": [
+                            "inter",
+                            "montserrat",
+                            "oswald"
+                          ]
+                        },
+                        "caption_position": {
+                          "default": "bottom",
+                          "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                          "type": "string",
+                          "enum": [
+                            "top",
+                            "center",
+                            "bottom"
+                          ]
+                        },
                         "presentation_mode": {
                           "default": "faceless",
                           "type": "string",
@@ -7516,6 +7732,9 @@
                         "aspect_ratio",
                         "resolution",
                         "captions",
+                        "caption_style",
+                        "caption_font",
+                        "caption_position",
                         "presentation_mode"
                       ],
                       "additionalProperties": false
@@ -7551,6 +7770,36 @@
                           "default": true,
                           "type": "boolean"
                         },
+                        "caption_style": {
+                          "default": "social_bold",
+                          "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                          "type": "string",
+                          "enum": [
+                            "social_bold",
+                            "social_highlight",
+                            "clean"
+                          ]
+                        },
+                        "caption_font": {
+                          "default": "inter",
+                          "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                          "type": "string",
+                          "enum": [
+                            "inter",
+                            "montserrat",
+                            "oswald"
+                          ]
+                        },
+                        "caption_position": {
+                          "default": "bottom",
+                          "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                          "type": "string",
+                          "enum": [
+                            "top",
+                            "center",
+                            "bottom"
+                          ]
+                        },
                         "presentation_mode": {
                           "default": "faceless",
                           "type": "string",
@@ -7565,6 +7814,9 @@
                         "aspect_ratio",
                         "resolution",
                         "captions",
+                        "caption_style",
+                        "caption_font",
+                        "caption_position",
                         "presentation_mode"
                       ],
                       "additionalProperties": false
@@ -7600,6 +7852,36 @@
                           "default": true,
                           "type": "boolean"
                         },
+                        "caption_style": {
+                          "default": "social_bold",
+                          "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                          "type": "string",
+                          "enum": [
+                            "social_bold",
+                            "social_highlight",
+                            "clean"
+                          ]
+                        },
+                        "caption_font": {
+                          "default": "inter",
+                          "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                          "type": "string",
+                          "enum": [
+                            "inter",
+                            "montserrat",
+                            "oswald"
+                          ]
+                        },
+                        "caption_position": {
+                          "default": "bottom",
+                          "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                          "type": "string",
+                          "enum": [
+                            "top",
+                            "center",
+                            "bottom"
+                          ]
+                        },
                         "presentation_mode": {
                           "default": "faceless",
                           "type": "string",
@@ -7614,6 +7896,9 @@
                         "aspect_ratio",
                         "resolution",
                         "captions",
+                        "caption_style",
+                        "caption_font",
+                        "caption_position",
                         "presentation_mode"
                       ],
                       "additionalProperties": false
@@ -7649,6 +7934,36 @@
                           "default": true,
                           "type": "boolean"
                         },
+                        "caption_style": {
+                          "default": "social_bold",
+                          "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                          "type": "string",
+                          "enum": [
+                            "social_bold",
+                            "social_highlight",
+                            "clean"
+                          ]
+                        },
+                        "caption_font": {
+                          "default": "inter",
+                          "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                          "type": "string",
+                          "enum": [
+                            "inter",
+                            "montserrat",
+                            "oswald"
+                          ]
+                        },
+                        "caption_position": {
+                          "default": "bottom",
+                          "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                          "type": "string",
+                          "enum": [
+                            "top",
+                            "center",
+                            "bottom"
+                          ]
+                        },
                         "presentation_mode": {
                           "default": "faceless",
                           "type": "string",
@@ -7675,6 +7990,9 @@
                         "aspect_ratio",
                         "resolution",
                         "captions",
+                        "caption_style",
+                        "caption_font",
+                        "caption_position",
                         "presentation_mode"
                       ],
                       "additionalProperties": false
@@ -7710,6 +8028,36 @@
                           "default": true,
                           "type": "boolean"
                         },
+                        "caption_style": {
+                          "default": "social_bold",
+                          "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                          "type": "string",
+                          "enum": [
+                            "social_bold",
+                            "social_highlight",
+                            "clean"
+                          ]
+                        },
+                        "caption_font": {
+                          "default": "inter",
+                          "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                          "type": "string",
+                          "enum": [
+                            "inter",
+                            "montserrat",
+                            "oswald"
+                          ]
+                        },
+                        "caption_position": {
+                          "default": "bottom",
+                          "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                          "type": "string",
+                          "enum": [
+                            "top",
+                            "center",
+                            "bottom"
+                          ]
+                        },
                         "presentation_mode": {
                           "default": "faceless",
                           "type": "string",
@@ -7724,6 +8072,9 @@
                         "aspect_ratio",
                         "resolution",
                         "captions",
+                        "caption_style",
+                        "caption_font",
+                        "caption_position",
                         "presentation_mode"
                       ],
                       "additionalProperties": false
@@ -8580,6 +8931,36 @@
                     "default": true,
                     "type": "boolean"
                   },
+                  "caption_style": {
+                    "default": "social_bold",
+                    "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                    "type": "string",
+                    "enum": [
+                      "social_bold",
+                      "social_highlight",
+                      "clean"
+                    ]
+                  },
+                  "caption_font": {
+                    "default": "inter",
+                    "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                    "type": "string",
+                    "enum": [
+                      "inter",
+                      "montserrat",
+                      "oswald"
+                    ]
+                  },
+                  "caption_position": {
+                    "default": "bottom",
+                    "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                    "type": "string",
+                    "enum": [
+                      "top",
+                      "center",
+                      "bottom"
+                    ]
+                  },
                   "presentation_mode": {
                     "default": "faceless",
                     "type": "string",
@@ -8594,6 +8975,9 @@
                   "aspect_ratio",
                   "resolution",
                   "captions",
+                  "caption_style",
+                  "caption_font",
+                  "caption_position",
                   "presentation_mode"
                 ],
                 "additionalProperties": false
@@ -8629,6 +9013,36 @@
                     "default": true,
                     "type": "boolean"
                   },
+                  "caption_style": {
+                    "default": "social_bold",
+                    "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                    "type": "string",
+                    "enum": [
+                      "social_bold",
+                      "social_highlight",
+                      "clean"
+                    ]
+                  },
+                  "caption_font": {
+                    "default": "inter",
+                    "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                    "type": "string",
+                    "enum": [
+                      "inter",
+                      "montserrat",
+                      "oswald"
+                    ]
+                  },
+                  "caption_position": {
+                    "default": "bottom",
+                    "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                    "type": "string",
+                    "enum": [
+                      "top",
+                      "center",
+                      "bottom"
+                    ]
+                  },
                   "presentation_mode": {
                     "default": "faceless",
                     "type": "string",
@@ -8643,6 +9057,9 @@
                   "aspect_ratio",
                   "resolution",
                   "captions",
+                  "caption_style",
+                  "caption_font",
+                  "caption_position",
                   "presentation_mode"
                 ],
                 "additionalProperties": false
@@ -8678,6 +9095,36 @@
                     "default": true,
                     "type": "boolean"
                   },
+                  "caption_style": {
+                    "default": "social_bold",
+                    "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                    "type": "string",
+                    "enum": [
+                      "social_bold",
+                      "social_highlight",
+                      "clean"
+                    ]
+                  },
+                  "caption_font": {
+                    "default": "inter",
+                    "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                    "type": "string",
+                    "enum": [
+                      "inter",
+                      "montserrat",
+                      "oswald"
+                    ]
+                  },
+                  "caption_position": {
+                    "default": "bottom",
+                    "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                    "type": "string",
+                    "enum": [
+                      "top",
+                      "center",
+                      "bottom"
+                    ]
+                  },
                   "presentation_mode": {
                     "default": "faceless",
                     "type": "string",
@@ -8692,6 +9139,9 @@
                   "aspect_ratio",
                   "resolution",
                   "captions",
+                  "caption_style",
+                  "caption_font",
+                  "caption_position",
                   "presentation_mode"
                 ],
                 "additionalProperties": false
@@ -8727,6 +9177,36 @@
                     "default": true,
                     "type": "boolean"
                   },
+                  "caption_style": {
+                    "default": "social_bold",
+                    "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                    "type": "string",
+                    "enum": [
+                      "social_bold",
+                      "social_highlight",
+                      "clean"
+                    ]
+                  },
+                  "caption_font": {
+                    "default": "inter",
+                    "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                    "type": "string",
+                    "enum": [
+                      "inter",
+                      "montserrat",
+                      "oswald"
+                    ]
+                  },
+                  "caption_position": {
+                    "default": "bottom",
+                    "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                    "type": "string",
+                    "enum": [
+                      "top",
+                      "center",
+                      "bottom"
+                    ]
+                  },
                   "presentation_mode": {
                     "default": "faceless",
                     "type": "string",
@@ -8753,6 +9233,9 @@
                   "aspect_ratio",
                   "resolution",
                   "captions",
+                  "caption_style",
+                  "caption_font",
+                  "caption_position",
                   "presentation_mode"
                 ],
                 "additionalProperties": false
@@ -8788,6 +9271,36 @@
                     "default": true,
                     "type": "boolean"
                   },
+                  "caption_style": {
+                    "default": "social_bold",
+                    "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                    "type": "string",
+                    "enum": [
+                      "social_bold",
+                      "social_highlight",
+                      "clean"
+                    ]
+                  },
+                  "caption_font": {
+                    "default": "inter",
+                    "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                    "type": "string",
+                    "enum": [
+                      "inter",
+                      "montserrat",
+                      "oswald"
+                    ]
+                  },
+                  "caption_position": {
+                    "default": "bottom",
+                    "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                    "type": "string",
+                    "enum": [
+                      "top",
+                      "center",
+                      "bottom"
+                    ]
+                  },
                   "presentation_mode": {
                     "default": "faceless",
                     "type": "string",
@@ -8802,6 +9315,9 @@
                   "aspect_ratio",
                   "resolution",
                   "captions",
+                  "caption_style",
+                  "caption_font",
+                  "caption_position",
                   "presentation_mode"
                 ],
                 "additionalProperties": false
@@ -9585,6 +10101,36 @@
                               "default": true,
                               "type": "boolean"
                             },
+                            "caption_style": {
+                              "default": "social_bold",
+                              "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                              "type": "string",
+                              "enum": [
+                                "social_bold",
+                                "social_highlight",
+                                "clean"
+                              ]
+                            },
+                            "caption_font": {
+                              "default": "inter",
+                              "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                              "type": "string",
+                              "enum": [
+                                "inter",
+                                "montserrat",
+                                "oswald"
+                              ]
+                            },
+                            "caption_position": {
+                              "default": "bottom",
+                              "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                              "type": "string",
+                              "enum": [
+                                "top",
+                                "center",
+                                "bottom"
+                              ]
+                            },
                             "presentation_mode": {
                               "default": "faceless",
                               "type": "string",
@@ -9599,6 +10145,9 @@
                             "aspect_ratio",
                             "resolution",
                             "captions",
+                            "caption_style",
+                            "caption_font",
+                            "caption_position",
                             "presentation_mode"
                           ],
                           "additionalProperties": false
@@ -9634,6 +10183,36 @@
                               "default": true,
                               "type": "boolean"
                             },
+                            "caption_style": {
+                              "default": "social_bold",
+                              "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                              "type": "string",
+                              "enum": [
+                                "social_bold",
+                                "social_highlight",
+                                "clean"
+                              ]
+                            },
+                            "caption_font": {
+                              "default": "inter",
+                              "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                              "type": "string",
+                              "enum": [
+                                "inter",
+                                "montserrat",
+                                "oswald"
+                              ]
+                            },
+                            "caption_position": {
+                              "default": "bottom",
+                              "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                              "type": "string",
+                              "enum": [
+                                "top",
+                                "center",
+                                "bottom"
+                              ]
+                            },
                             "presentation_mode": {
                               "default": "faceless",
                               "type": "string",
@@ -9648,6 +10227,9 @@
                             "aspect_ratio",
                             "resolution",
                             "captions",
+                            "caption_style",
+                            "caption_font",
+                            "caption_position",
                             "presentation_mode"
                           ],
                           "additionalProperties": false
@@ -9683,6 +10265,36 @@
                               "default": true,
                               "type": "boolean"
                             },
+                            "caption_style": {
+                              "default": "social_bold",
+                              "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                              "type": "string",
+                              "enum": [
+                                "social_bold",
+                                "social_highlight",
+                                "clean"
+                              ]
+                            },
+                            "caption_font": {
+                              "default": "inter",
+                              "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                              "type": "string",
+                              "enum": [
+                                "inter",
+                                "montserrat",
+                                "oswald"
+                              ]
+                            },
+                            "caption_position": {
+                              "default": "bottom",
+                              "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                              "type": "string",
+                              "enum": [
+                                "top",
+                                "center",
+                                "bottom"
+                              ]
+                            },
                             "presentation_mode": {
                               "default": "faceless",
                               "type": "string",
@@ -9697,6 +10309,9 @@
                             "aspect_ratio",
                             "resolution",
                             "captions",
+                            "caption_style",
+                            "caption_font",
+                            "caption_position",
                             "presentation_mode"
                           ],
                           "additionalProperties": false
@@ -9732,6 +10347,36 @@
                               "default": true,
                               "type": "boolean"
                             },
+                            "caption_style": {
+                              "default": "social_bold",
+                              "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                              "type": "string",
+                              "enum": [
+                                "social_bold",
+                                "social_highlight",
+                                "clean"
+                              ]
+                            },
+                            "caption_font": {
+                              "default": "inter",
+                              "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                              "type": "string",
+                              "enum": [
+                                "inter",
+                                "montserrat",
+                                "oswald"
+                              ]
+                            },
+                            "caption_position": {
+                              "default": "bottom",
+                              "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                              "type": "string",
+                              "enum": [
+                                "top",
+                                "center",
+                                "bottom"
+                              ]
+                            },
                             "presentation_mode": {
                               "default": "faceless",
                               "type": "string",
@@ -9758,6 +10403,9 @@
                             "aspect_ratio",
                             "resolution",
                             "captions",
+                            "caption_style",
+                            "caption_font",
+                            "caption_position",
                             "presentation_mode"
                           ],
                           "additionalProperties": false
@@ -9793,6 +10441,36 @@
                               "default": true,
                               "type": "boolean"
                             },
+                            "caption_style": {
+                              "default": "social_bold",
+                              "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                              "type": "string",
+                              "enum": [
+                                "social_bold",
+                                "social_highlight",
+                                "clean"
+                              ]
+                            },
+                            "caption_font": {
+                              "default": "inter",
+                              "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                              "type": "string",
+                              "enum": [
+                                "inter",
+                                "montserrat",
+                                "oswald"
+                              ]
+                            },
+                            "caption_position": {
+                              "default": "bottom",
+                              "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                              "type": "string",
+                              "enum": [
+                                "top",
+                                "center",
+                                "bottom"
+                              ]
+                            },
                             "presentation_mode": {
                               "default": "faceless",
                               "type": "string",
@@ -9807,6 +10485,9 @@
                             "aspect_ratio",
                             "resolution",
                             "captions",
+                            "caption_style",
+                            "caption_font",
+                            "caption_position",
                             "presentation_mode"
                           ],
                           "additionalProperties": false
@@ -10064,6 +10745,36 @@
                               "default": true,
                               "type": "boolean"
                             },
+                            "caption_style": {
+                              "default": "social_bold",
+                              "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                              "type": "string",
+                              "enum": [
+                                "social_bold",
+                                "social_highlight",
+                                "clean"
+                              ]
+                            },
+                            "caption_font": {
+                              "default": "inter",
+                              "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                              "type": "string",
+                              "enum": [
+                                "inter",
+                                "montserrat",
+                                "oswald"
+                              ]
+                            },
+                            "caption_position": {
+                              "default": "bottom",
+                              "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                              "type": "string",
+                              "enum": [
+                                "top",
+                                "center",
+                                "bottom"
+                              ]
+                            },
                             "presentation_mode": {
                               "default": "faceless",
                               "type": "string",
@@ -10078,6 +10789,9 @@
                             "aspect_ratio",
                             "resolution",
                             "captions",
+                            "caption_style",
+                            "caption_font",
+                            "caption_position",
                             "presentation_mode"
                           ],
                           "additionalProperties": false
@@ -10113,6 +10827,36 @@
                               "default": true,
                               "type": "boolean"
                             },
+                            "caption_style": {
+                              "default": "social_bold",
+                              "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                              "type": "string",
+                              "enum": [
+                                "social_bold",
+                                "social_highlight",
+                                "clean"
+                              ]
+                            },
+                            "caption_font": {
+                              "default": "inter",
+                              "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                              "type": "string",
+                              "enum": [
+                                "inter",
+                                "montserrat",
+                                "oswald"
+                              ]
+                            },
+                            "caption_position": {
+                              "default": "bottom",
+                              "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                              "type": "string",
+                              "enum": [
+                                "top",
+                                "center",
+                                "bottom"
+                              ]
+                            },
                             "presentation_mode": {
                               "default": "faceless",
                               "type": "string",
@@ -10127,6 +10871,9 @@
                             "aspect_ratio",
                             "resolution",
                             "captions",
+                            "caption_style",
+                            "caption_font",
+                            "caption_position",
                             "presentation_mode"
                           ],
                           "additionalProperties": false
@@ -10162,6 +10909,36 @@
                               "default": true,
                               "type": "boolean"
                             },
+                            "caption_style": {
+                              "default": "social_bold",
+                              "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                              "type": "string",
+                              "enum": [
+                                "social_bold",
+                                "social_highlight",
+                                "clean"
+                              ]
+                            },
+                            "caption_font": {
+                              "default": "inter",
+                              "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                              "type": "string",
+                              "enum": [
+                                "inter",
+                                "montserrat",
+                                "oswald"
+                              ]
+                            },
+                            "caption_position": {
+                              "default": "bottom",
+                              "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                              "type": "string",
+                              "enum": [
+                                "top",
+                                "center",
+                                "bottom"
+                              ]
+                            },
                             "presentation_mode": {
                               "default": "faceless",
                               "type": "string",
@@ -10176,6 +10953,9 @@
                             "aspect_ratio",
                             "resolution",
                             "captions",
+                            "caption_style",
+                            "caption_font",
+                            "caption_position",
                             "presentation_mode"
                           ],
                           "additionalProperties": false
@@ -10211,6 +10991,36 @@
                               "default": true,
                               "type": "boolean"
                             },
+                            "caption_style": {
+                              "default": "social_bold",
+                              "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                              "type": "string",
+                              "enum": [
+                                "social_bold",
+                                "social_highlight",
+                                "clean"
+                              ]
+                            },
+                            "caption_font": {
+                              "default": "inter",
+                              "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                              "type": "string",
+                              "enum": [
+                                "inter",
+                                "montserrat",
+                                "oswald"
+                              ]
+                            },
+                            "caption_position": {
+                              "default": "bottom",
+                              "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                              "type": "string",
+                              "enum": [
+                                "top",
+                                "center",
+                                "bottom"
+                              ]
+                            },
                             "presentation_mode": {
                               "default": "faceless",
                               "type": "string",
@@ -10237,6 +11047,9 @@
                             "aspect_ratio",
                             "resolution",
                             "captions",
+                            "caption_style",
+                            "caption_font",
+                            "caption_position",
                             "presentation_mode"
                           ],
                           "additionalProperties": false
@@ -10272,6 +11085,36 @@
                               "default": true,
                               "type": "boolean"
                             },
+                            "caption_style": {
+                              "default": "social_bold",
+                              "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                              "type": "string",
+                              "enum": [
+                                "social_bold",
+                                "social_highlight",
+                                "clean"
+                              ]
+                            },
+                            "caption_font": {
+                              "default": "inter",
+                              "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                              "type": "string",
+                              "enum": [
+                                "inter",
+                                "montserrat",
+                                "oswald"
+                              ]
+                            },
+                            "caption_position": {
+                              "default": "bottom",
+                              "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                              "type": "string",
+                              "enum": [
+                                "top",
+                                "center",
+                                "bottom"
+                              ]
+                            },
                             "presentation_mode": {
                               "default": "faceless",
                               "type": "string",
@@ -10286,6 +11129,9 @@
                             "aspect_ratio",
                             "resolution",
                             "captions",
+                            "caption_style",
+                            "caption_font",
+                            "caption_position",
                             "presentation_mode"
                           ],
                           "additionalProperties": false
@@ -12086,6 +12932,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -12100,6 +12976,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -12135,6 +13014,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -12149,6 +13058,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -12184,6 +13096,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -12198,6 +13140,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -12233,6 +13178,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -12259,6 +13234,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -12294,6 +13272,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -12308,6 +13316,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -12565,6 +13576,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -12579,6 +13620,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -12614,6 +13658,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -12628,6 +13702,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -12663,6 +13740,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -12677,6 +13784,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -12712,6 +13822,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -12738,6 +13878,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -12773,6 +13916,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -12787,6 +13960,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -13035,6 +14211,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -13049,6 +14255,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -13084,6 +14293,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -13098,6 +14337,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -13133,6 +14375,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -13147,6 +14419,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -13182,6 +14457,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -13208,6 +14513,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -13243,6 +14551,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -13257,6 +14595,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -13506,6 +14847,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -13520,6 +14891,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -13555,6 +14929,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -13569,6 +14973,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -13604,6 +15011,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -13618,6 +15055,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -13653,6 +15093,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -13679,6 +15149,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -13714,6 +15187,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -13728,6 +15231,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -13981,6 +15487,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -13995,6 +15531,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -14030,6 +15569,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -14044,6 +15613,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -14079,6 +15651,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -14093,6 +15695,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -14128,6 +15733,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -14154,6 +15789,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
@@ -14189,6 +15827,36 @@
                         "default": true,
                         "type": "boolean"
                       },
+                      "caption_style": {
+                        "default": "social_bold",
+                        "description": "Burned-in caption preset. social_bold uses large outlined social-video text, social_highlight highlights the final word in yellow, and clean uses smaller understated text. No preset adds a full-width background box.",
+                        "type": "string",
+                        "enum": [
+                          "social_bold",
+                          "social_highlight",
+                          "clean"
+                        ]
+                      },
+                      "caption_font": {
+                        "default": "inter",
+                        "description": "Bundled burned-in caption font: Inter Black, Montserrat ExtraBold, or Oswald Bold.",
+                        "type": "string",
+                        "enum": [
+                          "inter",
+                          "montserrat",
+                          "oswald"
+                        ]
+                      },
+                      "caption_position": {
+                        "default": "bottom",
+                        "description": "Vertical placement for burned-in captions. The default bottom position remains clear of the logo.",
+                        "type": "string",
+                        "enum": [
+                          "top",
+                          "center",
+                          "bottom"
+                        ]
+                      },
                       "presentation_mode": {
                         "default": "faceless",
                         "type": "string",
@@ -14203,6 +15871,9 @@
                       "aspect_ratio",
                       "resolution",
                       "captions",
+                      "caption_style",
+                      "caption_font",
+                      "caption_position",
                       "presentation_mode"
                     ],
                     "additionalProperties": false
