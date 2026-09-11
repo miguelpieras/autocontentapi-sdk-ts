@@ -318,7 +318,37 @@ type VideoRequest<TAssetType extends string, TOptions extends VideoOptions = Vid
 
 export type ShortVideoRequest = VideoRequest<'short_video'>;
 export type ExplainerVideoRequest = VideoRequest<'explainer_video'>;
-export type LaunchVideoRequest = VideoRequest<'launch_video'>;
+export type MotionLaunchVideoOptions = {
+  /** Integer from 15 to 60; defaults to 60. */
+  duration_seconds?: number;
+  aspect_ratio?: '16:9';
+  /** 1080p is 30 fps; 4k is 60 fps. */
+  resolution?: '1080p' | '4k';
+  captions?: false;
+  presentation_mode?: 'faceless';
+  caption_style?: never;
+  caption_font?: never;
+  caption_position?: never;
+};
+
+export type MotionLaunchVideoRequest = {
+  asset_type: 'launch_video';
+  model: 'autocontent-motion-design-v1';
+  instructions?: string;
+  language?: string;
+  options?: MotionLaunchVideoOptions;
+  model_options?: {
+    /** At most 500 characters; guides the original instrumental's mood and instrumentation. */
+    music_direction?: string;
+    /** Every create/Loop run already receives new music; true is edit-only. */
+    refresh_music?: false;
+  };
+  voice_id?: never;
+  avatar_id?: never;
+  narration_script?: never;
+};
+
+export type LaunchVideoRequest = VideoRequest<'launch_video'> | MotionLaunchVideoRequest;
 export type ProductDemoVideoRequest = VideoRequest<
   'product_demo_video',
   VideoOptions & { product_visual_source_ids?: string[] }
@@ -375,6 +405,23 @@ interface GenerationAssetEditBase {
   model?: string;
   model_options?: JsonObject;
 }
+
+export type MotionLaunchVideoEdit = {
+  asset_id: string;
+  model?: 'autocontent-motion-design-v1';
+  instructions?: string;
+  language?: string;
+  options?: MotionLaunchVideoOptions;
+  model_options?: {
+    /** Changing this direction or duration requires a newly quoted score. */
+    music_direction?: string;
+    /** A one-edit directive; later edits reuse the accepted score by default. */
+    refresh_music?: boolean;
+  };
+  voice_id?: never;
+  avatar_id?: never;
+  narration_script?: never;
+};
 
 export type GenerationAssetEdit =
   | (GenerationAssetEditBase & {

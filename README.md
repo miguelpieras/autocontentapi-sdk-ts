@@ -85,7 +85,7 @@ catalog type not known to this SDK version. It rejects all twelve known IDs.
 
 ### Exact video narration
 
-All five Video Assets accept `narration_script`. Put Voice and Avatar IDs on
+The standard models for all five Video Assets accept `narration_script`. Put Voice and Avatar IDs on
 each speaker; do not combine an exact script with root `voice_id` or
 `avatar_id`. A one-speaker script may use the Project default resources. Two
 speakers require a Voice for each, and Avatar presentation also requires an
@@ -141,6 +141,28 @@ Choose `caption_style` (`social_bold`, `social_highlight`, or `clean`),
 (`top`, `center`, or `bottom`). Defaults are `social_bold`, `inter`, and
 `bottom`. Setting `captions: false` disables burn-in; the VTT Artifact remains
 available.
+
+### Music-led launch films
+
+When `models.list({ asset_type: 'launch_video' })` includes
+`autocontent-motion-design-v1`, select that exact model for Motion Design. The
+existing Launch default is unchanged. Use `MotionLaunchVideoRequest` for its
+typed contract: 15–60 integer seconds (default 60), landscape 16:9, and either
+`resolution: '1080p'` at 30 fps (default) or `'4k'` at 60 fps.
+
+Each create or Content Loop run receives a new original instrumental. Optional
+`model_options.music_direction` accepts at most 500 characters. This model is
+music-only: omit Voice, Avatar, narration, and caption styling; captions default
+to false. Ready same-Project images can be supplied through the existing
+`attachment_source_ids`; text evidence still supplies the facts.
+
+Ordinary edits, including resolution-only edits, reuse the exact accepted
+score. Changing duration or music direction, or setting the edit-only
+`model_options.refresh_music: true`, requires a newly quoted score. The refresh
+directive applies once and is not inherited by later edits. Preview the edit
+before accepting its maximum; the final measured production charge stays within
+the reservation and unused funds are released. The SDK forwards the API quote
+without calculating prices. See [the complete example](examples/12-motion-launch.ts).
 
 ## Complete resource surface
 

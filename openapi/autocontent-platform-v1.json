@@ -7184,6 +7184,41 @@
                         "presentation_mode"
                       ],
                       "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "duration_seconds": {
+                          "default": 60,
+                          "type": "integer",
+                          "minimum": 15,
+                          "maximum": 60
+                        },
+                        "aspect_ratio": {
+                          "default": "16:9",
+                          "type": "string",
+                          "const": "16:9"
+                        },
+                        "resolution": {
+                          "default": "1080p",
+                          "type": "string",
+                          "enum": [
+                            "1080p",
+                            "4k"
+                          ]
+                        },
+                        "captions": {
+                          "default": false,
+                          "type": "boolean",
+                          "const": false
+                        },
+                        "presentation_mode": {
+                          "default": "faceless",
+                          "type": "string",
+                          "const": "faceless"
+                        }
+                      },
+                      "additionalProperties": false
                     }
                   ]
                 },
@@ -7191,6 +7226,27 @@
                   "type": "object",
                   "additionalProperties": true,
                   "description": "Present only when the exact model has normalized native options."
+                },
+                "music": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "action",
+                    "new_score"
+                  ],
+                  "description": "Motion Design score policy for this request. Reuse retains the exact accepted audio; generate prices one original replacement.",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "generate",
+                        "reuse"
+                      ]
+                    },
+                    "new_score": {
+                      "type": "boolean"
+                    }
+                  }
                 },
                 "cost_usd": {
                   "type": "string",
@@ -8078,6 +8134,41 @@
                         "presentation_mode"
                       ],
                       "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "duration_seconds": {
+                          "default": 60,
+                          "type": "integer",
+                          "minimum": 15,
+                          "maximum": 60
+                        },
+                        "aspect_ratio": {
+                          "default": "16:9",
+                          "type": "string",
+                          "const": "16:9"
+                        },
+                        "resolution": {
+                          "default": "1080p",
+                          "type": "string",
+                          "enum": [
+                            "1080p",
+                            "4k"
+                          ]
+                        },
+                        "captions": {
+                          "default": false,
+                          "type": "boolean",
+                          "const": false
+                        },
+                        "presentation_mode": {
+                          "default": "faceless",
+                          "type": "string",
+                          "const": "faceless"
+                        }
+                      },
+                      "additionalProperties": false
                     }
                   ]
                 },
@@ -8085,6 +8176,27 @@
                   "type": "object",
                   "additionalProperties": true,
                   "description": "Present only when the exact model has normalized native options."
+                },
+                "music": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "action",
+                    "new_score"
+                  ],
+                  "description": "Motion Design score policy for this request. Reuse retains the exact accepted audio; generate prices one original replacement.",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "generate",
+                        "reuse"
+                      ]
+                    },
+                    "new_score": {
+                      "type": "boolean"
+                    }
+                  }
                 },
                 "cost_usd": {
                   "type": "string",
@@ -9321,8 +9433,48 @@
                   "presentation_mode"
                 ],
                 "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "duration_seconds": {
+                    "default": 60,
+                    "type": "integer",
+                    "minimum": 15,
+                    "maximum": 60
+                  },
+                  "aspect_ratio": {
+                    "default": "16:9",
+                    "type": "string",
+                    "const": "16:9"
+                  },
+                  "resolution": {
+                    "default": "1080p",
+                    "type": "string",
+                    "enum": [
+                      "1080p",
+                      "4k"
+                    ]
+                  },
+                  "captions": {
+                    "default": false,
+                    "type": "boolean",
+                    "const": false
+                  },
+                  "presentation_mode": {
+                    "default": "faceless",
+                    "type": "string",
+                    "const": "faceless"
+                  }
+                },
+                "additionalProperties": false
               }
             ]
+          },
+          "normalized_model_options": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Accepted effective native options. One-shot edit directives such as refresh_music are excluded."
           },
           "contract_version": {
             "type": "integer",
@@ -10491,6 +10643,41 @@
                             "presentation_mode"
                           ],
                           "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "duration_seconds": {
+                              "default": 60,
+                              "type": "integer",
+                              "minimum": 15,
+                              "maximum": 60
+                            },
+                            "aspect_ratio": {
+                              "default": "16:9",
+                              "type": "string",
+                              "const": "16:9"
+                            },
+                            "resolution": {
+                              "default": "1080p",
+                              "type": "string",
+                              "enum": [
+                                "1080p",
+                                "4k"
+                              ]
+                            },
+                            "captions": {
+                              "default": false,
+                              "type": "boolean",
+                              "const": false
+                            },
+                            "presentation_mode": {
+                              "default": "faceless",
+                              "type": "string",
+                              "const": "faceless"
+                            }
+                          },
+                          "additionalProperties": false
                         }
                       ]
                     },
@@ -11134,6 +11321,41 @@
                             "caption_position",
                             "presentation_mode"
                           ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "duration_seconds": {
+                              "default": 60,
+                              "type": "integer",
+                              "minimum": 15,
+                              "maximum": 60
+                            },
+                            "aspect_ratio": {
+                              "default": "16:9",
+                              "type": "string",
+                              "const": "16:9"
+                            },
+                            "resolution": {
+                              "default": "1080p",
+                              "type": "string",
+                              "enum": [
+                                "1080p",
+                                "4k"
+                              ]
+                            },
+                            "captions": {
+                              "default": false,
+                              "type": "boolean",
+                              "const": false
+                            },
+                            "presentation_mode": {
+                              "default": "faceless",
+                              "type": "string",
+                              "const": "faceless"
+                            }
+                          },
                           "additionalProperties": false
                         }
                       ]
@@ -13322,6 +13544,41 @@
                       "presentation_mode"
                     ],
                     "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "duration_seconds": {
+                        "default": 60,
+                        "type": "integer",
+                        "minimum": 15,
+                        "maximum": 60
+                      },
+                      "aspect_ratio": {
+                        "default": "16:9",
+                        "type": "string",
+                        "const": "16:9"
+                      },
+                      "resolution": {
+                        "default": "1080p",
+                        "type": "string",
+                        "enum": [
+                          "1080p",
+                          "4k"
+                        ]
+                      },
+                      "captions": {
+                        "default": false,
+                        "type": "boolean",
+                        "const": false
+                      },
+                      "presentation_mode": {
+                        "default": "faceless",
+                        "type": "string",
+                        "const": "faceless"
+                      }
+                    },
+                    "additionalProperties": false
                   }
                 ]
               },
@@ -13966,6 +14223,41 @@
                       "presentation_mode"
                     ],
                     "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "duration_seconds": {
+                        "default": 60,
+                        "type": "integer",
+                        "minimum": 15,
+                        "maximum": 60
+                      },
+                      "aspect_ratio": {
+                        "default": "16:9",
+                        "type": "string",
+                        "const": "16:9"
+                      },
+                      "resolution": {
+                        "default": "1080p",
+                        "type": "string",
+                        "enum": [
+                          "1080p",
+                          "4k"
+                        ]
+                      },
+                      "captions": {
+                        "default": false,
+                        "type": "boolean",
+                        "const": false
+                      },
+                      "presentation_mode": {
+                        "default": "faceless",
+                        "type": "string",
+                        "const": "faceless"
+                      }
+                    },
+                    "additionalProperties": false
                   }
                 ]
               },
@@ -14600,6 +14892,41 @@
                       "caption_position",
                       "presentation_mode"
                     ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "duration_seconds": {
+                        "default": 60,
+                        "type": "integer",
+                        "minimum": 15,
+                        "maximum": 60
+                      },
+                      "aspect_ratio": {
+                        "default": "16:9",
+                        "type": "string",
+                        "const": "16:9"
+                      },
+                      "resolution": {
+                        "default": "1080p",
+                        "type": "string",
+                        "enum": [
+                          "1080p",
+                          "4k"
+                        ]
+                      },
+                      "captions": {
+                        "default": false,
+                        "type": "boolean",
+                        "const": false
+                      },
+                      "presentation_mode": {
+                        "default": "faceless",
+                        "type": "string",
+                        "const": "faceless"
+                      }
+                    },
                     "additionalProperties": false
                   }
                 ]
@@ -15236,6 +15563,41 @@
                       "caption_position",
                       "presentation_mode"
                     ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "duration_seconds": {
+                        "default": 60,
+                        "type": "integer",
+                        "minimum": 15,
+                        "maximum": 60
+                      },
+                      "aspect_ratio": {
+                        "default": "16:9",
+                        "type": "string",
+                        "const": "16:9"
+                      },
+                      "resolution": {
+                        "default": "1080p",
+                        "type": "string",
+                        "enum": [
+                          "1080p",
+                          "4k"
+                        ]
+                      },
+                      "captions": {
+                        "default": false,
+                        "type": "boolean",
+                        "const": false
+                      },
+                      "presentation_mode": {
+                        "default": "faceless",
+                        "type": "string",
+                        "const": "faceless"
+                      }
+                    },
                     "additionalProperties": false
                   }
                 ]
@@ -15876,6 +16238,41 @@
                       "caption_position",
                       "presentation_mode"
                     ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "duration_seconds": {
+                        "default": 60,
+                        "type": "integer",
+                        "minimum": 15,
+                        "maximum": 60
+                      },
+                      "aspect_ratio": {
+                        "default": "16:9",
+                        "type": "string",
+                        "const": "16:9"
+                      },
+                      "resolution": {
+                        "default": "1080p",
+                        "type": "string",
+                        "enum": [
+                          "1080p",
+                          "4k"
+                        ]
+                      },
+                      "captions": {
+                        "default": false,
+                        "type": "boolean",
+                        "const": false
+                      },
+                      "presentation_mode": {
+                        "default": "faceless",
+                        "type": "string",
+                        "const": "faceless"
+                      }
+                    },
                     "additionalProperties": false
                   }
                 ]

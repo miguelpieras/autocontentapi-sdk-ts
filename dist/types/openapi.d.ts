@@ -1147,10 +1147,39 @@ export interface components {
                      * @enum {string}
                      */
                     presentation_mode: "faceless" | "avatar";
+                } | {
+                    /** @default 60 */
+                    duration_seconds: number;
+                    /**
+                     * @default 16:9
+                     * @constant
+                     */
+                    aspect_ratio: "16:9";
+                    /**
+                     * @default 1080p
+                     * @enum {string}
+                     */
+                    resolution: "1080p" | "4k";
+                    /**
+                     * @default false
+                     * @constant
+                     */
+                    captions: false;
+                    /**
+                     * @default faceless
+                     * @constant
+                     */
+                    presentation_mode: "faceless";
                 };
                 /** @description Present only when the exact model has normalized native options. */
                 normalized_model_options?: {
                     [key: string]: unknown;
+                };
+                /** @description Motion Design score policy for this request. Reuse retains the exact accepted audio; generate prices one original replacement. */
+                music?: {
+                    /** @enum {string} */
+                    action: "generate" | "reuse";
+                    new_score: boolean;
                 };
                 /** @description Maximum reservation for this Asset. The final successful charge is based on measured COGS and cannot exceed this amount. */
                 cost_usd: string;
@@ -1457,10 +1486,39 @@ export interface components {
                      * @enum {string}
                      */
                     presentation_mode: "faceless" | "avatar";
+                } | {
+                    /** @default 60 */
+                    duration_seconds: number;
+                    /**
+                     * @default 16:9
+                     * @constant
+                     */
+                    aspect_ratio: "16:9";
+                    /**
+                     * @default 1080p
+                     * @enum {string}
+                     */
+                    resolution: "1080p" | "4k";
+                    /**
+                     * @default false
+                     * @constant
+                     */
+                    captions: false;
+                    /**
+                     * @default faceless
+                     * @constant
+                     */
+                    presentation_mode: "faceless";
                 };
                 /** @description Present only when the exact model has normalized native options. */
                 normalized_model_options?: {
                     [key: string]: unknown;
+                };
+                /** @description Motion Design score policy for this request. Reuse retains the exact accepted audio; generate prices one original replacement. */
+                music?: {
+                    /** @enum {string} */
+                    action: "generate" | "reuse";
+                    new_score: boolean;
                 };
                 /** @description Maximum reservation for this Asset. The final successful charge is based on measured COGS and cannot exceed this amount. */
                 cost_usd: string;
@@ -1831,6 +1889,33 @@ export interface components {
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 60 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @constant
+                 */
+                aspect_ratio: "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "1080p" | "4k";
+                /**
+                 * @default false
+                 * @constant
+                 */
+                captions: false;
+                /**
+                 * @default faceless
+                 * @constant
+                 */
+                presentation_mode: "faceless";
+            };
+            /** @description Accepted effective native options. One-shot edit directives such as refresh_music are excluded. */
+            normalized_model_options?: {
+                [key: string]: unknown;
             };
             contract_version?: number;
             requested_model?: string | null;
@@ -2192,6 +2277,29 @@ export interface components {
                      * @enum {string}
                      */
                     presentation_mode: "faceless" | "avatar";
+                } | {
+                    /** @default 60 */
+                    duration_seconds: number;
+                    /**
+                     * @default 16:9
+                     * @constant
+                     */
+                    aspect_ratio: "16:9";
+                    /**
+                     * @default 1080p
+                     * @enum {string}
+                     */
+                    resolution: "1080p" | "4k";
+                    /**
+                     * @default false
+                     * @constant
+                     */
+                    captions: false;
+                    /**
+                     * @default faceless
+                     * @constant
+                     */
+                    presentation_mode: "faceless";
                 };
                 voice_id?: string;
                 avatar_id?: string;
@@ -2459,6 +2567,29 @@ export interface components {
                      * @enum {string}
                      */
                     presentation_mode: "faceless" | "avatar";
+                } | {
+                    /** @default 60 */
+                    duration_seconds: number;
+                    /**
+                     * @default 16:9
+                     * @constant
+                     */
+                    aspect_ratio: "16:9";
+                    /**
+                     * @default 1080p
+                     * @enum {string}
+                     */
+                    resolution: "1080p" | "4k";
+                    /**
+                     * @default false
+                     * @constant
+                     */
+                    captions: false;
+                    /**
+                     * @default faceless
+                     * @constant
+                     */
+                    presentation_mode: "faceless";
                 };
                 narration_script: components["schemas"]["NarrationScript"];
                 model?: string;
@@ -3019,6 +3150,29 @@ export interface components {
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 60 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @constant
+                 */
+                aspect_ratio: "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "1080p" | "4k";
+                /**
+                 * @default false
+                 * @constant
+                 */
+                captions: false;
+                /**
+                 * @default faceless
+                 * @constant
+                 */
+                presentation_mode: "faceless";
             };
             voice_id?: string;
             avatar_id?: string;
@@ -3286,6 +3440,29 @@ export interface components {
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 60 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @constant
+                 */
+                aspect_ratio: "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "1080p" | "4k";
+                /**
+                 * @default false
+                 * @constant
+                 */
+                captions: false;
+                /**
+                 * @default faceless
+                 * @constant
+                 */
+                presentation_mode: "faceless";
             };
             narration_script: components["schemas"]["NarrationScript"];
             model?: string;
@@ -3552,6 +3729,29 @@ export interface components {
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 60 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @constant
+                 */
+                aspect_ratio: "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "1080p" | "4k";
+                /**
+                 * @default false
+                 * @constant
+                 */
+                captions: false;
+                /**
+                 * @default faceless
+                 * @constant
+                 */
+                presentation_mode: "faceless";
             };
             voice_id?: string;
             avatar_id?: string;
@@ -3817,6 +4017,29 @@ export interface components {
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 60 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @constant
+                 */
+                aspect_ratio: "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "1080p" | "4k";
+                /**
+                 * @default false
+                 * @constant
+                 */
+                captions: false;
+                /**
+                 * @default faceless
+                 * @constant
+                 */
+                presentation_mode: "faceless";
             };
             voice_id?: string;
             avatar_id?: string;
@@ -4084,6 +4307,29 @@ export interface components {
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
+            } | {
+                /** @default 60 */
+                duration_seconds: number;
+                /**
+                 * @default 16:9
+                 * @constant
+                 */
+                aspect_ratio: "16:9";
+                /**
+                 * @default 1080p
+                 * @enum {string}
+                 */
+                resolution: "1080p" | "4k";
+                /**
+                 * @default false
+                 * @constant
+                 */
+                captions: false;
+                /**
+                 * @default faceless
+                 * @constant
+                 */
+                presentation_mode: "faceless";
             };
             narration_script: components["schemas"]["NarrationScript"];
             model?: string;
