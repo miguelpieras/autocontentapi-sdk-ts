@@ -5652,6 +5652,14 @@ export interface operations {
                             }[];
                         }[];
                         cursor: string;
+                        browser_events: {
+                            id: string;
+                            turn_id: string;
+                            /** @enum {string} */
+                            type: "browser_action" | "browser_result";
+                            data: unknown;
+                            created_at: string;
+                        }[];
                     };
                 };
             };
