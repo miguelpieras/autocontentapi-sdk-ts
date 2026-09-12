@@ -39,4 +39,24 @@ test('managed messages preserve captured page and caller request identity', asyn
     assert.equal(sent.model, 'gpt-5.6-luna');
     assert.equal(sent.use_balance, true);
 });
+test('native connection input stays outside message history and requires the owning OAuth session', async () => {
+    const requests = [];
+    const client = new AutoContent({ getAccessToken: () => 'own_oauth', fetch: async (input, init) => {
+            requests.push(new Request(input, init));
+            return Response.json({ connection: { provider: 'claude', revision: 2, status: 'connecting', account: null } });
+        } });
+    await client.agent.connection('claude');
+    await client.agent.connect('claude', { method: 'claudeai' });
+    await client.agent.connectionInput('claude', { revision: 2, text: 'fixture-native-code\n' });
+    await client.agent.disconnect('claude', 2);
+    assert.deepEqual(requests.map(request => new URL(request.url).pathname), [
+        '/v1/agent/connections/claude', '/v1/agent/connections/claude/connect',
+        '/v1/agent/connections/claude/input', '/v1/agent/connections/claude/disconnect'
+    ]);
+    assert.equal(requests[2].headers.get('idempotency-key'), null);
+    assert.deepEqual(await requests[2].json(), { revision: 2, text: 'fixture-native-code\n' });
+    const key = new AutoContent({ apiKey: 'acp_fixture', fetch: async () => { throw new Error('Must not send native credentials with an API key.'); } });
+    assert.throws(() => key.agent.connect('codex'), /OAuth/);
+    assert.throws(() => key.agent.connectionInput('claude', { revision: 2, text: 'fixture' }), /OAuth/);
+});
 //# sourceMappingURL=agent.test.js.map

@@ -410,11 +410,16 @@
                         },
                         "model": {
                           "type": "string",
+                          "minLength": 1,
+                          "maxLength": 120,
+                          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:[\\]-]*$"
+                        },
+                        "runtime": {
+                          "type": "string",
                           "enum": [
-                            "gpt-5.6-luna",
-                            "gpt-5.6-terra",
-                            "gpt-5.6-sol",
-                            "gpt-6-astra"
+                            "managed",
+                            "codex",
+                            "claude"
                           ]
                         },
                         "inference_max_cost_usd": {
@@ -512,6 +517,161 @@
                         "gpt-6-astra"
                       ]
                     },
+                    "native_available": {
+                      "type": "boolean"
+                    },
+                    "native_connections": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "provider": {
+                            "type": "string",
+                            "enum": [
+                              "codex",
+                              "claude"
+                            ]
+                          },
+                          "revision": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "disconnected",
+                              "connecting",
+                              "connected"
+                            ]
+                          },
+                          "account": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "connected": {
+                                    "type": "boolean"
+                                  },
+                                  "funding": {
+                                    "type": "string",
+                                    "enum": [
+                                      "subscription",
+                                      "api",
+                                      "unknown"
+                                    ]
+                                  },
+                                  "label": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "plan": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "models": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "minLength": 1,
+                                          "maxLength": 120,
+                                          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:[\\]-]*$"
+                                        },
+                                        "label": {
+                                          "type": "string"
+                                        },
+                                        "description": {
+                                          "type": "string"
+                                        },
+                                        "is_default": {
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "label",
+                                        "description",
+                                        "is_default"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "limits": {
+                                    "anyOf": [
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "used_percent": {
+                                              "type": "number",
+                                              "minimum": 0,
+                                              "maximum": 100
+                                            },
+                                            "resets_at": {
+                                              "anyOf": [
+                                                {
+                                                  "type": "number"
+                                                },
+                                                {
+                                                  "type": "null"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "required": [
+                                            "used_percent",
+                                            "resets_at"
+                                          ],
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "connected",
+                                  "funding",
+                                  "label",
+                                  "plan",
+                                  "models",
+                                  "limits"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "provider",
+                          "revision",
+                          "status",
+                          "account"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
                     "models": {
                       "type": "array",
                       "items": {
@@ -603,11 +763,16 @@
                           },
                           "model": {
                             "type": "string",
+                            "minLength": 1,
+                            "maxLength": 120,
+                            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:[\\]-]*$"
+                          },
+                          "runtime": {
+                            "type": "string",
                             "enum": [
-                              "gpt-5.6-luna",
-                              "gpt-5.6-terra",
-                              "gpt-5.6-sol",
-                              "gpt-6-astra"
+                              "managed",
+                              "codex",
+                              "claude"
                             ]
                           }
                         },
@@ -1270,12 +1435,1028 @@
                     "settings",
                     "preferences",
                     "default_model",
+                    "native_available",
+                    "native_connections",
                     "models",
                     "available",
                     "messages",
                     "plans",
                     "cursor",
                     "browser_events"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/agent/connections/{provider}": {
+      "get": {
+        "operationId": "getAgentRuntime",
+        "summary": "Read your private native provider connection",
+        "tags": [
+          "agent"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.read"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "codex",
+                "claude"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "connection": {
+                      "type": "object",
+                      "properties": {
+                        "provider": {
+                          "type": "string",
+                          "enum": [
+                            "codex",
+                            "claude"
+                          ]
+                        },
+                        "revision": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "disconnected",
+                            "connecting",
+                            "connected"
+                          ]
+                        },
+                        "account": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "connected": {
+                                  "type": "boolean"
+                                },
+                                "funding": {
+                                  "type": "string",
+                                  "enum": [
+                                    "subscription",
+                                    "api",
+                                    "unknown"
+                                  ]
+                                },
+                                "label": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "plan": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "models": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 120,
+                                        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:[\\]-]*$"
+                                      },
+                                      "label": {
+                                        "type": "string"
+                                      },
+                                      "description": {
+                                        "type": "string"
+                                      },
+                                      "is_default": {
+                                        "type": "boolean"
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "label",
+                                      "description",
+                                      "is_default"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "limits": {
+                                  "anyOf": [
+                                    {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "used_percent": {
+                                            "type": "number",
+                                            "minimum": 0,
+                                            "maximum": 100
+                                          },
+                                          "resets_at": {
+                                            "anyOf": [
+                                              {
+                                                "type": "number"
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "used_percent",
+                                          "resets_at"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "connected",
+                                "funding",
+                                "label",
+                                "plan",
+                                "models",
+                                "limits"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "provider",
+                        "revision",
+                        "status",
+                        "account"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "auth": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "connecting",
+                            "connected",
+                            "failed"
+                          ]
+                        },
+                        "expires_at": {
+                          "type": "string"
+                        },
+                        "verification_url": {
+                          "type": "string"
+                        },
+                        "user_code": {
+                          "type": "string"
+                        },
+                        "terminal": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "status",
+                        "expires_at"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "connection"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/agent/connections/{provider}/connect": {
+      "post": {
+        "operationId": "connectAgentRuntime",
+        "summary": "Start the native provider authentication flow",
+        "tags": [
+          "agent"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.write"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "codex",
+                "claude"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "method": {
+                    "default": "default",
+                    "type": "string",
+                    "enum": [
+                      "default",
+                      "claudeai",
+                      "console",
+                      "sso"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "connection": {
+                      "type": "object",
+                      "properties": {
+                        "provider": {
+                          "type": "string",
+                          "enum": [
+                            "codex",
+                            "claude"
+                          ]
+                        },
+                        "revision": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "disconnected",
+                            "connecting",
+                            "connected"
+                          ]
+                        },
+                        "account": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "connected": {
+                                  "type": "boolean"
+                                },
+                                "funding": {
+                                  "type": "string",
+                                  "enum": [
+                                    "subscription",
+                                    "api",
+                                    "unknown"
+                                  ]
+                                },
+                                "label": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "plan": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "models": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 120,
+                                        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:[\\]-]*$"
+                                      },
+                                      "label": {
+                                        "type": "string"
+                                      },
+                                      "description": {
+                                        "type": "string"
+                                      },
+                                      "is_default": {
+                                        "type": "boolean"
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "label",
+                                      "description",
+                                      "is_default"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "limits": {
+                                  "anyOf": [
+                                    {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "used_percent": {
+                                            "type": "number",
+                                            "minimum": 0,
+                                            "maximum": 100
+                                          },
+                                          "resets_at": {
+                                            "anyOf": [
+                                              {
+                                                "type": "number"
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "used_percent",
+                                          "resets_at"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "connected",
+                                "funding",
+                                "label",
+                                "plan",
+                                "models",
+                                "limits"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "provider",
+                        "revision",
+                        "status",
+                        "account"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "auth": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "connecting",
+                            "connected",
+                            "failed"
+                          ]
+                        },
+                        "expires_at": {
+                          "type": "string"
+                        },
+                        "verification_url": {
+                          "type": "string"
+                        },
+                        "user_code": {
+                          "type": "string"
+                        },
+                        "terminal": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "status",
+                        "expires_at"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "connection"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/agent/connections/{provider}/input": {
+      "post": {
+        "operationId": "inputAgentRuntime",
+        "summary": "Forward transient input to your native authentication terminal",
+        "tags": [
+          "agent"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.write"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "codex",
+                "claude"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "revision": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "text": {
+                    "type": "string",
+                    "maxLength": 8192
+                  }
+                },
+                "required": [
+                  "revision",
+                  "text"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "connection": {
+                      "type": "object",
+                      "properties": {
+                        "provider": {
+                          "type": "string",
+                          "enum": [
+                            "codex",
+                            "claude"
+                          ]
+                        },
+                        "revision": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "disconnected",
+                            "connecting",
+                            "connected"
+                          ]
+                        },
+                        "account": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "connected": {
+                                  "type": "boolean"
+                                },
+                                "funding": {
+                                  "type": "string",
+                                  "enum": [
+                                    "subscription",
+                                    "api",
+                                    "unknown"
+                                  ]
+                                },
+                                "label": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "plan": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "models": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 120,
+                                        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:[\\]-]*$"
+                                      },
+                                      "label": {
+                                        "type": "string"
+                                      },
+                                      "description": {
+                                        "type": "string"
+                                      },
+                                      "is_default": {
+                                        "type": "boolean"
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "label",
+                                      "description",
+                                      "is_default"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "limits": {
+                                  "anyOf": [
+                                    {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "used_percent": {
+                                            "type": "number",
+                                            "minimum": 0,
+                                            "maximum": 100
+                                          },
+                                          "resets_at": {
+                                            "anyOf": [
+                                              {
+                                                "type": "number"
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "used_percent",
+                                          "resets_at"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "connected",
+                                "funding",
+                                "label",
+                                "plan",
+                                "models",
+                                "limits"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "provider",
+                        "revision",
+                        "status",
+                        "account"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "auth": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "connecting",
+                            "connected",
+                            "failed"
+                          ]
+                        },
+                        "expires_at": {
+                          "type": "string"
+                        },
+                        "verification_url": {
+                          "type": "string"
+                        },
+                        "user_code": {
+                          "type": "string"
+                        },
+                        "terminal": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "status",
+                        "expires_at"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "connection"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/agent/connections/{provider}/disconnect": {
+      "post": {
+        "operationId": "disconnectAgentRuntime",
+        "summary": "Disconnect and remove your native provider profile",
+        "tags": [
+          "agent"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.write"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "codex",
+                "claude"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expected_revision": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "expected_revision"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "connection": {
+                      "type": "object",
+                      "properties": {
+                        "provider": {
+                          "type": "string",
+                          "enum": [
+                            "codex",
+                            "claude"
+                          ]
+                        },
+                        "revision": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "disconnected",
+                            "connecting",
+                            "connected"
+                          ]
+                        },
+                        "account": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "connected": {
+                                  "type": "boolean"
+                                },
+                                "funding": {
+                                  "type": "string",
+                                  "enum": [
+                                    "subscription",
+                                    "api",
+                                    "unknown"
+                                  ]
+                                },
+                                "label": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "plan": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "models": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 120,
+                                        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:[\\]-]*$"
+                                      },
+                                      "label": {
+                                        "type": "string"
+                                      },
+                                      "description": {
+                                        "type": "string"
+                                      },
+                                      "is_default": {
+                                        "type": "boolean"
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "label",
+                                      "description",
+                                      "is_default"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "limits": {
+                                  "anyOf": [
+                                    {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "used_percent": {
+                                            "type": "number",
+                                            "minimum": 0,
+                                            "maximum": 100
+                                          },
+                                          "resets_at": {
+                                            "anyOf": [
+                                              {
+                                                "type": "number"
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "used_percent",
+                                          "resets_at"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "connected",
+                                "funding",
+                                "label",
+                                "plan",
+                                "models",
+                                "limits"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "provider",
+                        "revision",
+                        "status",
+                        "account"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "auth": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "connecting",
+                            "connected",
+                            "failed"
+                          ]
+                        },
+                        "expires_at": {
+                          "type": "string"
+                        },
+                        "verification_url": {
+                          "type": "string"
+                        },
+                        "user_code": {
+                          "type": "string"
+                        },
+                        "terminal": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "status",
+                        "expires_at"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "connection"
                   ],
                   "additionalProperties": false
                 }
@@ -1326,11 +2507,16 @@
                       },
                       "model": {
                         "type": "string",
+                        "minLength": 1,
+                        "maxLength": 120,
+                        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:[\\]-]*$"
+                      },
+                      "runtime": {
+                        "type": "string",
                         "enum": [
-                          "gpt-5.6-luna",
-                          "gpt-5.6-terra",
-                          "gpt-5.6-sol",
-                          "gpt-6-astra"
+                          "managed",
+                          "codex",
+                          "claude"
                         ]
                       },
                       "inference_max_cost_usd": {
@@ -1449,11 +2635,16 @@
                         },
                         "model": {
                           "type": "string",
+                          "minLength": 1,
+                          "maxLength": 120,
+                          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:[\\]-]*$"
+                        },
+                        "runtime": {
+                          "type": "string",
                           "enum": [
-                            "gpt-5.6-luna",
-                            "gpt-5.6-terra",
-                            "gpt-5.6-sol",
-                            "gpt-6-astra"
+                            "managed",
+                            "codex",
+                            "claude"
                           ]
                         },
                         "inference_max_cost_usd": {
@@ -1858,12 +3049,22 @@
                   },
                   "model": {
                     "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120,
+                    "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:[\\]-]*$"
+                  },
+                  "runtime": {
+                    "type": "string",
                     "enum": [
-                      "gpt-5.6-luna",
-                      "gpt-5.6-terra",
-                      "gpt-5.6-sol",
-                      "gpt-6-astra"
+                      "managed",
+                      "codex",
+                      "claude"
                     ]
+                  },
+                  "native_connection_revision": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
                   },
                   "use_balance": {
                     "type": "boolean",
@@ -1917,11 +3118,16 @@
                         },
                         "model": {
                           "type": "string",
+                          "minLength": 1,
+                          "maxLength": 120,
+                          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:[\\]-]*$"
+                        },
+                        "runtime": {
+                          "type": "string",
                           "enum": [
-                            "gpt-5.6-luna",
-                            "gpt-5.6-terra",
-                            "gpt-5.6-sol",
-                            "gpt-6-astra"
+                            "managed",
+                            "codex",
+                            "claude"
                           ]
                         },
                         "inference_max_cost_usd": {
@@ -1942,12 +3148,9 @@
                     },
                     "model": {
                       "type": "string",
-                      "enum": [
-                        "gpt-5.6-luna",
-                        "gpt-5.6-terra",
-                        "gpt-5.6-sol",
-                        "gpt-6-astra"
-                      ]
+                      "minLength": 1,
+                      "maxLength": 120,
+                      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:[\\]-]*$"
                     }
                   },
                   "required": [

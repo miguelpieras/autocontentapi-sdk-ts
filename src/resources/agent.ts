@@ -1,15 +1,33 @@
 import type { Transport } from '../transport.js';
+import { InvalidRequestError } from '../errors.js';
 import type {
   AgentBrowserResultInput, AgentConversation, AgentEvents, AgentPlan, AgentPlanAcceptInput,
+  AgentNativeConnection, AgentNativeProvider, AgentNativeConnectInput, AgentNativeInput,
   AgentPlanInput, AgentSettingsInput, AgentTurn, AgentTurnInput, KnowledgeChunk, KnowledgeMatches,
   KnowledgeReadInput, KnowledgeSearchInput, MutationOptions, RequestOptions
 } from '../types/index.js';
 
-/** Output plans and knowledge calls are deterministic; only send() requests managed inference. */
+/** Output plans and knowledge calls are deterministic. send() uses the explicitly selected funding route. */
 export class AgentResource {
   constructor(private readonly transport: Transport) {}
   conversation(options: RequestOptions = {}): Promise<AgentConversation> {
     return this.transport.request({ method: 'GET', path: '/agent/conversation', naturallyIdempotent: true, options });
+  }
+  connection(provider: AgentNativeProvider, options: RequestOptions = {}): Promise<AgentNativeConnection> {
+    this.requireNativeOAuth();
+    return this.transport.request({ method: 'GET', path: `/agent/connections/${encodeURIComponent(provider)}`, naturallyIdempotent: true, options });
+  }
+  connect(provider: AgentNativeProvider, input: AgentNativeConnectInput = {}, options: RequestOptions = {}): Promise<AgentNativeConnection> {
+    this.requireNativeOAuth();
+    return this.transport.request({ method: 'POST', path: `/agent/connections/${encodeURIComponent(provider)}/connect`, json: input, options });
+  }
+  connectionInput(provider: AgentNativeProvider, input: AgentNativeInput, options: RequestOptions = {}): Promise<AgentNativeConnection> {
+    this.requireNativeOAuth();
+    return this.transport.request({ method: 'POST', path: `/agent/connections/${encodeURIComponent(provider)}/input`, json: input, options });
+  }
+  disconnect(provider: AgentNativeProvider, revision: number, options: RequestOptions = {}): Promise<AgentNativeConnection> {
+    this.requireNativeOAuth();
+    return this.transport.request({ method: 'POST', path: `/agent/connections/${encodeURIComponent(provider)}/disconnect`, json: { expected_revision: revision }, options });
   }
   settings(input: AgentSettingsInput, options: RequestOptions = {}): Promise<Pick<AgentConversation, 'revision' | 'settings' | 'preferences'>> {
     return this.transport.request({ method: 'PATCH', path: '/agent/settings', json: input, options });
@@ -44,4 +62,10 @@ export class AgentResource {
   readSourceChunk(input: KnowledgeReadInput, options: RequestOptions = {}): Promise<KnowledgeChunk> {
     return this.transport.request({ method: 'POST', path: '/agent/knowledge/read', json: input, naturallyIdempotent: true, options });
   }
+  private requireNativeOAuth(): void {
+    if (this.transport.authKind === 'oauth') return;
+    throw new InvalidRequestError({ code: 'invalid_request', status: 0, correlation_id: null, doc_url: null,
+      message: 'Native provider connections require the owning user’s OAuth session.' });
+  }
+
 }

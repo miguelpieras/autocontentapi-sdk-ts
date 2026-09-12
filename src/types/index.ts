@@ -4,6 +4,10 @@ type AgentResponse<Name extends keyof operations> = operations[Name] extends {
   responses: { 200: { content: { 'application/json': infer Body } } }
 } ? Body : operations[Name] extends { responses: { 202: { content: { 'application/json': infer Body } } } } ? Body : never;
 export type AgentConversation = AgentResponse<'getAgentConversation'>;
+export type AgentNativeConnection = AgentResponse<'getAgentRuntime'>;
+export type AgentNativeProvider = 'codex' | 'claude';
+export type AgentNativeConnectInput = operations['connectAgentRuntime']['requestBody']['content']['application/json'];
+export type AgentNativeInput = operations['inputAgentRuntime']['requestBody']['content']['application/json'];
 export type AgentSettings = AgentConversation['settings'];
 export type AgentMessage = AgentConversation['messages'][number];
 export type AgentPlan = AgentResponse<'getAgentPlan'>;

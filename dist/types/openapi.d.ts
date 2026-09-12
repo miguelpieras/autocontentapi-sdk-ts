@@ -71,6 +71,74 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/agent/connections/{provider}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read your private native provider connection */
+        get: operations["getAgentRuntime"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/agent/connections/{provider}/connect": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start the native provider authentication flow */
+        post: operations["connectAgentRuntime"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/agent/connections/{provider}/input": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Forward transient input to your native authentication terminal */
+        post: operations["inputAgentRuntime"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/agent/connections/{provider}/disconnect": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Disconnect and remove your native provider profile */
+        post: operations["disconnectAgentRuntime"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/agent/settings": {
         parameters: {
             query?: never;
@@ -5556,8 +5624,9 @@ export interface operations {
                         revision: number;
                         settings: {
                             enabled: boolean;
+                            model?: string;
                             /** @enum {string} */
-                            model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
+                            runtime?: "managed" | "codex" | "claude";
                             inference_max_cost_usd: string;
                             daily_max_cost_usd: string;
                         };
@@ -5578,6 +5647,31 @@ export interface operations {
                         };
                         /** @enum {string} */
                         default_model: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
+                        native_available: boolean;
+                        native_connections: {
+                            /** @enum {string} */
+                            provider: "codex" | "claude";
+                            revision: number;
+                            /** @enum {string} */
+                            status: "disconnected" | "connecting" | "connected";
+                            account: {
+                                connected: boolean;
+                                /** @enum {string} */
+                                funding: "subscription" | "api" | "unknown";
+                                label: string | null;
+                                plan: string | null;
+                                models: {
+                                    id: string;
+                                    label: string;
+                                    description: string;
+                                    is_default: boolean;
+                                }[];
+                                limits: {
+                                    used_percent: number;
+                                    resets_at: number | null;
+                                }[] | null;
+                            } | null;
+                        }[];
                         models: {
                             /** @enum {string} */
                             id: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
@@ -5596,8 +5690,9 @@ export interface operations {
                             status: string;
                             created_at: string;
                             error: string | null;
+                            model?: string;
                             /** @enum {string} */
-                            model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
+                            runtime?: "managed" | "codex" | "claude";
                         }[];
                         plans: {
                             id: string;
@@ -5731,6 +5826,257 @@ export interface operations {
             default: components["responses"]["AutoContentError"];
         };
     };
+    getAgentRuntime: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: "codex" | "claude";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        connection: {
+                            /** @enum {string} */
+                            provider: "codex" | "claude";
+                            revision: number;
+                            /** @enum {string} */
+                            status: "disconnected" | "connecting" | "connected";
+                            account: {
+                                connected: boolean;
+                                /** @enum {string} */
+                                funding: "subscription" | "api" | "unknown";
+                                label: string | null;
+                                plan: string | null;
+                                models: {
+                                    id: string;
+                                    label: string;
+                                    description: string;
+                                    is_default: boolean;
+                                }[];
+                                limits: {
+                                    used_percent: number;
+                                    resets_at: number | null;
+                                }[] | null;
+                            } | null;
+                        };
+                        auth?: {
+                            /** @enum {string} */
+                            status: "connecting" | "connected" | "failed";
+                            expires_at: string;
+                            verification_url?: string;
+                            user_code?: string;
+                            terminal?: string;
+                            message?: string;
+                        };
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    connectAgentRuntime: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: "codex" | "claude";
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /**
+                     * @default default
+                     * @enum {string}
+                     */
+                    method?: "default" | "claudeai" | "console" | "sso";
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        connection: {
+                            /** @enum {string} */
+                            provider: "codex" | "claude";
+                            revision: number;
+                            /** @enum {string} */
+                            status: "disconnected" | "connecting" | "connected";
+                            account: {
+                                connected: boolean;
+                                /** @enum {string} */
+                                funding: "subscription" | "api" | "unknown";
+                                label: string | null;
+                                plan: string | null;
+                                models: {
+                                    id: string;
+                                    label: string;
+                                    description: string;
+                                    is_default: boolean;
+                                }[];
+                                limits: {
+                                    used_percent: number;
+                                    resets_at: number | null;
+                                }[] | null;
+                            } | null;
+                        };
+                        auth?: {
+                            /** @enum {string} */
+                            status: "connecting" | "connected" | "failed";
+                            expires_at: string;
+                            verification_url?: string;
+                            user_code?: string;
+                            terminal?: string;
+                            message?: string;
+                        };
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    inputAgentRuntime: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: "codex" | "claude";
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    revision: number;
+                    text: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        connection: {
+                            /** @enum {string} */
+                            provider: "codex" | "claude";
+                            revision: number;
+                            /** @enum {string} */
+                            status: "disconnected" | "connecting" | "connected";
+                            account: {
+                                connected: boolean;
+                                /** @enum {string} */
+                                funding: "subscription" | "api" | "unknown";
+                                label: string | null;
+                                plan: string | null;
+                                models: {
+                                    id: string;
+                                    label: string;
+                                    description: string;
+                                    is_default: boolean;
+                                }[];
+                                limits: {
+                                    used_percent: number;
+                                    resets_at: number | null;
+                                }[] | null;
+                            } | null;
+                        };
+                        auth?: {
+                            /** @enum {string} */
+                            status: "connecting" | "connected" | "failed";
+                            expires_at: string;
+                            verification_url?: string;
+                            user_code?: string;
+                            terminal?: string;
+                            message?: string;
+                        };
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    disconnectAgentRuntime: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: "codex" | "claude";
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    expected_revision: number;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        connection: {
+                            /** @enum {string} */
+                            provider: "codex" | "claude";
+                            revision: number;
+                            /** @enum {string} */
+                            status: "disconnected" | "connecting" | "connected";
+                            account: {
+                                connected: boolean;
+                                /** @enum {string} */
+                                funding: "subscription" | "api" | "unknown";
+                                label: string | null;
+                                plan: string | null;
+                                models: {
+                                    id: string;
+                                    label: string;
+                                    description: string;
+                                    is_default: boolean;
+                                }[];
+                                limits: {
+                                    used_percent: number;
+                                    resets_at: number | null;
+                                }[] | null;
+                            } | null;
+                        };
+                        auth?: {
+                            /** @enum {string} */
+                            status: "connecting" | "connected" | "failed";
+                            expires_at: string;
+                            verification_url?: string;
+                            user_code?: string;
+                            terminal?: string;
+                            message?: string;
+                        };
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
     updateAgentSettings: {
         parameters: {
             query?: never;
@@ -5744,8 +6090,9 @@ export interface operations {
                     expected_revision: number;
                     settings?: {
                         enabled: boolean;
+                        model?: string;
                         /** @enum {string} */
-                        model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
+                        runtime?: "managed" | "codex" | "claude";
                         inference_max_cost_usd: string;
                         daily_max_cost_usd: string;
                     };
@@ -5778,8 +6125,9 @@ export interface operations {
                         revision: number;
                         settings: {
                             enabled: boolean;
+                            model?: string;
                             /** @enum {string} */
-                            model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
+                            runtime?: "managed" | "codex" | "claude";
                             inference_max_cost_usd: string;
                             daily_max_cost_usd: string;
                         };
@@ -5862,8 +6210,10 @@ export interface operations {
                         } | null;
                     };
                     inference_max_cost_usd: string;
+                    model?: string;
                     /** @enum {string} */
-                    model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
+                    runtime?: "managed" | "codex" | "claude";
+                    native_connection_revision?: number;
                     /** @constant */
                     use_balance?: true;
                     /** @default [] */
@@ -5884,13 +6234,13 @@ export interface operations {
                         revision?: number;
                         settings?: {
                             enabled: boolean;
+                            model?: string;
                             /** @enum {string} */
-                            model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
+                            runtime?: "managed" | "codex" | "claude";
                             inference_max_cost_usd: string;
                             daily_max_cost_usd: string;
                         };
-                        /** @enum {string} */
-                        model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
+                        model?: string;
                     };
                 };
             };
