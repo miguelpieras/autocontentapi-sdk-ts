@@ -3,6 +3,210 @@
  * Do not make direct changes to the file.
  */
 export interface paths {
+    "/agent/browser-actions/result": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Acknowledge an action in its originating browser view */
+        post: operations["recordAgentBrowserResult"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/agent/knowledge/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Search matching indexed Project Source text without inference */
+        post: operations["searchAgentKnowledge"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/agent/knowledge/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Read an exact published Project Source chunk without inference */
+        post: operations["readAgentSourceChunk"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/agent/conversation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read your private Agent conversation */
+        get: operations["getAgentConversation"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/agent/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update explicit Agent preferences and spending limits */
+        patch: operations["updateAgentSettings"];
+        trace?: never;
+    };
+    "/agent/turns": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send a message with originating page context and an inference cap */
+        post: operations["createAgentTurn"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/agent/turns/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Stop new Agent dispatches for a message */
+        post: operations["cancelAgentTurn"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/agent/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read or stream durable Agent events after a cursor */
+        get: operations["listAgentEvents"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/agent/plans/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Validate and price a bounded ordered set of outputs without inference */
+        post: operations["prepareAgentPlan"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/agent/plans/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read an output proposal and accepted Generations */
+        get: operations["getAgentPlan"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/agent/plans/{id}/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Accept one exact output proposal revision within a USD cap */
+        post: operations["acceptAgentPlan"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/agent/plans/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancel remaining admissions and undispatched work */
+        post: operations["cancelAgentPlan"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/projects": {
         parameters: {
             query?: never;
@@ -712,6 +916,21 @@ export interface components {
             allow_competitor_mentions: boolean;
             /** Format: bcp47 */
             research_locale: string;
+            generation_defaults?: {
+                /** Format: bcp47 */
+                language?: string;
+                style?: string;
+                formats?: {
+                    [key: string]: {
+                        duration_seconds?: number;
+                        target_words?: number;
+                        page_count?: number;
+                        /** @enum {string} */
+                        aspect_ratio?: "9:16" | "16:9" | "1:1" | "4:5" | "3:4";
+                        captions?: boolean;
+                    };
+                };
+            };
             crawl_scope: {
                 /** Format: uri */
                 root_url: string;
@@ -879,8 +1098,6 @@ export interface components {
                 /** @constant */
                 type: "topic";
                 topic: string;
-                /** @enum {string} */
-                evidence_scope?: "project" | "project_and_web";
                 lookback_days?: number;
                 source_ids?: string[];
                 collection_ids?: string[];
@@ -1118,6 +1335,12 @@ export interface components {
                      */
                     aspect_ratio: "9:16" | "1:1" | "16:9";
                     /**
+                     * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                     * @default enhanced
+                     * @enum {string}
+                     */
+                    visual_production: "essential" | "enhanced" | "premium";
+                    /**
                      * @default 1080p
                      * @enum {string}
                      */
@@ -1217,8 +1440,6 @@ export interface components {
                 /** @constant */
                 type: "topic";
                 topic: string;
-                /** @enum {string} */
-                evidence_scope?: "project" | "project_and_web";
                 lookback_days?: number;
                 source_ids?: string[];
                 collection_ids?: string[];
@@ -1457,6 +1678,12 @@ export interface components {
                      */
                     aspect_ratio: "9:16" | "1:1" | "16:9";
                     /**
+                     * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                     * @default enhanced
+                     * @enum {string}
+                     */
+                    visual_production: "essential" | "enhanced" | "premium";
+                    /**
                      * @default 1080p
                      * @enum {string}
                      */
@@ -1553,8 +1780,6 @@ export interface components {
                 /** @constant */
                 type: "topic";
                 topic: string;
-                /** @enum {string} */
-                evidence_scope?: "project" | "project_and_web";
                 lookback_days?: number;
                 source_ids?: string[];
                 collection_ids?: string[];
@@ -1860,6 +2085,12 @@ export interface components {
                  */
                 aspect_ratio: "9:16" | "1:1" | "16:9";
                 /**
+                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                 * @default enhanced
+                 * @enum {string}
+                 */
+                visual_production: "essential" | "enhanced" | "premium";
+                /**
                  * @default 1080p
                  * @enum {string}
                  */
@@ -1982,8 +2213,6 @@ export interface components {
                 /** @constant */
                 type: "topic";
                 topic: string;
-                /** @enum {string} */
-                evidence_scope?: "project" | "project_and_web";
                 lookback_days?: number;
                 source_ids?: string[];
                 collection_ids?: string[];
@@ -2247,6 +2476,12 @@ export interface components {
                      * @enum {string}
                      */
                     aspect_ratio: "9:16" | "1:1" | "16:9";
+                    /**
+                     * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                     * @default enhanced
+                     * @enum {string}
+                     */
+                    visual_production: "essential" | "enhanced" | "premium";
                     /**
                      * @default 1080p
                      * @enum {string}
@@ -2538,6 +2773,12 @@ export interface components {
                      */
                     aspect_ratio: "9:16" | "1:1" | "16:9";
                     /**
+                     * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                     * @default enhanced
+                     * @enum {string}
+                     */
+                    visual_production: "essential" | "enhanced" | "premium";
+                    /**
                      * @default 1080p
                      * @enum {string}
                      */
@@ -2642,8 +2883,6 @@ export interface components {
                         /** @constant */
                         type: "topic";
                         topic: string;
-                        /** @enum {string} */
-                        evidence_scope?: "project" | "project_and_web";
                         lookback_days?: number;
                         source_ids?: string[];
                         collection_ids?: string[];
@@ -2697,8 +2936,6 @@ export interface components {
                             /** @constant */
                             type: "topic";
                             topic: string;
-                            /** @enum {string} */
-                            evidence_scope?: "project" | "project_and_web";
                             lookback_days?: number;
                             source_ids?: string[];
                             collection_ids?: string[];
@@ -3121,6 +3358,12 @@ export interface components {
                  */
                 aspect_ratio: "9:16" | "1:1" | "16:9";
                 /**
+                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                 * @default enhanced
+                 * @enum {string}
+                 */
+                visual_production: "essential" | "enhanced" | "premium";
+                /**
                  * @default 1080p
                  * @enum {string}
                  */
@@ -3411,6 +3654,12 @@ export interface components {
                  */
                 aspect_ratio: "9:16" | "1:1" | "16:9";
                 /**
+                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                 * @default enhanced
+                 * @enum {string}
+                 */
+                visual_production: "essential" | "enhanced" | "premium";
+                /**
                  * @default 1080p
                  * @enum {string}
                  */
@@ -3700,6 +3949,12 @@ export interface components {
                  */
                 aspect_ratio: "9:16" | "1:1" | "16:9";
                 /**
+                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                 * @default enhanced
+                 * @enum {string}
+                 */
+                visual_production: "essential" | "enhanced" | "premium";
+                /**
                  * @default 1080p
                  * @enum {string}
                  */
@@ -3987,6 +4242,12 @@ export interface components {
                  * @enum {string}
                  */
                 aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                 * @default enhanced
+                 * @enum {string}
+                 */
+                visual_production: "essential" | "enhanced" | "premium";
                 /**
                  * @default 1080p
                  * @enum {string}
@@ -4277,6 +4538,12 @@ export interface components {
                  * @enum {string}
                  */
                 aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                 * @default enhanced
+                 * @enum {string}
+                 */
+                visual_production: "essential" | "enhanced" | "premium";
                 /**
                  * @default 1080p
                  * @enum {string}
@@ -5060,7 +5327,7 @@ export interface components {
         };
         ErrorBody: {
             /** @enum {string} */
-            code: "invalid_request" | "unknown_asset_type" | "invalid_asset_options" | "invalid_model_options" | "model_not_supported" | "model_retired" | "project_not_ready" | "project_limit_exceeded" | "provider_operation_limit_exceeded" | "source_not_ready" | "source_unreachable" | "source_paywalled" | "product_visual_required" | "no_qualified_trend" | "no_qualified_knowledge" | "input_resolution_failed" | "max_cost_exceeded" | "payment_required" | "content_loop_budget_exceeded" | "content_loop_limit_exceeded" | "idempotency_conflict" | "idempotency_in_progress" | "consent_required" | "voice_not_found" | "voice_not_ready" | "voice_not_supported" | "avatar_not_found" | "avatar_not_ready" | "avatar_not_supported" | "artifact_verification_failed" | "rate_limited" | "webhook_limit_exceeded" | "not_found" | "unauthorized" | "forbidden" | "internal_error";
+            code: "agent_unavailable" | "invalid_request" | "unknown_asset_type" | "invalid_asset_options" | "invalid_model_options" | "model_not_supported" | "model_retired" | "project_not_ready" | "project_limit_exceeded" | "provider_operation_limit_exceeded" | "source_not_ready" | "source_unreachable" | "source_paywalled" | "product_visual_required" | "no_qualified_trend" | "no_qualified_knowledge" | "input_resolution_failed" | "max_cost_exceeded" | "payment_required" | "content_loop_budget_exceeded" | "content_loop_limit_exceeded" | "idempotency_conflict" | "idempotency_in_progress" | "consent_required" | "voice_not_found" | "voice_not_ready" | "voice_not_supported" | "avatar_not_found" | "avatar_not_ready" | "avatar_not_supported" | "artifact_verification_failed" | "rate_limited" | "webhook_limit_exceeded" | "not_found" | "unauthorized" | "forbidden" | "internal_error";
             message: string;
             details?: components["schemas"]["ErrorDetail"][] | Record<string, never>;
             correlation_id: string;
@@ -5101,6 +5368,1155 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    recordAgentBrowserResult: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    turn_id: string;
+                    command_id: string;
+                    /** Format: uuid */
+                    tab_id: string;
+                    /** Format: uuid */
+                    view_id: string;
+                    /** @enum {string} */
+                    status: "applied" | "unavailable" | "cancelled";
+                    message?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        status: "applied" | "unavailable" | "cancelled";
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    searchAgentKnowledge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    project_id: string;
+                    query: string;
+                    source_ids?: string[];
+                    collection_ids?: string[];
+                    offset?: number;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        status: "matched" | "no_match";
+                        chunks: {
+                            source_id: string;
+                            title: string;
+                            revision_id: string;
+                            chunk_index: number;
+                            text: string;
+                            partial: boolean;
+                        }[];
+                        next_offset: number | null;
+                        coverage: string;
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    readAgentSourceChunk: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    project_id: string;
+                    source_id: string;
+                    revision_id: string;
+                    chunk_index: number;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        source_id: string;
+                        title: string;
+                        revision_id: string;
+                        chunk_index: number;
+                        text: string;
+                        partial: boolean;
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    getAgentConversation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        revision: number;
+                        settings: {
+                            enabled: boolean;
+                            inference_max_cost_usd: string;
+                            daily_max_cost_usd: string;
+                        };
+                        preferences: {
+                            /** Format: bcp47 */
+                            language?: string;
+                            style?: string;
+                            formats?: {
+                                [key: string]: {
+                                    duration_seconds?: number;
+                                    target_words?: number;
+                                    page_count?: number;
+                                    /** @enum {string} */
+                                    aspect_ratio?: "9:16" | "16:9" | "1:1" | "4:5" | "3:4";
+                                    captions?: boolean;
+                                };
+                            };
+                        };
+                        available: boolean;
+                        messages: {
+                            id: string;
+                            project_id: string | null;
+                            message: string;
+                            answer: string;
+                            status: string;
+                            created_at: string;
+                            error: string | null;
+                        }[];
+                        plans: {
+                            id: string;
+                            turn_id: string | null;
+                            project_id: string;
+                            revision: number;
+                            /** @enum {string} */
+                            status: "draft" | "accepted" | "running" | "paused" | "completed" | "cancelled";
+                            plan: {
+                                project_id: string;
+                                items: {
+                                    id: string;
+                                    context_group_id?: string;
+                                    brief: string;
+                                    input: {
+                                        /** @constant */
+                                        type: "trend";
+                                        lookback_days?: number;
+                                        instructions?: string;
+                                    } | {
+                                        /** @constant */
+                                        type: "topic";
+                                        topic: string;
+                                        lookback_days?: number;
+                                        source_ids?: string[];
+                                        collection_ids?: string[];
+                                        instructions?: string;
+                                    } | {
+                                        /** @constant */
+                                        type: "knowledge";
+                                        source_ids?: string[];
+                                        collection_ids?: string[];
+                                        instructions?: string;
+                                    };
+                                    asset: {
+                                        /** @enum {string} */
+                                        asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+                                        instructions?: string;
+                                        /** Format: bcp47 */
+                                        language?: string;
+                                        options?: {
+                                            [key: string]: unknown;
+                                        };
+                                        voice_id?: string;
+                                        avatar_id?: string;
+                                        narration_script?: {
+                                            speakers: [
+                                                {
+                                                    id: string;
+                                                    voice_id?: string;
+                                                    avatar_id?: string;
+                                                }
+                                            ] | [
+                                                {
+                                                    id: string;
+                                                    voice_id?: string;
+                                                    avatar_id?: string;
+                                                },
+                                                {
+                                                    id: string;
+                                                    voice_id?: string;
+                                                    avatar_id?: string;
+                                                }
+                                            ];
+                                            segments: {
+                                                speaker_id: string;
+                                                text: string;
+                                            }[];
+                                        };
+                                        model?: string;
+                                        model_options?: {
+                                            [key: string]: unknown;
+                                        };
+                                    };
+                                    attachment_source_ids?: string[];
+                                }[];
+                                /** Format: bcp47 */
+                                language?: string;
+                                instructions?: string;
+                                budget?: {
+                                    /** @constant */
+                                    scope: "request";
+                                    max_cost_usd: string;
+                                };
+                            };
+                            total_cost_usd: string;
+                            /** @enum {string} */
+                            budget_scope: "outputs" | "request";
+                            authorized_max_cost_usd: string | null;
+                            groups: {
+                                attempt: number;
+                                item_ids: string[];
+                                quote: {
+                                    /** @constant */
+                                    currency: "usd";
+                                    total_cost_usd: string;
+                                    assets: ({
+                                        /** @enum {string} */
+                                        asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+                                        cost_usd: string;
+                                        normalized_options: {
+                                            [key: string]: unknown;
+                                        };
+                                    } & {
+                                        [key: string]: unknown;
+                                    })[];
+                                } & {
+                                    [key: string]: unknown;
+                                };
+                                generation_id: string | null;
+                                assets: {
+                                    item_id: string;
+                                    asset_id: string;
+                                    status: string;
+                                }[];
+                                error: string | null;
+                            }[];
+                        }[];
+                        cursor: string;
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    updateAgentSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    expected_revision: number;
+                    settings?: {
+                        enabled: boolean;
+                        inference_max_cost_usd: string;
+                        daily_max_cost_usd: string;
+                    };
+                    preferences?: {
+                        /** Format: bcp47 */
+                        language?: string;
+                        style?: string;
+                        formats?: {
+                            [key: string]: {
+                                duration_seconds?: number;
+                                target_words?: number;
+                                page_count?: number;
+                                /** @enum {string} */
+                                aspect_ratio?: "9:16" | "16:9" | "1:1" | "4:5" | "3:4";
+                                captions?: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        revision: number;
+                        settings: {
+                            enabled: boolean;
+                            inference_max_cost_usd: string;
+                            daily_max_cost_usd: string;
+                        };
+                        preferences: {
+                            /** Format: bcp47 */
+                            language?: string;
+                            style?: string;
+                            formats?: {
+                                [key: string]: {
+                                    duration_seconds?: number;
+                                    target_words?: number;
+                                    page_count?: number;
+                                    /** @enum {string} */
+                                    aspect_ratio?: "9:16" | "16:9" | "1:1" | "4:5" | "3:4";
+                                    captions?: boolean;
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    createAgentTurn: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description 1–255 visible ASCII bytes; UUID recommended. */
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    message: string;
+                    page: {
+                        /** Format: uuid */
+                        tab_id: string;
+                        /** Format: uuid */
+                        view_id: string;
+                        revision: number;
+                        /** @enum {string} */
+                        view: "overview" | "context" | "sources" | "create" | "assets" | "asset" | "generation" | "generation-edit" | "loops" | "loop" | "billing" | "keys" | "webhooks" | "account" | "mcp" | "sdk" | "unknown";
+                        project_id: string | null;
+                        /** @enum {string} */
+                        state: "ready" | "loading" | "unavailable" | "protected";
+                        resource_id: (string) | null;
+                        /** @default [] */
+                        selected_source_ids?: string[];
+                        /** @default [] */
+                        selected_collection_ids?: string[];
+                        /** @default [] */
+                        selected_asset_ids?: string[];
+                        /** @default [] */
+                        selected_generation_ids?: string[];
+                        /** @default {} */
+                        filters?: {
+                            [key: string]: string | number | boolean | null | string[];
+                        };
+                        /** @default [] */
+                        actions?: string[];
+                        /** @default null */
+                        draft?: {
+                            /** Format: uuid */
+                            id: string;
+                            revision: number;
+                            /** @enum {string} */
+                            kind: "create" | "project" | "loop" | "generation-edit";
+                            values: {
+                                [key: string]: unknown;
+                            };
+                        } | null;
+                        /** @default null */
+                        proposal?: {
+                            id: string;
+                            revision: number;
+                        } | null;
+                    };
+                    inference_max_cost_usd: string;
+                    /** @default [] */
+                    attachment_source_ids?: string[];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        status: string;
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    cancelAgentTurn: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        status: string;
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    listAgentEvents: {
+        parameters: {
+            query?: {
+                after?: string;
+                stream?: "true" | "false";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            turn_id: string | null;
+                            type: string;
+                            data: unknown;
+                            created_at: string;
+                        }[];
+                        cursor: string;
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    prepareAgentPlan: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    plan: {
+                        project_id: string;
+                        items: {
+                            id: string;
+                            context_group_id?: string;
+                            brief: string;
+                            input: {
+                                /** @constant */
+                                type: "trend";
+                                lookback_days?: number;
+                                instructions?: string;
+                            } | {
+                                /** @constant */
+                                type: "topic";
+                                topic: string;
+                                lookback_days?: number;
+                                source_ids?: string[];
+                                collection_ids?: string[];
+                                instructions?: string;
+                            } | {
+                                /** @constant */
+                                type: "knowledge";
+                                source_ids?: string[];
+                                collection_ids?: string[];
+                                instructions?: string;
+                            };
+                            asset: {
+                                /** @enum {string} */
+                                asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+                                instructions?: string;
+                                /** Format: bcp47 */
+                                language?: string;
+                                options?: {
+                                    [key: string]: unknown;
+                                };
+                                voice_id?: string;
+                                avatar_id?: string;
+                                narration_script?: {
+                                    speakers: [
+                                        {
+                                            id: string;
+                                            voice_id?: string;
+                                            avatar_id?: string;
+                                        }
+                                    ] | [
+                                        {
+                                            id: string;
+                                            voice_id?: string;
+                                            avatar_id?: string;
+                                        },
+                                        {
+                                            id: string;
+                                            voice_id?: string;
+                                            avatar_id?: string;
+                                        }
+                                    ];
+                                    segments: {
+                                        speaker_id: string;
+                                        text: string;
+                                    }[];
+                                };
+                                model?: string;
+                                model_options?: {
+                                    [key: string]: unknown;
+                                };
+                            };
+                            attachment_source_ids?: string[];
+                        }[];
+                        /** Format: bcp47 */
+                        language?: string;
+                        instructions?: string;
+                        budget?: {
+                            /** @constant */
+                            scope: "request";
+                            max_cost_usd: string;
+                        };
+                    };
+                    plan_id?: string;
+                    expected_revision?: number;
+                    /** @default [] */
+                    retry_item_ids?: string[];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        turn_id: string | null;
+                        project_id: string;
+                        revision: number;
+                        /** @enum {string} */
+                        status: "draft" | "accepted" | "running" | "paused" | "completed" | "cancelled";
+                        plan: {
+                            project_id: string;
+                            items: {
+                                id: string;
+                                context_group_id?: string;
+                                brief: string;
+                                input: {
+                                    /** @constant */
+                                    type: "trend";
+                                    lookback_days?: number;
+                                    instructions?: string;
+                                } | {
+                                    /** @constant */
+                                    type: "topic";
+                                    topic: string;
+                                    lookback_days?: number;
+                                    source_ids?: string[];
+                                    collection_ids?: string[];
+                                    instructions?: string;
+                                } | {
+                                    /** @constant */
+                                    type: "knowledge";
+                                    source_ids?: string[];
+                                    collection_ids?: string[];
+                                    instructions?: string;
+                                };
+                                asset: {
+                                    /** @enum {string} */
+                                    asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+                                    instructions?: string;
+                                    /** Format: bcp47 */
+                                    language?: string;
+                                    options?: {
+                                        [key: string]: unknown;
+                                    };
+                                    voice_id?: string;
+                                    avatar_id?: string;
+                                    narration_script?: {
+                                        speakers: [
+                                            {
+                                                id: string;
+                                                voice_id?: string;
+                                                avatar_id?: string;
+                                            }
+                                        ] | [
+                                            {
+                                                id: string;
+                                                voice_id?: string;
+                                                avatar_id?: string;
+                                            },
+                                            {
+                                                id: string;
+                                                voice_id?: string;
+                                                avatar_id?: string;
+                                            }
+                                        ];
+                                        segments: {
+                                            speaker_id: string;
+                                            text: string;
+                                        }[];
+                                    };
+                                    model?: string;
+                                    model_options?: {
+                                        [key: string]: unknown;
+                                    };
+                                };
+                                attachment_source_ids?: string[];
+                            }[];
+                            /** Format: bcp47 */
+                            language?: string;
+                            instructions?: string;
+                            budget?: {
+                                /** @constant */
+                                scope: "request";
+                                max_cost_usd: string;
+                            };
+                        };
+                        total_cost_usd: string;
+                        /** @enum {string} */
+                        budget_scope: "outputs" | "request";
+                        authorized_max_cost_usd: string | null;
+                        groups: {
+                            attempt: number;
+                            item_ids: string[];
+                            quote: {
+                                /** @constant */
+                                currency: "usd";
+                                total_cost_usd: string;
+                                assets: ({
+                                    /** @enum {string} */
+                                    asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+                                    cost_usd: string;
+                                    normalized_options: {
+                                        [key: string]: unknown;
+                                    };
+                                } & {
+                                    [key: string]: unknown;
+                                })[];
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            generation_id: string | null;
+                            assets: {
+                                item_id: string;
+                                asset_id: string;
+                                status: string;
+                            }[];
+                            error: string | null;
+                        }[];
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    getAgentPlan: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        turn_id: string | null;
+                        project_id: string;
+                        revision: number;
+                        /** @enum {string} */
+                        status: "draft" | "accepted" | "running" | "paused" | "completed" | "cancelled";
+                        plan: {
+                            project_id: string;
+                            items: {
+                                id: string;
+                                context_group_id?: string;
+                                brief: string;
+                                input: {
+                                    /** @constant */
+                                    type: "trend";
+                                    lookback_days?: number;
+                                    instructions?: string;
+                                } | {
+                                    /** @constant */
+                                    type: "topic";
+                                    topic: string;
+                                    lookback_days?: number;
+                                    source_ids?: string[];
+                                    collection_ids?: string[];
+                                    instructions?: string;
+                                } | {
+                                    /** @constant */
+                                    type: "knowledge";
+                                    source_ids?: string[];
+                                    collection_ids?: string[];
+                                    instructions?: string;
+                                };
+                                asset: {
+                                    /** @enum {string} */
+                                    asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+                                    instructions?: string;
+                                    /** Format: bcp47 */
+                                    language?: string;
+                                    options?: {
+                                        [key: string]: unknown;
+                                    };
+                                    voice_id?: string;
+                                    avatar_id?: string;
+                                    narration_script?: {
+                                        speakers: [
+                                            {
+                                                id: string;
+                                                voice_id?: string;
+                                                avatar_id?: string;
+                                            }
+                                        ] | [
+                                            {
+                                                id: string;
+                                                voice_id?: string;
+                                                avatar_id?: string;
+                                            },
+                                            {
+                                                id: string;
+                                                voice_id?: string;
+                                                avatar_id?: string;
+                                            }
+                                        ];
+                                        segments: {
+                                            speaker_id: string;
+                                            text: string;
+                                        }[];
+                                    };
+                                    model?: string;
+                                    model_options?: {
+                                        [key: string]: unknown;
+                                    };
+                                };
+                                attachment_source_ids?: string[];
+                            }[];
+                            /** Format: bcp47 */
+                            language?: string;
+                            instructions?: string;
+                            budget?: {
+                                /** @constant */
+                                scope: "request";
+                                max_cost_usd: string;
+                            };
+                        };
+                        total_cost_usd: string;
+                        /** @enum {string} */
+                        budget_scope: "outputs" | "request";
+                        authorized_max_cost_usd: string | null;
+                        groups: {
+                            attempt: number;
+                            item_ids: string[];
+                            quote: {
+                                /** @constant */
+                                currency: "usd";
+                                total_cost_usd: string;
+                                assets: ({
+                                    /** @enum {string} */
+                                    asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+                                    cost_usd: string;
+                                    normalized_options: {
+                                        [key: string]: unknown;
+                                    };
+                                } & {
+                                    [key: string]: unknown;
+                                })[];
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            generation_id: string | null;
+                            assets: {
+                                item_id: string;
+                                asset_id: string;
+                                status: string;
+                            }[];
+                            error: string | null;
+                        }[];
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    acceptAgentPlan: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    expected_revision: number;
+                    max_cost_usd: string;
+                    /**
+                     * @default request
+                     * @enum {string}
+                     */
+                    budget_scope?: "outputs" | "request";
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        turn_id: string | null;
+                        project_id: string;
+                        revision: number;
+                        /** @enum {string} */
+                        status: "draft" | "accepted" | "running" | "paused" | "completed" | "cancelled";
+                        plan: {
+                            project_id: string;
+                            items: {
+                                id: string;
+                                context_group_id?: string;
+                                brief: string;
+                                input: {
+                                    /** @constant */
+                                    type: "trend";
+                                    lookback_days?: number;
+                                    instructions?: string;
+                                } | {
+                                    /** @constant */
+                                    type: "topic";
+                                    topic: string;
+                                    lookback_days?: number;
+                                    source_ids?: string[];
+                                    collection_ids?: string[];
+                                    instructions?: string;
+                                } | {
+                                    /** @constant */
+                                    type: "knowledge";
+                                    source_ids?: string[];
+                                    collection_ids?: string[];
+                                    instructions?: string;
+                                };
+                                asset: {
+                                    /** @enum {string} */
+                                    asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+                                    instructions?: string;
+                                    /** Format: bcp47 */
+                                    language?: string;
+                                    options?: {
+                                        [key: string]: unknown;
+                                    };
+                                    voice_id?: string;
+                                    avatar_id?: string;
+                                    narration_script?: {
+                                        speakers: [
+                                            {
+                                                id: string;
+                                                voice_id?: string;
+                                                avatar_id?: string;
+                                            }
+                                        ] | [
+                                            {
+                                                id: string;
+                                                voice_id?: string;
+                                                avatar_id?: string;
+                                            },
+                                            {
+                                                id: string;
+                                                voice_id?: string;
+                                                avatar_id?: string;
+                                            }
+                                        ];
+                                        segments: {
+                                            speaker_id: string;
+                                            text: string;
+                                        }[];
+                                    };
+                                    model?: string;
+                                    model_options?: {
+                                        [key: string]: unknown;
+                                    };
+                                };
+                                attachment_source_ids?: string[];
+                            }[];
+                            /** Format: bcp47 */
+                            language?: string;
+                            instructions?: string;
+                            budget?: {
+                                /** @constant */
+                                scope: "request";
+                                max_cost_usd: string;
+                            };
+                        };
+                        total_cost_usd: string;
+                        /** @enum {string} */
+                        budget_scope: "outputs" | "request";
+                        authorized_max_cost_usd: string | null;
+                        groups: {
+                            attempt: number;
+                            item_ids: string[];
+                            quote: {
+                                /** @constant */
+                                currency: "usd";
+                                total_cost_usd: string;
+                                assets: ({
+                                    /** @enum {string} */
+                                    asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+                                    cost_usd: string;
+                                    normalized_options: {
+                                        [key: string]: unknown;
+                                    };
+                                } & {
+                                    [key: string]: unknown;
+                                })[];
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            generation_id: string | null;
+                            assets: {
+                                item_id: string;
+                                asset_id: string;
+                                status: string;
+                            }[];
+                            error: string | null;
+                        }[];
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    cancelAgentPlan: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        turn_id: string | null;
+                        project_id: string;
+                        revision: number;
+                        /** @enum {string} */
+                        status: "draft" | "accepted" | "running" | "paused" | "completed" | "cancelled";
+                        plan: {
+                            project_id: string;
+                            items: {
+                                id: string;
+                                context_group_id?: string;
+                                brief: string;
+                                input: {
+                                    /** @constant */
+                                    type: "trend";
+                                    lookback_days?: number;
+                                    instructions?: string;
+                                } | {
+                                    /** @constant */
+                                    type: "topic";
+                                    topic: string;
+                                    lookback_days?: number;
+                                    source_ids?: string[];
+                                    collection_ids?: string[];
+                                    instructions?: string;
+                                } | {
+                                    /** @constant */
+                                    type: "knowledge";
+                                    source_ids?: string[];
+                                    collection_ids?: string[];
+                                    instructions?: string;
+                                };
+                                asset: {
+                                    /** @enum {string} */
+                                    asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+                                    instructions?: string;
+                                    /** Format: bcp47 */
+                                    language?: string;
+                                    options?: {
+                                        [key: string]: unknown;
+                                    };
+                                    voice_id?: string;
+                                    avatar_id?: string;
+                                    narration_script?: {
+                                        speakers: [
+                                            {
+                                                id: string;
+                                                voice_id?: string;
+                                                avatar_id?: string;
+                                            }
+                                        ] | [
+                                            {
+                                                id: string;
+                                                voice_id?: string;
+                                                avatar_id?: string;
+                                            },
+                                            {
+                                                id: string;
+                                                voice_id?: string;
+                                                avatar_id?: string;
+                                            }
+                                        ];
+                                        segments: {
+                                            speaker_id: string;
+                                            text: string;
+                                        }[];
+                                    };
+                                    model?: string;
+                                    model_options?: {
+                                        [key: string]: unknown;
+                                    };
+                                };
+                                attachment_source_ids?: string[];
+                            }[];
+                            /** Format: bcp47 */
+                            language?: string;
+                            instructions?: string;
+                            budget?: {
+                                /** @constant */
+                                scope: "request";
+                                max_cost_usd: string;
+                            };
+                        };
+                        total_cost_usd: string;
+                        /** @enum {string} */
+                        budget_scope: "outputs" | "request";
+                        authorized_max_cost_usd: string | null;
+                        groups: {
+                            attempt: number;
+                            item_ids: string[];
+                            quote: {
+                                /** @constant */
+                                currency: "usd";
+                                total_cost_usd: string;
+                                assets: ({
+                                    /** @enum {string} */
+                                    asset_type: "article" | "lead_magnet" | "ebook" | "slides" | "infographic" | "quiz" | "podcast_episode" | "short_video" | "explainer_video" | "launch_video" | "product_demo_video" | "ad_video";
+                                    cost_usd: string;
+                                    normalized_options: {
+                                        [key: string]: unknown;
+                                    };
+                                } & {
+                                    [key: string]: unknown;
+                                })[];
+                            } & {
+                                [key: string]: unknown;
+                            };
+                            generation_id: string | null;
+                            assets: {
+                                item_id: string;
+                                asset_id: string;
+                                status: string;
+                            }[];
+                            error: string | null;
+                        }[];
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
     listProjects: {
         parameters: {
             query?: {
@@ -5221,6 +6637,22 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": {
+                    expected_profile_revision?: number;
+                    generation_defaults?: {
+                        /** Format: bcp47 */
+                        language?: string;
+                        style?: string;
+                        formats?: {
+                            [key: string]: {
+                                duration_seconds?: number;
+                                target_words?: number;
+                                page_count?: number;
+                                /** @enum {string} */
+                                aspect_ratio?: "9:16" | "16:9" | "1:1" | "4:5" | "3:4";
+                                captions?: boolean;
+                            };
+                        };
+                    };
                     name?: string;
                     description?: string;
                     category?: string;
@@ -5956,8 +7388,6 @@ export interface operations {
                         /** @constant */
                         type: "topic";
                         topic: string;
-                        /** @enum {string} */
-                        evidence_scope?: "project" | "project_and_web";
                         lookback_days?: number;
                         source_ids?: string[];
                         collection_ids?: string[];
@@ -6046,8 +7476,6 @@ export interface operations {
                         /** @constant */
                         type: "topic";
                         topic: string;
-                        /** @enum {string} */
-                        evidence_scope?: "project" | "project_and_web";
                         lookback_days?: number;
                         source_ids?: string[];
                         collection_ids?: string[];
@@ -6333,8 +7761,6 @@ export interface operations {
                         /** @constant */
                         type: "topic";
                         topic: string;
-                        /** @enum {string} */
-                        evidence_scope?: "project" | "project_and_web";
                         lookback_days?: number;
                         source_ids?: string[];
                         collection_ids?: string[];
@@ -6454,6 +7880,7 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": {
+                    expected_revision?: number;
                     input?: {
                         /** @constant */
                         type: "trend";
@@ -6463,8 +7890,6 @@ export interface operations {
                         /** @constant */
                         type: "topic";
                         topic: string;
-                        /** @enum {string} */
-                        evidence_scope?: "project" | "project_and_web";
                         lookback_days?: number;
                         source_ids?: string[];
                         collection_ids?: string[];

@@ -1,5 +1,6 @@
 import { AccountResource, ApiKeysResource, BillingResource, WebhooksResource } from './resources/account.js';
 import { AssetsResource } from './resources/assets.js';
+import { AgentResource } from './resources/agent.js';
 import { ContentLoopsResource } from './resources/contentLoops.js';
 import { AssetTypesResource, AvatarsResource, ModelsResource, VoicesResource } from './resources/discovery.js';
 import { GenerationsResource } from './resources/generations.js';
@@ -21,6 +22,7 @@ export default class AutoContent {
   readonly avatars: AvatarsResource;
   readonly generations: GenerationsResource;
   readonly assets: AssetsResource;
+  readonly agent: AgentResource;
   readonly contentLoops: ContentLoopsResource;
   readonly account: AccountResource;
   readonly apiKeys: ApiKeysResource;
@@ -40,6 +42,7 @@ export default class AutoContent {
     this.avatars = new AvatarsResource(this.transport);
     this.generations = new GenerationsResource(this.transport);
     this.assets = new AssetsResource(this.transport);
+    this.agent = new AgentResource(this.transport);
     this.contentLoops = new ContentLoopsResource(this.transport);
     this.account = new AccountResource(this.transport);
     this.apiKeys = new ApiKeysResource(this.transport);

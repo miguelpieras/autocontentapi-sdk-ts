@@ -1,4 +1,38 @@
 import type { components, operations } from './openapi.js';
+type AgentResponse<Name extends keyof operations> = operations[Name] extends {
+    responses: {
+        200: {
+            content: {
+                'application/json': infer Body;
+            };
+        };
+    };
+} ? Body : operations[Name] extends {
+    responses: {
+        202: {
+            content: {
+                'application/json': infer Body;
+            };
+        };
+    };
+} ? Body : never;
+export type AgentConversation = AgentResponse<'getAgentConversation'>;
+export type AgentSettings = AgentConversation['settings'];
+export type AgentMessage = AgentConversation['messages'][number];
+export type AgentPlan = AgentResponse<'getAgentPlan'>;
+export type AgentPlanInput = operations['prepareAgentPlan']['requestBody']['content']['application/json'];
+export type AgentOutputItem = AgentPlan['plan']['items'][number];
+export type AgentTurnInput = operations['createAgentTurn']['requestBody']['content']['application/json'];
+export type AgentPageContext = AgentTurnInput['page'];
+export type AgentTurn = AgentResponse<'createAgentTurn'>;
+export type AgentEvents = AgentResponse<'listAgentEvents'>;
+export type AgentSettingsInput = operations['updateAgentSettings']['requestBody']['content']['application/json'];
+export type AgentPlanAcceptInput = operations['acceptAgentPlan']['requestBody']['content']['application/json'];
+export type AgentBrowserResultInput = operations['recordAgentBrowserResult']['requestBody']['content']['application/json'];
+export type KnowledgeSearchInput = operations['searchAgentKnowledge']['requestBody']['content']['application/json'];
+export type KnowledgeReadInput = operations['readAgentSourceChunk']['requestBody']['content']['application/json'];
+export type KnowledgeMatches = AgentResponse<'searchAgentKnowledge'>;
+export type KnowledgeChunk = AgentResponse<'readAgentSourceChunk'>;
 export type JsonPrimitive = string | number | boolean | null;
 export type JsonValue = JsonPrimitive | JsonObject | JsonValue[];
 export interface JsonObject {

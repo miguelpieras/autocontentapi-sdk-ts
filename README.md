@@ -234,6 +234,20 @@ Content Loops, usage, and webhooks.
 
 ## Examples
 
+The `client.agent` resource supports concrete output plans without managed chat:
+`prepareOutputs({ plan })`, `acceptOutputs(id, { expected_revision, max_cost_usd,
+budget_scope: 'outputs' })`, `getOutputs(id)`, and `cancelOutputs(id)`. A plan's
+ordered `items` may repeat Asset types and give each output its own brief,
+language and options. Stable `out_` IDs keep edits and results attached to the
+intended output. Inspect the canonical quote before accepting its USD cap.
+
+`agent.searchKnowledge` and `agent.readSourceChunk` read permitted Project Sources
+without inference. `agent.send` is the separate, OAuth-only managed conversation
+operation and requires an explicit inference cap and originating page context.
+An external client has no implicit access to the website's active page. Asset
+production continues to use AutoContent prepaid USD regardless of where the
+conversation happens.
+
 The [`examples`](./examples) directory covers Project onboarding and Lead Magnet,
 brand resources, a trend multi-Asset request, a two-hour Podcast, Quiz JSON,
 all five Videos, a weekly Content Loop, webhook verification, artifact download,
