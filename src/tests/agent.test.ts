@@ -29,7 +29,7 @@ test('managed messages preserve captured page and caller request identity', asyn
     requests.push(new Request(input, init));
     return Response.json({ id: 'agt_message', status: 'queued' }, { status: 202 });
   } });
-  await client.agent.send({ message: 'Explain this page', inference_max_cost_usd: '0.10',
+  await client.agent.send({ message: 'Explain this page', inference_max_cost_usd: '0.10', model: 'gpt-5.6-luna', use_balance: true,
     page: { tab_id: 'd3e3df9f-8111-4e9a-8c0a-20599180bff8', view_id: '1b116b82-8bbe-4cb2-9650-bf657c7403fd',
       revision: 1, view: 'create', state: 'ready', project_id: 'prj_original', resource_id: null,
       selected_source_ids: [], selected_collection_ids: [], selected_asset_ids: [], selected_generation_ids: [],
@@ -37,6 +37,8 @@ test('managed messages preserve captured page and caller request identity', asyn
   { idempotencyKey: 'same-message-even-after-navigation' });
   assert.equal(requests[0]!.headers.get('authorization'), 'Bearer own_oauth');
   assert.equal(requests[0]!.headers.get('idempotency-key'), 'same-message-even-after-navigation');
-  const sent = await requests[0]!.json() as { page: { project_id: string } };
+  const sent = await requests[0]!.json() as { page: { project_id: string }; model: string; use_balance: boolean };
   assert.equal(sent.page.project_id, 'prj_original');
+  assert.equal(sent.model, 'gpt-5.6-luna');
+  assert.equal(sent.use_balance, true);
 });

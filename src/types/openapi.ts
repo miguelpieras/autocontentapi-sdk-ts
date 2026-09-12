@@ -1371,6 +1371,11 @@ export interface components {
                      * @enum {string}
                      */
                     presentation_mode: "faceless" | "avatar";
+                    /**
+                     * @description Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.
+                     * @default []
+                     */
+                    product_visual_source_ids: string[];
                 } | {
                     /** @default 60 */
                     duration_seconds: number;
@@ -1714,6 +1719,11 @@ export interface components {
                      * @enum {string}
                      */
                     presentation_mode: "faceless" | "avatar";
+                    /**
+                     * @description Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.
+                     * @default []
+                     */
+                    product_visual_source_ids: string[];
                 } | {
                     /** @default 60 */
                     duration_seconds: number;
@@ -2121,6 +2131,11 @@ export interface components {
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
+                /**
+                 * @description Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.
+                 * @default []
+                 */
+                product_visual_source_ids: string[];
             } | {
                 /** @default 60 */
                 duration_seconds: number;
@@ -2513,6 +2528,11 @@ export interface components {
                      * @enum {string}
                      */
                     presentation_mode: "faceless" | "avatar";
+                    /**
+                     * @description Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.
+                     * @default []
+                     */
+                    product_visual_source_ids: string[];
                 } | {
                     /** @default 60 */
                     duration_seconds: number;
@@ -2809,6 +2829,11 @@ export interface components {
                      * @enum {string}
                      */
                     presentation_mode: "faceless" | "avatar";
+                    /**
+                     * @description Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.
+                     * @default []
+                     */
+                    product_visual_source_ids: string[];
                 } | {
                     /** @default 60 */
                     duration_seconds: number;
@@ -3394,6 +3419,11 @@ export interface components {
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
+                /**
+                 * @description Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.
+                 * @default []
+                 */
+                product_visual_source_ids: string[];
             } | {
                 /** @default 60 */
                 duration_seconds: number;
@@ -3690,6 +3720,11 @@ export interface components {
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
+                /**
+                 * @description Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.
+                 * @default []
+                 */
+                product_visual_source_ids: string[];
             } | {
                 /** @default 60 */
                 duration_seconds: number;
@@ -3985,6 +4020,11 @@ export interface components {
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
+                /**
+                 * @description Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.
+                 * @default []
+                 */
+                product_visual_source_ids: string[];
             } | {
                 /** @default 60 */
                 duration_seconds: number;
@@ -4279,6 +4319,11 @@ export interface components {
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
+                /**
+                 * @description Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.
+                 * @default []
+                 */
+                product_visual_source_ids: string[];
             } | {
                 /** @default 60 */
                 duration_seconds: number;
@@ -4575,6 +4620,11 @@ export interface components {
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
+                /**
+                 * @description Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.
+                 * @default []
+                 */
+                product_visual_source_ids: string[];
             } | {
                 /** @default 60 */
                 duration_seconds: number;
@@ -5507,6 +5557,8 @@ export interface operations {
                         revision: number;
                         settings: {
                             enabled: boolean;
+                            /** @enum {string} */
+                            model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
                             inference_max_cost_usd: string;
                             daily_max_cost_usd: string;
                         };
@@ -5525,6 +5577,17 @@ export interface operations {
                                 };
                             };
                         };
+                        /** @enum {string} */
+                        default_model: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
+                        models: {
+                            /** @enum {string} */
+                            id: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
+                            label: string;
+                            description: string;
+                            input_cost_usd_per_million_tokens: string;
+                            cached_input_cost_usd_per_million_tokens: string;
+                            output_cost_usd_per_million_tokens: string;
+                        }[];
                         available: boolean;
                         messages: {
                             id: string;
@@ -5534,6 +5597,8 @@ export interface operations {
                             status: string;
                             created_at: string;
                             error: string | null;
+                            /** @enum {string} */
+                            model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
                         }[];
                         plans: {
                             id: string;
@@ -5680,6 +5745,8 @@ export interface operations {
                     expected_revision: number;
                     settings?: {
                         enabled: boolean;
+                        /** @enum {string} */
+                        model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
                         inference_max_cost_usd: string;
                         daily_max_cost_usd: string;
                     };
@@ -5712,6 +5779,8 @@ export interface operations {
                         revision: number;
                         settings: {
                             enabled: boolean;
+                            /** @enum {string} */
+                            model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
                             inference_max_cost_usd: string;
                             daily_max_cost_usd: string;
                         };
@@ -5794,6 +5863,10 @@ export interface operations {
                         } | null;
                     };
                     inference_max_cost_usd: string;
+                    /** @enum {string} */
+                    model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
+                    /** @constant */
+                    use_balance?: true;
                     /** @default [] */
                     attachment_source_ids?: string[];
                 };
@@ -5809,6 +5882,16 @@ export interface operations {
                     "application/json": {
                         id: string;
                         status: string;
+                        revision?: number;
+                        settings?: {
+                            enabled: boolean;
+                            /** @enum {string} */
+                            model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
+                            inference_max_cost_usd: string;
+                            daily_max_cost_usd: string;
+                        };
+                        /** @enum {string} */
+                        model?: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
                     };
                 };
             };

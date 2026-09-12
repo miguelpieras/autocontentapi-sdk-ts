@@ -408,6 +408,15 @@
                         "enabled": {
                           "type": "boolean"
                         },
+                        "model": {
+                          "type": "string",
+                          "enum": [
+                            "gpt-5.6-luna",
+                            "gpt-5.6-terra",
+                            "gpt-5.6-sol",
+                            "gpt-6-astra"
+                          ]
+                        },
                         "inference_max_cost_usd": {
                           "type": "string",
                           "pattern": "^(0|[1-9][0-9]{0,5})\\.[0-9]{2}$"
@@ -494,6 +503,59 @@
                       },
                       "additionalProperties": false
                     },
+                    "default_model": {
+                      "type": "string",
+                      "enum": [
+                        "gpt-5.6-luna",
+                        "gpt-5.6-terra",
+                        "gpt-5.6-sol",
+                        "gpt-6-astra"
+                      ]
+                    },
+                    "models": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "enum": [
+                              "gpt-5.6-luna",
+                              "gpt-5.6-terra",
+                              "gpt-5.6-sol",
+                              "gpt-6-astra"
+                            ]
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "input_cost_usd_per_million_tokens": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,5})\\.[0-9]{2}$"
+                          },
+                          "cached_input_cost_usd_per_million_tokens": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,5})\\.[0-9]{2}$"
+                          },
+                          "output_cost_usd_per_million_tokens": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,5})\\.[0-9]{2}$"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "label",
+                          "description",
+                          "input_cost_usd_per_million_tokens",
+                          "cached_input_cost_usd_per_million_tokens",
+                          "output_cost_usd_per_million_tokens"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
                     "available": {
                       "type": "boolean"
                     },
@@ -537,6 +599,15 @@
                               {
                                 "type": "null"
                               }
+                            ]
+                          },
+                          "model": {
+                            "type": "string",
+                            "enum": [
+                              "gpt-5.6-luna",
+                              "gpt-5.6-terra",
+                              "gpt-5.6-sol",
+                              "gpt-6-astra"
                             ]
                           }
                         },
@@ -1198,6 +1269,8 @@
                     "revision",
                     "settings",
                     "preferences",
+                    "default_model",
+                    "models",
                     "available",
                     "messages",
                     "plans",
@@ -1250,6 +1323,15 @@
                     "properties": {
                       "enabled": {
                         "type": "boolean"
+                      },
+                      "model": {
+                        "type": "string",
+                        "enum": [
+                          "gpt-5.6-luna",
+                          "gpt-5.6-terra",
+                          "gpt-5.6-sol",
+                          "gpt-6-astra"
+                        ]
                       },
                       "inference_max_cost_usd": {
                         "type": "string",
@@ -1364,6 +1446,15 @@
                       "properties": {
                         "enabled": {
                           "type": "boolean"
+                        },
+                        "model": {
+                          "type": "string",
+                          "enum": [
+                            "gpt-5.6-luna",
+                            "gpt-5.6-terra",
+                            "gpt-5.6-sol",
+                            "gpt-6-astra"
+                          ]
                         },
                         "inference_max_cost_usd": {
                           "type": "string",
@@ -1765,6 +1856,19 @@
                     "type": "string",
                     "pattern": "^(0|[1-9][0-9]{0,5})\\.[0-9]{2}$"
                   },
+                  "model": {
+                    "type": "string",
+                    "enum": [
+                      "gpt-5.6-luna",
+                      "gpt-5.6-terra",
+                      "gpt-5.6-sol",
+                      "gpt-6-astra"
+                    ]
+                  },
+                  "use_balance": {
+                    "type": "boolean",
+                    "const": true
+                  },
                   "attachment_source_ids": {
                     "default": [],
                     "maxItems": 20,
@@ -1799,6 +1903,51 @@
                     },
                     "status": {
                       "type": "string"
+                    },
+                    "revision": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "settings": {
+                      "type": "object",
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "model": {
+                          "type": "string",
+                          "enum": [
+                            "gpt-5.6-luna",
+                            "gpt-5.6-terra",
+                            "gpt-5.6-sol",
+                            "gpt-6-astra"
+                          ]
+                        },
+                        "inference_max_cost_usd": {
+                          "type": "string",
+                          "pattern": "^(0|[1-9][0-9]{0,5})\\.[0-9]{2}$"
+                        },
+                        "daily_max_cost_usd": {
+                          "type": "string",
+                          "pattern": "^(0|[1-9][0-9]{0,5})\\.[0-9]{2}$"
+                        }
+                      },
+                      "required": [
+                        "enabled",
+                        "inference_max_cost_usd",
+                        "daily_max_cost_usd"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "model": {
+                      "type": "string",
+                      "enum": [
+                        "gpt-5.6-luna",
+                        "gpt-5.6-terra",
+                        "gpt-5.6-sol",
+                        "gpt-6-astra"
+                      ]
                     }
                   },
                   "required": [
@@ -12287,6 +12436,19 @@
                             "faceless",
                             "avatar"
                           ]
+                        },
+                        "product_visual_source_ids": {
+                          "default": [],
+                          "description": "Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.",
+                          "maxItems": 4,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 200,
+                            "pattern": "^[A-Za-z0-9_-]+$"
+                          },
+                          "uniqueItems": true
                         }
                       },
                       "required": [
@@ -12298,7 +12460,8 @@
                         "caption_style",
                         "caption_font",
                         "caption_position",
-                        "presentation_mode"
+                        "presentation_mode",
+                        "product_visual_source_ids"
                       ],
                       "additionalProperties": false
                     },
@@ -13241,6 +13404,19 @@
                             "faceless",
                             "avatar"
                           ]
+                        },
+                        "product_visual_source_ids": {
+                          "default": [],
+                          "description": "Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.",
+                          "maxItems": 4,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 200,
+                            "pattern": "^[A-Za-z0-9_-]+$"
+                          },
+                          "uniqueItems": true
                         }
                       },
                       "required": [
@@ -13252,7 +13428,8 @@
                         "caption_style",
                         "caption_font",
                         "caption_position",
-                        "presentation_mode"
+                        "presentation_mode",
+                        "product_visual_source_ids"
                       ],
                       "additionalProperties": false
                     },
@@ -14544,6 +14721,19 @@
                       "faceless",
                       "avatar"
                     ]
+                  },
+                  "product_visual_source_ids": {
+                    "default": [],
+                    "description": "Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.",
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200,
+                      "pattern": "^[A-Za-z0-9_-]+$"
+                    },
+                    "uniqueItems": true
                   }
                 },
                 "required": [
@@ -14555,7 +14745,8 @@
                   "caption_style",
                   "caption_font",
                   "caption_position",
-                  "presentation_mode"
+                  "presentation_mode",
+                  "product_visual_source_ids"
                 ],
                 "additionalProperties": false
               },
@@ -15758,6 +15949,19 @@
                                 "faceless",
                                 "avatar"
                               ]
+                            },
+                            "product_visual_source_ids": {
+                              "default": [],
+                              "description": "Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.",
+                              "maxItems": 4,
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 200,
+                                "pattern": "^[A-Za-z0-9_-]+$"
+                              },
+                              "uniqueItems": true
                             }
                           },
                           "required": [
@@ -15769,7 +15973,8 @@
                             "caption_style",
                             "caption_font",
                             "caption_position",
-                            "presentation_mode"
+                            "presentation_mode",
+                            "product_visual_source_ids"
                           ],
                           "additionalProperties": false
                         },
@@ -16448,6 +16653,19 @@
                                 "faceless",
                                 "avatar"
                               ]
+                            },
+                            "product_visual_source_ids": {
+                              "default": [],
+                              "description": "Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.",
+                              "maxItems": 4,
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 200,
+                                "pattern": "^[A-Za-z0-9_-]+$"
+                              },
+                              "uniqueItems": true
                             }
                           },
                           "required": [
@@ -16459,7 +16677,8 @@
                             "caption_style",
                             "caption_font",
                             "caption_position",
-                            "presentation_mode"
+                            "presentation_mode",
+                            "product_visual_source_ids"
                           ],
                           "additionalProperties": false
                         },
@@ -18667,6 +18886,19 @@
                           "faceless",
                           "avatar"
                         ]
+                      },
+                      "product_visual_source_ids": {
+                        "default": [],
+                        "description": "Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.",
+                        "maxItems": 4,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200,
+                          "pattern": "^[A-Za-z0-9_-]+$"
+                        },
+                        "uniqueItems": true
                       }
                     },
                     "required": [
@@ -18678,7 +18910,8 @@
                       "caption_style",
                       "caption_font",
                       "caption_position",
-                      "presentation_mode"
+                      "presentation_mode",
+                      "product_visual_source_ids"
                     ],
                     "additionalProperties": false
                   },
@@ -19357,6 +19590,19 @@
                           "faceless",
                           "avatar"
                         ]
+                      },
+                      "product_visual_source_ids": {
+                        "default": [],
+                        "description": "Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.",
+                        "maxItems": 4,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200,
+                          "pattern": "^[A-Za-z0-9_-]+$"
+                        },
+                        "uniqueItems": true
                       }
                     },
                     "required": [
@@ -19368,7 +19614,8 @@
                       "caption_style",
                       "caption_font",
                       "caption_position",
-                      "presentation_mode"
+                      "presentation_mode",
+                      "product_visual_source_ids"
                     ],
                     "additionalProperties": false
                   },
@@ -20038,6 +20285,19 @@
                           "faceless",
                           "avatar"
                         ]
+                      },
+                      "product_visual_source_ids": {
+                        "default": [],
+                        "description": "Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.",
+                        "maxItems": 4,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200,
+                          "pattern": "^[A-Za-z0-9_-]+$"
+                        },
+                        "uniqueItems": true
                       }
                     },
                     "required": [
@@ -20049,7 +20309,8 @@
                       "caption_style",
                       "caption_font",
                       "caption_position",
-                      "presentation_mode"
+                      "presentation_mode",
+                      "product_visual_source_ids"
                     ],
                     "additionalProperties": false
                   },
@@ -20720,6 +20981,19 @@
                           "faceless",
                           "avatar"
                         ]
+                      },
+                      "product_visual_source_ids": {
+                        "default": [],
+                        "description": "Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.",
+                        "maxItems": 4,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200,
+                          "pattern": "^[A-Za-z0-9_-]+$"
+                        },
+                        "uniqueItems": true
                       }
                     },
                     "required": [
@@ -20731,7 +21005,8 @@
                       "caption_style",
                       "caption_font",
                       "caption_position",
-                      "presentation_mode"
+                      "presentation_mode",
+                      "product_visual_source_ids"
                     ],
                     "additionalProperties": false
                   },
@@ -21406,6 +21681,19 @@
                           "faceless",
                           "avatar"
                         ]
+                      },
+                      "product_visual_source_ids": {
+                        "default": [],
+                        "description": "Optional photos of the specific product being advertised. Leave empty for a service, brand, or general ad. Supplied product photos preserve that product in generated footage; logos are applied separately.",
+                        "maxItems": 4,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200,
+                          "pattern": "^[A-Za-z0-9_-]+$"
+                        },
+                        "uniqueItems": true
                       }
                     },
                     "required": [
@@ -21417,7 +21705,8 @@
                       "caption_style",
                       "caption_font",
                       "caption_position",
-                      "presentation_mode"
+                      "presentation_mode",
+                      "product_visual_source_ids"
                     ],
                     "additionalProperties": false
                   },
