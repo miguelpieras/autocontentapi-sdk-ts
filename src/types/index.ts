@@ -386,12 +386,35 @@ export type MotionAdVideoRequest = Omit<MotionLaunchVideoRequest, 'asset_type' |
   options?: MotionAdVideoOptions;
 };
 
-export type LaunchVideoRequest = VideoRequest<'launch_video'> | MotionLaunchVideoRequest;
+/** AI captures a real public website and composes a 15–60 second product film. */
+export type RecordedDemoOptions = {
+  website_url: string;
+  duration_seconds?: number;
+  aspect_ratio?: '16:9' | '9:16' | '1:1';
+  resolution?: '1080p';
+  presentation_mode?: 'faceless';
+  captions?: false;
+} & ({ interaction_mode?: 'browse'; demo_environment_confirmed?: false }
+  | { interaction_mode: 'demo'; demo_environment_confirmed: true });
+
+export type RecordedDemoRequest<T extends 'product_demo_video' | 'launch_video' | 'ad_video' = 'product_demo_video' | 'launch_video' | 'ad_video'> = {
+  asset_type: T;
+  model: 'autocontent-recorded-demo-v1';
+  options: RecordedDemoOptions;
+  instructions?: string;
+  language?: string;
+  voice_id?: string;
+  avatar_id?: never;
+  narration_script?: never;
+  model_options?: { narration?: boolean; music_direction?: string };
+};
+
+export type LaunchVideoRequest = VideoRequest<'launch_video'> | MotionLaunchVideoRequest | RecordedDemoRequest<'launch_video'>;
 export type ProductDemoVideoRequest = VideoRequest<
   'product_demo_video',
   VideoOptions & { product_visual_source_ids?: string[] }
->;
-export type AdVideoRequest = VideoRequest<'ad_video'> | MotionAdVideoRequest;
+> | RecordedDemoRequest<'product_demo_video'>;
+export type AdVideoRequest = VideoRequest<'ad_video'> | MotionAdVideoRequest | RecordedDemoRequest<'ad_video'>;
 
 export type KnownAssetRequest =
   | ArticleRequest

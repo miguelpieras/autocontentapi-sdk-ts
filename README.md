@@ -262,3 +262,26 @@ Generation edit, Asset feedback, and OAuth-only prepaid funding.
 
 The default API origin is `https://api.autocontentapi.com/v1`. Use `baseUrl` or
 `--base-url` only for local, staging, or self-hosted environments.
+
+### Record a public website
+
+When model discovery lists `autocontent-recorded-demo-v1`, use it with `product_demo_video`, `launch_video`, or `ad_video`. Set `options.website_url` to a public HTTPS page and describe the journey in `instructions`. AI records real browser interactions and composes the footage, typography, narration, and an original instrumental. No credentials or saved browser sessions are accepted.
+
+```ts
+import type { RecordedDemoRequest } from 'autocontentapi';
+
+const video: RecordedDemoRequest = {
+  asset_type: 'product_demo_video',
+  model: 'autocontent-recorded-demo-v1',
+  instructions: 'Demonstrate the public product search, show the result, and explain why it saves time.',
+  options: {
+    website_url: 'https://your-product.com',
+    duration_seconds: 30,
+    aspect_ratio: '16:9',
+    interaction_mode: 'browse',
+  },
+  model_options: { narration: true, music_direction: 'Playful percussion, a quiet break, and a confident ending' },
+};
+```
+
+Include this asset in the usual Generation preview/create request. Use the returned quote, your spending cap, and a stable idempotency key. `browse` allows public page navigation; same-origin writes require `interaction_mode: 'demo'` and `demo_environment_confirmed: true`, attesting to a test environment without real purchases, messages, or destructive effects. An interrupted browser journey is never replayed automatically. Each generation or edit records a fresh journey and composes a new score. Output is 15–60 seconds at 1080p, with landscape, vertical, or square framing. The same request works through HTTP, CLI, and MCP; the web app calls it **Record website**.

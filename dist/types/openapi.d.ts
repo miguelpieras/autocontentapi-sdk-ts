@@ -1108,7 +1108,7 @@ export interface components {
                 exact_price_via_preview: true;
             };
         };
-        /** @description Exact model discovery. When available, autocontent-narrated-video-v1 produces Short and Explainer videos with generated artwork, narrated explanatory motion, and optional short H3 clips. It supports faceless presentation, existing Voice selection, captions, all three video aspect ratios, and 720p/1080p. No music is added. Preview returns the maximum price; settlement charges newly incurred work. */
+        /** @description Exact model discovery. When available, autocontent-recorded-demo-v1 supports product_demo_video, launch_video and ad_video from options.website_url (public HTTPS only) plus instructions. AI captures real browser interactions and composes typography, optional narration and original music. It supports 15–60 seconds, 1080p, and 16:9, 9:16 or 1:1. interaction_mode defaults to browse; demo requires demo_environment_confirmed:true for an environment without real external effects. Credentials and saved sessions are unsupported. model_options accepts narration and music_direction. Each generation or edit captures a new journey and score. When available, autocontent-narrated-video-v1 produces Short and Explainer videos with generated artwork, narrated explanatory motion, and optional short H3 clips. It supports faceless presentation, existing Voice selection, captions, all three video aspect ratios, and 720p/1080p. No music is added. Preview returns the maximum price; settlement charges newly incurred work. */
         Model: {
             id: string;
             asset_types: components["schemas"]["AssetType"][];
