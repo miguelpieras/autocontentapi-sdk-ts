@@ -12680,6 +12680,7 @@
         }
       },
       "Model": {
+        "description": "Exact model discovery. When available, autocontent-narrated-video-v1 produces Short and Explainer videos with generated artwork, narrated explanatory motion, and optional short H3 clips. It supports faceless presentation, existing Voice selection, captions, all three video aspect ratios, and 720p/1080p. No music is added. Preview returns the maximum price; settlement charges newly incurred work.",
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -13565,7 +13566,7 @@
                       "type": "object",
                       "properties": {
                         "duration_seconds": {
-                          "default": 30,
+                          "default": 15,
                           "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                           "type": "integer",
                           "minimum": 5,
@@ -13582,7 +13583,7 @@
                         },
                         "visual_production": {
                           "default": "enhanced",
-                          "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
+                          "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
                           "type": "string",
                           "enum": [
                             "essential",
@@ -13689,6 +13690,42 @@
                             "1080p",
                             "4k"
                           ]
+                        },
+                        "captions": {
+                          "default": false,
+                          "type": "boolean",
+                          "const": false
+                        },
+                        "presentation_mode": {
+                          "default": "faceless",
+                          "type": "string",
+                          "const": "faceless"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "duration_seconds": {
+                          "default": 15,
+                          "type": "integer",
+                          "minimum": 15,
+                          "maximum": 60
+                        },
+                        "aspect_ratio": {
+                          "default": "9:16",
+                          "type": "string",
+                          "enum": [
+                            "9:16",
+                            "1:1",
+                            "16:9"
+                          ]
+                        },
+                        "resolution": {
+                          "default": "1080p",
+                          "type": "string",
+                          "const": "1080p"
                         },
                         "captions": {
                           "default": false,
@@ -14533,7 +14570,7 @@
                       "type": "object",
                       "properties": {
                         "duration_seconds": {
-                          "default": 30,
+                          "default": 15,
                           "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                           "type": "integer",
                           "minimum": 5,
@@ -14550,7 +14587,7 @@
                         },
                         "visual_production": {
                           "default": "enhanced",
-                          "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
+                          "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
                           "type": "string",
                           "enum": [
                             "essential",
@@ -14657,6 +14694,42 @@
                             "1080p",
                             "4k"
                           ]
+                        },
+                        "captions": {
+                          "default": false,
+                          "type": "boolean",
+                          "const": false
+                        },
+                        "presentation_mode": {
+                          "default": "faceless",
+                          "type": "string",
+                          "const": "faceless"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "duration_seconds": {
+                          "default": 15,
+                          "type": "integer",
+                          "minimum": 15,
+                          "maximum": 60
+                        },
+                        "aspect_ratio": {
+                          "default": "9:16",
+                          "type": "string",
+                          "enum": [
+                            "9:16",
+                            "1:1",
+                            "16:9"
+                          ]
+                        },
+                        "resolution": {
+                          "default": "1080p",
+                          "type": "string",
+                          "const": "1080p"
                         },
                         "captions": {
                           "default": false,
@@ -15850,7 +15923,7 @@
                 "type": "object",
                 "properties": {
                   "duration_seconds": {
-                    "default": 30,
+                    "default": 15,
                     "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                     "type": "integer",
                     "minimum": 5,
@@ -15867,7 +15940,7 @@
                   },
                   "visual_production": {
                     "default": "enhanced",
-                    "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
+                    "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
                     "type": "string",
                     "enum": [
                       "essential",
@@ -15974,6 +16047,42 @@
                       "1080p",
                       "4k"
                     ]
+                  },
+                  "captions": {
+                    "default": false,
+                    "type": "boolean",
+                    "const": false
+                  },
+                  "presentation_mode": {
+                    "default": "faceless",
+                    "type": "string",
+                    "const": "faceless"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "duration_seconds": {
+                    "default": 15,
+                    "type": "integer",
+                    "minimum": 15,
+                    "maximum": 60
+                  },
+                  "aspect_ratio": {
+                    "default": "9:16",
+                    "type": "string",
+                    "enum": [
+                      "9:16",
+                      "1:1",
+                      "16:9"
+                    ]
+                  },
+                  "resolution": {
+                    "default": "1080p",
+                    "type": "string",
+                    "const": "1080p"
                   },
                   "captions": {
                     "default": false,
@@ -17078,7 +17187,7 @@
                           "type": "object",
                           "properties": {
                             "duration_seconds": {
-                              "default": 30,
+                              "default": 15,
                               "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                               "type": "integer",
                               "minimum": 5,
@@ -17095,7 +17204,7 @@
                             },
                             "visual_production": {
                               "default": "enhanced",
-                              "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
+                              "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
                               "type": "string",
                               "enum": [
                                 "essential",
@@ -17202,6 +17311,42 @@
                                 "1080p",
                                 "4k"
                               ]
+                            },
+                            "captions": {
+                              "default": false,
+                              "type": "boolean",
+                              "const": false
+                            },
+                            "presentation_mode": {
+                              "default": "faceless",
+                              "type": "string",
+                              "const": "faceless"
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "duration_seconds": {
+                              "default": 15,
+                              "type": "integer",
+                              "minimum": 15,
+                              "maximum": 60
+                            },
+                            "aspect_ratio": {
+                              "default": "9:16",
+                              "type": "string",
+                              "enum": [
+                                "9:16",
+                                "1:1",
+                                "16:9"
+                              ]
+                            },
+                            "resolution": {
+                              "default": "1080p",
+                              "type": "string",
+                              "const": "1080p"
                             },
                             "captions": {
                               "default": false,
@@ -17782,7 +17927,7 @@
                           "type": "object",
                           "properties": {
                             "duration_seconds": {
-                              "default": 30,
+                              "default": 15,
                               "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                               "type": "integer",
                               "minimum": 5,
@@ -17799,7 +17944,7 @@
                             },
                             "visual_production": {
                               "default": "enhanced",
-                              "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
+                              "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
                               "type": "string",
                               "enum": [
                                 "essential",
@@ -17906,6 +18051,42 @@
                                 "1080p",
                                 "4k"
                               ]
+                            },
+                            "captions": {
+                              "default": false,
+                              "type": "boolean",
+                              "const": false
+                            },
+                            "presentation_mode": {
+                              "default": "faceless",
+                              "type": "string",
+                              "const": "faceless"
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "duration_seconds": {
+                              "default": 15,
+                              "type": "integer",
+                              "minimum": 15,
+                              "maximum": 60
+                            },
+                            "aspect_ratio": {
+                              "default": "9:16",
+                              "type": "string",
+                              "enum": [
+                                "9:16",
+                                "1:1",
+                                "16:9"
+                              ]
+                            },
+                            "resolution": {
+                              "default": "1080p",
+                              "type": "string",
+                              "const": "1080p"
                             },
                             "captions": {
                               "default": false,
@@ -20015,7 +20196,7 @@
                     "type": "object",
                     "properties": {
                       "duration_seconds": {
-                        "default": 30,
+                        "default": 15,
                         "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
@@ -20032,7 +20213,7 @@
                       },
                       "visual_production": {
                         "default": "enhanced",
-                        "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
+                        "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
                         "type": "string",
                         "enum": [
                           "essential",
@@ -20139,6 +20320,42 @@
                           "1080p",
                           "4k"
                         ]
+                      },
+                      "captions": {
+                        "default": false,
+                        "type": "boolean",
+                        "const": false
+                      },
+                      "presentation_mode": {
+                        "default": "faceless",
+                        "type": "string",
+                        "const": "faceless"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "duration_seconds": {
+                        "default": 15,
+                        "type": "integer",
+                        "minimum": 15,
+                        "maximum": 60
+                      },
+                      "aspect_ratio": {
+                        "default": "9:16",
+                        "type": "string",
+                        "enum": [
+                          "9:16",
+                          "1:1",
+                          "16:9"
+                        ]
+                      },
+                      "resolution": {
+                        "default": "1080p",
+                        "type": "string",
+                        "const": "1080p"
                       },
                       "captions": {
                         "default": false,
@@ -20719,7 +20936,7 @@
                     "type": "object",
                     "properties": {
                       "duration_seconds": {
-                        "default": 30,
+                        "default": 15,
                         "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
@@ -20736,7 +20953,7 @@
                       },
                       "visual_production": {
                         "default": "enhanced",
-                        "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
+                        "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
                         "type": "string",
                         "enum": [
                           "essential",
@@ -20843,6 +21060,42 @@
                           "1080p",
                           "4k"
                         ]
+                      },
+                      "captions": {
+                        "default": false,
+                        "type": "boolean",
+                        "const": false
+                      },
+                      "presentation_mode": {
+                        "default": "faceless",
+                        "type": "string",
+                        "const": "faceless"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "duration_seconds": {
+                        "default": 15,
+                        "type": "integer",
+                        "minimum": 15,
+                        "maximum": 60
+                      },
+                      "aspect_ratio": {
+                        "default": "9:16",
+                        "type": "string",
+                        "enum": [
+                          "9:16",
+                          "1:1",
+                          "16:9"
+                        ]
+                      },
+                      "resolution": {
+                        "default": "1080p",
+                        "type": "string",
+                        "const": "1080p"
                       },
                       "captions": {
                         "default": false,
@@ -21414,7 +21667,7 @@
                     "type": "object",
                     "properties": {
                       "duration_seconds": {
-                        "default": 30,
+                        "default": 15,
                         "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
@@ -21431,7 +21684,7 @@
                       },
                       "visual_production": {
                         "default": "enhanced",
-                        "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
+                        "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
                         "type": "string",
                         "enum": [
                           "essential",
@@ -21538,6 +21791,42 @@
                           "1080p",
                           "4k"
                         ]
+                      },
+                      "captions": {
+                        "default": false,
+                        "type": "boolean",
+                        "const": false
+                      },
+                      "presentation_mode": {
+                        "default": "faceless",
+                        "type": "string",
+                        "const": "faceless"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "duration_seconds": {
+                        "default": 15,
+                        "type": "integer",
+                        "minimum": 15,
+                        "maximum": 60
+                      },
+                      "aspect_ratio": {
+                        "default": "9:16",
+                        "type": "string",
+                        "enum": [
+                          "9:16",
+                          "1:1",
+                          "16:9"
+                        ]
+                      },
+                      "resolution": {
+                        "default": "1080p",
+                        "type": "string",
+                        "const": "1080p"
                       },
                       "captions": {
                         "default": false,
@@ -22110,7 +22399,7 @@
                     "type": "object",
                     "properties": {
                       "duration_seconds": {
-                        "default": 30,
+                        "default": 15,
                         "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
@@ -22127,7 +22416,7 @@
                       },
                       "visual_production": {
                         "default": "enhanced",
-                        "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
+                        "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
                         "type": "string",
                         "enum": [
                           "essential",
@@ -22234,6 +22523,42 @@
                           "1080p",
                           "4k"
                         ]
+                      },
+                      "captions": {
+                        "default": false,
+                        "type": "boolean",
+                        "const": false
+                      },
+                      "presentation_mode": {
+                        "default": "faceless",
+                        "type": "string",
+                        "const": "faceless"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "duration_seconds": {
+                        "default": 15,
+                        "type": "integer",
+                        "minimum": 15,
+                        "maximum": 60
+                      },
+                      "aspect_ratio": {
+                        "default": "9:16",
+                        "type": "string",
+                        "enum": [
+                          "9:16",
+                          "1:1",
+                          "16:9"
+                        ]
+                      },
+                      "resolution": {
+                        "default": "1080p",
+                        "type": "string",
+                        "const": "1080p"
                       },
                       "captions": {
                         "default": false,
@@ -22810,7 +23135,7 @@
                     "type": "object",
                     "properties": {
                       "duration_seconds": {
-                        "default": 30,
+                        "default": 15,
                         "description": "Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.",
                         "type": "integer",
                         "minimum": 5,
@@ -22827,7 +23152,7 @@
                       },
                       "visual_production": {
                         "default": "enhanced",
-                        "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
+                        "description": "Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.",
                         "type": "string",
                         "enum": [
                           "essential",
@@ -22934,6 +23259,42 @@
                           "1080p",
                           "4k"
                         ]
+                      },
+                      "captions": {
+                        "default": false,
+                        "type": "boolean",
+                        "const": false
+                      },
+                      "presentation_mode": {
+                        "default": "faceless",
+                        "type": "string",
+                        "const": "faceless"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "duration_seconds": {
+                        "default": 15,
+                        "type": "integer",
+                        "minimum": 15,
+                        "maximum": 60
+                      },
+                      "aspect_ratio": {
+                        "default": "9:16",
+                        "type": "string",
+                        "enum": [
+                          "9:16",
+                          "1:1",
+                          "16:9"
+                        ]
+                      },
+                      "resolution": {
+                        "default": "1080p",
+                        "type": "string",
+                        "const": "1080p"
                       },
                       "captions": {
                         "default": false,

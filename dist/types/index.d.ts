@@ -323,11 +323,23 @@ export type MotionLaunchVideoRequest = {
     avatar_id?: never;
     narration_script?: never;
 };
+export type MotionAdVideoOptions = Omit<MotionLaunchVideoOptions, 'aspect_ratio' | 'resolution'> & {
+    /** 15–60 seconds, default 15; 1080p at 30 fps. */
+    duration_seconds?: number;
+    aspect_ratio?: '9:16' | '1:1' | '16:9';
+    resolution?: '1080p';
+    visual_production?: never;
+    product_visual_source_ids?: never;
+};
+export type MotionAdVideoRequest = Omit<MotionLaunchVideoRequest, 'asset_type' | 'options'> & {
+    asset_type: 'ad_video';
+    options?: MotionAdVideoOptions;
+};
 export type LaunchVideoRequest = VideoRequest<'launch_video'> | MotionLaunchVideoRequest;
 export type ProductDemoVideoRequest = VideoRequest<'product_demo_video', VideoOptions & {
     product_visual_source_ids?: string[];
 }>;
-export type AdVideoRequest = VideoRequest<'ad_video'>;
+export type AdVideoRequest = VideoRequest<'ad_video'> | MotionAdVideoRequest;
 export type KnownAssetRequest = ArticleRequest | LeadMagnetRequest | EbookRequest | SlidesRequest | InfographicRequest | QuizRequest | PodcastEpisodeRequest | ShortVideoRequest | ExplainerVideoRequest | LaunchVideoRequest | ProductDemoVideoRequest | AdVideoRequest;
 declare const extensionAssetTypeBrand: unique symbol;
 export type ExtensionAssetType = string & {
@@ -376,6 +388,10 @@ export type MotionLaunchVideoEdit = {
     voice_id?: never;
     avatar_id?: never;
     narration_script?: never;
+};
+/** Canonical edit admission resolves the original Asset type and validates its profile. */
+export type MotionAdVideoEdit = Omit<MotionLaunchVideoEdit, 'options'> & {
+    options?: MotionAdVideoOptions;
 };
 export type GenerationAssetEdit = (GenerationAssetEditBase & {
     voice_id?: string;

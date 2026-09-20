@@ -142,7 +142,7 @@ Choose `caption_style` (`social_bold`, `social_highlight`, or `clean`),
 `bottom`. Setting `captions: false` disables burn-in; the VTT Artifact remains
 available.
 
-### Music-led launch films
+### Motion Design Ads and launch films
 
 When `models.list({ asset_type: 'launch_video' })` includes
 `autocontent-motion-design-v1`, select that exact model for Motion Design. The
@@ -150,7 +150,14 @@ existing Launch default is unchanged. Use `MotionLaunchVideoRequest` for its
 typed contract: 15–60 integer seconds (default 60), landscape 16:9, and either
 `resolution: '1080p'` at 30 fps (default) or `'4k'` at 60 fps.
 
-Each create or Content Loop run receives a new original instrumental. Optional
+Motion Ads select the same model through `models.list({ asset_type: 'ad_video' })`.
+Use `MotionAdVideoRequest`: 15–60 seconds (default 15), portrait 9:16 (default),
+square 1:1 or landscape 16:9, and 1080p/30. This production style uses frozen
+Project evidence and images; omit ordinary Ad `visual_production`, physical-photo
+options, Voice, Avatar and narration. Helper types describe known contracts; the
+forward-compatible generic model branch still relies on canonical API validation.
+
+Each create or Content Loop run receives one new original arranged instrumental. Optional
 `model_options.music_direction` accepts at most 500 characters. This model is
 music-only: omit Voice, Avatar, narration, and caption styling; captions default
 to false. Ready same-Project images can be supplied through the existing

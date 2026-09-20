@@ -1109,6 +1109,7 @@ export interface components {
                 exact_price_via_preview: true;
             };
         };
+        /** @description Exact model discovery. When available, autocontent-narrated-video-v1 produces Short and Explainer videos with generated artwork, narrated explanatory motion, and optional short H3 clips. It supports faceless presentation, existing Voice selection, captions, all three video aspect ratios, and 720p/1080p. No music is added. Preview returns the maximum price; settlement charges newly incurred work. */
         Model: {
             id: string;
             asset_types: components["schemas"]["AssetType"][];
@@ -1395,7 +1396,7 @@ export interface components {
                 } | {
                     /**
                      * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
-                     * @default 30
+                     * @default 15
                      */
                     duration_seconds: number;
                     /**
@@ -1404,7 +1405,7 @@ export interface components {
                      */
                     aspect_ratio: "9:16" | "1:1" | "16:9";
                     /**
-                     * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                     * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
                      * @default enhanced
                      * @enum {string}
                      */
@@ -1457,6 +1458,29 @@ export interface components {
                      * @enum {string}
                      */
                     resolution: "1080p" | "4k";
+                    /**
+                     * @default false
+                     * @constant
+                     */
+                    captions: false;
+                    /**
+                     * @default faceless
+                     * @constant
+                     */
+                    presentation_mode: "faceless";
+                } | {
+                    /** @default 15 */
+                    duration_seconds: number;
+                    /**
+                     * @default 9:16
+                     * @enum {string}
+                     */
+                    aspect_ratio: "9:16" | "1:1" | "16:9";
+                    /**
+                     * @default 1080p
+                     * @constant
+                     */
+                    resolution: "1080p";
                     /**
                      * @default false
                      * @constant
@@ -1743,7 +1767,7 @@ export interface components {
                 } | {
                     /**
                      * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
-                     * @default 30
+                     * @default 15
                      */
                     duration_seconds: number;
                     /**
@@ -1752,7 +1776,7 @@ export interface components {
                      */
                     aspect_ratio: "9:16" | "1:1" | "16:9";
                     /**
-                     * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                     * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
                      * @default enhanced
                      * @enum {string}
                      */
@@ -1805,6 +1829,29 @@ export interface components {
                      * @enum {string}
                      */
                     resolution: "1080p" | "4k";
+                    /**
+                     * @default false
+                     * @constant
+                     */
+                    captions: false;
+                    /**
+                     * @default faceless
+                     * @constant
+                     */
+                    presentation_mode: "faceless";
+                } | {
+                    /** @default 15 */
+                    duration_seconds: number;
+                    /**
+                     * @default 9:16
+                     * @enum {string}
+                     */
+                    aspect_ratio: "9:16" | "1:1" | "16:9";
+                    /**
+                     * @default 1080p
+                     * @constant
+                     */
+                    resolution: "1080p";
                     /**
                      * @default false
                      * @constant
@@ -2155,7 +2202,7 @@ export interface components {
             } | {
                 /**
                  * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
-                 * @default 30
+                 * @default 15
                  */
                 duration_seconds: number;
                 /**
@@ -2164,7 +2211,7 @@ export interface components {
                  */
                 aspect_ratio: "9:16" | "1:1" | "16:9";
                 /**
-                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
                  * @default enhanced
                  * @enum {string}
                  */
@@ -2217,6 +2264,29 @@ export interface components {
                  * @enum {string}
                  */
                 resolution: "1080p" | "4k";
+                /**
+                 * @default false
+                 * @constant
+                 */
+                captions: false;
+                /**
+                 * @default faceless
+                 * @constant
+                 */
+                presentation_mode: "faceless";
+            } | {
+                /** @default 15 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @constant
+                 */
+                resolution: "1080p";
                 /**
                  * @default false
                  * @constant
@@ -2552,7 +2622,7 @@ export interface components {
                 } | {
                     /**
                      * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
-                     * @default 30
+                     * @default 15
                      */
                     duration_seconds: number;
                     /**
@@ -2561,7 +2631,7 @@ export interface components {
                      */
                     aspect_ratio: "9:16" | "1:1" | "16:9";
                     /**
-                     * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                     * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
                      * @default enhanced
                      * @enum {string}
                      */
@@ -2614,6 +2684,29 @@ export interface components {
                      * @enum {string}
                      */
                     resolution: "1080p" | "4k";
+                    /**
+                     * @default false
+                     * @constant
+                     */
+                    captions: false;
+                    /**
+                     * @default faceless
+                     * @constant
+                     */
+                    presentation_mode: "faceless";
+                } | {
+                    /** @default 15 */
+                    duration_seconds: number;
+                    /**
+                     * @default 9:16
+                     * @enum {string}
+                     */
+                    aspect_ratio: "9:16" | "1:1" | "16:9";
+                    /**
+                     * @default 1080p
+                     * @constant
+                     */
+                    resolution: "1080p";
                     /**
                      * @default false
                      * @constant
@@ -2853,7 +2946,7 @@ export interface components {
                 } | {
                     /**
                      * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
-                     * @default 30
+                     * @default 15
                      */
                     duration_seconds: number;
                     /**
@@ -2862,7 +2955,7 @@ export interface components {
                      */
                     aspect_ratio: "9:16" | "1:1" | "16:9";
                     /**
-                     * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                     * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
                      * @default enhanced
                      * @enum {string}
                      */
@@ -2915,6 +3008,29 @@ export interface components {
                      * @enum {string}
                      */
                     resolution: "1080p" | "4k";
+                    /**
+                     * @default false
+                     * @constant
+                     */
+                    captions: false;
+                    /**
+                     * @default faceless
+                     * @constant
+                     */
+                    presentation_mode: "faceless";
+                } | {
+                    /** @default 15 */
+                    duration_seconds: number;
+                    /**
+                     * @default 9:16
+                     * @enum {string}
+                     */
+                    aspect_ratio: "9:16" | "1:1" | "16:9";
+                    /**
+                     * @default 1080p
+                     * @constant
+                     */
+                    resolution: "1080p";
                     /**
                      * @default false
                      * @constant
@@ -3443,7 +3559,7 @@ export interface components {
             } | {
                 /**
                  * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
-                 * @default 30
+                 * @default 15
                  */
                 duration_seconds: number;
                 /**
@@ -3452,7 +3568,7 @@ export interface components {
                  */
                 aspect_ratio: "9:16" | "1:1" | "16:9";
                 /**
-                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
                  * @default enhanced
                  * @enum {string}
                  */
@@ -3505,6 +3621,29 @@ export interface components {
                  * @enum {string}
                  */
                 resolution: "1080p" | "4k";
+                /**
+                 * @default false
+                 * @constant
+                 */
+                captions: false;
+                /**
+                 * @default faceless
+                 * @constant
+                 */
+                presentation_mode: "faceless";
+            } | {
+                /** @default 15 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @constant
+                 */
+                resolution: "1080p";
                 /**
                  * @default false
                  * @constant
@@ -3744,7 +3883,7 @@ export interface components {
             } | {
                 /**
                  * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
-                 * @default 30
+                 * @default 15
                  */
                 duration_seconds: number;
                 /**
@@ -3753,7 +3892,7 @@ export interface components {
                  */
                 aspect_ratio: "9:16" | "1:1" | "16:9";
                 /**
-                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
                  * @default enhanced
                  * @enum {string}
                  */
@@ -3806,6 +3945,29 @@ export interface components {
                  * @enum {string}
                  */
                 resolution: "1080p" | "4k";
+                /**
+                 * @default false
+                 * @constant
+                 */
+                captions: false;
+                /**
+                 * @default faceless
+                 * @constant
+                 */
+                presentation_mode: "faceless";
+            } | {
+                /** @default 15 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @constant
+                 */
+                resolution: "1080p";
                 /**
                  * @default false
                  * @constant
@@ -4044,7 +4206,7 @@ export interface components {
             } | {
                 /**
                  * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
-                 * @default 30
+                 * @default 15
                  */
                 duration_seconds: number;
                 /**
@@ -4053,7 +4215,7 @@ export interface components {
                  */
                 aspect_ratio: "9:16" | "1:1" | "16:9";
                 /**
-                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
                  * @default enhanced
                  * @enum {string}
                  */
@@ -4106,6 +4268,29 @@ export interface components {
                  * @enum {string}
                  */
                 resolution: "1080p" | "4k";
+                /**
+                 * @default false
+                 * @constant
+                 */
+                captions: false;
+                /**
+                 * @default faceless
+                 * @constant
+                 */
+                presentation_mode: "faceless";
+            } | {
+                /** @default 15 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @constant
+                 */
+                resolution: "1080p";
                 /**
                  * @default false
                  * @constant
@@ -4343,7 +4528,7 @@ export interface components {
             } | {
                 /**
                  * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
-                 * @default 30
+                 * @default 15
                  */
                 duration_seconds: number;
                 /**
@@ -4352,7 +4537,7 @@ export interface components {
                  */
                 aspect_ratio: "9:16" | "1:1" | "16:9";
                 /**
-                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
                  * @default enhanced
                  * @enum {string}
                  */
@@ -4405,6 +4590,29 @@ export interface components {
                  * @enum {string}
                  */
                 resolution: "1080p" | "4k";
+                /**
+                 * @default false
+                 * @constant
+                 */
+                captions: false;
+                /**
+                 * @default faceless
+                 * @constant
+                 */
+                presentation_mode: "faceless";
+            } | {
+                /** @default 15 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @constant
+                 */
+                resolution: "1080p";
                 /**
                  * @default false
                  * @constant
@@ -4644,7 +4852,7 @@ export interface components {
             } | {
                 /**
                  * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
-                 * @default 30
+                 * @default 15
                  */
                 duration_seconds: number;
                 /**
@@ -4653,7 +4861,7 @@ export interface components {
                  */
                 aspect_ratio: "9:16" | "1:1" | "16:9";
                 /**
-                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
+                 * @description Quality of visual production. Essential funds focused coverage, Enhanced funds more distinct shots, and Premium funds the most custom takes and visual variety. Quality does not change the requested duration. All levels use the same evidence and brand standards. The maximum price updates with the resource budget; resolution is a separate export setting.
                  * @default enhanced
                  * @enum {string}
                  */
@@ -4706,6 +4914,29 @@ export interface components {
                  * @enum {string}
                  */
                 resolution: "1080p" | "4k";
+                /**
+                 * @default false
+                 * @constant
+                 */
+                captions: false;
+                /**
+                 * @default faceless
+                 * @constant
+                 */
+                presentation_mode: "faceless";
+            } | {
+                /** @default 15 */
+                duration_seconds: number;
+                /**
+                 * @default 9:16
+                 * @enum {string}
+                 */
+                aspect_ratio: "9:16" | "1:1" | "16:9";
+                /**
+                 * @default 1080p
+                 * @constant
+                 */
+                resolution: "1080p";
                 /**
                  * @default false
                  * @constant
