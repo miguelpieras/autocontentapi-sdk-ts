@@ -381,9 +381,16 @@ export type MotionAdVideoOptions = Omit<MotionLaunchVideoOptions, 'aspect_ratio'
   visual_production?: never;
   product_visual_source_ids?: never;
 };
-export type MotionAdVideoRequest = Omit<MotionLaunchVideoRequest, 'asset_type' | 'options'> & {
+export type ProductCommercialSources = {
+  /** One to four distinct, ready direct image uploads from the request's Project scope. */
+  product_source_ids: string[];
+  /** Up to two separate uploads, used only for visual style, never as factual evidence or render layers. */
+  style_reference_source_ids?: string[];
+};
+export type MotionAdVideoRequest = Omit<MotionLaunchVideoRequest, 'asset_type' | 'options' | 'model_options'> & {
   asset_type: 'ad_video';
   options?: MotionAdVideoOptions;
+  model_options?: NonNullable<MotionLaunchVideoRequest['model_options']> & { product_commercial?: ProductCommercialSources };
 };
 
 /** AI captures a real public website and composes a 15–60 second product film. */
@@ -485,7 +492,14 @@ export type MotionLaunchVideoEdit = {
 };
 
 /** Canonical edit admission resolves the original Asset type and validates its profile. */
-export type MotionAdVideoEdit = Omit<MotionLaunchVideoEdit, 'options'> & { options?: MotionAdVideoOptions };
+export type MotionAdVideoEdit = Omit<MotionLaunchVideoEdit, 'options' | 'model_options'> & {
+  options?: MotionAdVideoOptions;
+  model_options?: NonNullable<MotionLaunchVideoEdit['model_options']> & {
+    product_commercial?: ProductCommercialSources;
+    /** Stable scene ID from this result's metadata; retains all other scenes, format and music. Edit-only. */
+    target_section_id?: string;
+  };
+};
 
 
 export type GenerationAssetEdit =

@@ -2720,7 +2720,7 @@ export interface components {
                 voice_id?: string;
                 avatar_id?: string;
                 model?: string;
-                /** @description Validated by the exact versioned schema returned from GET /models for the pinned model. */
+                /** @description Validated by GET /models for the pinned model. Motion Ad supports product_commercial with 1–4 product_source_ids and 0–2 distinct style_reference_source_ids, all ready in-scope direct image uploads. Sources freeze at acceptance; style references are not evidence or output pixels. This mode adds an optional secondary storyboard PNG and scenes in metadata after rendering. */
                 model_options?: {
                     [key: string]: unknown;
                 };
@@ -3043,7 +3043,7 @@ export interface components {
                 };
                 narration_script: components["schemas"]["NarrationScript"];
                 model?: string;
-                /** @description Validated by the exact versioned schema returned from GET /models for the pinned model. */
+                /** @description Validated by GET /models for the pinned model. Motion Ad supports product_commercial with 1–4 product_source_ids and 0–2 distinct style_reference_source_ids, all ready in-scope direct image uploads. Sources freeze at acceptance; style references are not evidence or output pixels. This mode adds an optional secondary storyboard PNG and scenes in metadata after rendering. */
                 model_options?: {
                     [key: string]: unknown;
                 };
@@ -3657,7 +3657,7 @@ export interface components {
             voice_id?: string;
             avatar_id?: string;
             model?: string;
-            /** @description Validated by the exact versioned schema returned from GET /models for the pinned model. */
+            /** @description Validated by GET /models for the pinned model. Motion Ad supports product_commercial with 1–4 product_source_ids and 0–2 distinct style_reference_source_ids, all ready in-scope direct image uploads. Sources freeze at acceptance; style references are not evidence or output pixels. This mode adds an optional secondary storyboard PNG and scenes in metadata after rendering. */
             model_options?: {
                 [key: string]: unknown;
             };
@@ -3980,7 +3980,7 @@ export interface components {
             };
             narration_script: components["schemas"]["NarrationScript"];
             model?: string;
-            /** @description Validated by the exact versioned schema returned from GET /models for the pinned model. */
+            /** @description Validated by GET /models for the pinned model. Motion Ad supports product_commercial with 1–4 product_source_ids and 0–2 distinct style_reference_source_ids, all ready in-scope direct image uploads. Sources freeze at acceptance; style references are not evidence or output pixels. This mode adds an optional secondary storyboard PNG and scenes in metadata after rendering. */
             model_options?: {
                 [key: string]: unknown;
             };
@@ -4304,6 +4304,7 @@ export interface components {
             voice_id?: string;
             avatar_id?: string;
             model?: string;
+            /** @description Motion product-commercial edits can pass target_section_id from the selected successful result metadata and instructions for the change. References, output profile, language, other scenes and the exact score remain fixed. The directive is consumed; subsequent edits are whole-film unless targeted again. This is a paid full rerender, not pre-render approval. */
             model_options?: {
                 [key: string]: unknown;
             };
@@ -4628,6 +4629,7 @@ export interface components {
             /** @description Remove the accepted exact script and return this Asset to generated narration. */
             narration_script: null;
             model?: string;
+            /** @description Motion product-commercial edits can pass target_section_id from the selected successful result metadata and instructions for the change. References, output profile, language, other scenes and the exact score remain fixed. The directive is consumed; subsequent edits are whole-film unless targeted again. This is a paid full rerender, not pre-render approval. */
             model_options?: {
                 [key: string]: unknown;
             };
@@ -4949,6 +4951,7 @@ export interface components {
             };
             narration_script: components["schemas"]["NarrationScript"];
             model?: string;
+            /** @description Motion product-commercial edits can pass target_section_id from the selected successful result metadata and instructions for the change. References, output profile, language, other scenes and the exact score remain fixed. The directive is consumed; subsequent edits are whole-film unless targeted again. This is a paid full rerender, not pre-render approval. */
             model_options?: {
                 [key: string]: unknown;
             };

@@ -17378,7 +17378,7 @@
                     },
                     "model_options": {
                       "type": "object",
-                      "description": "Validated by the exact versioned schema returned from GET /models for the pinned model.",
+                      "description": "Validated by GET /models for the pinned model. Motion Ad supports product_commercial with 1–4 product_source_ids and 0–2 distinct style_reference_source_ids, all ready in-scope direct image uploads. Sources freeze at acceptance; style references are not evidence or output pixels. This mode adds an optional secondary storyboard PNG and scenes in metadata after rendering.",
                       "additionalProperties": true,
                       "x-schema-source": "GET /models.model_options_schema"
                     }
@@ -18113,7 +18113,7 @@
                     },
                     "model_options": {
                       "type": "object",
-                      "description": "Validated by the exact versioned schema returned from GET /models for the pinned model.",
+                      "description": "Validated by GET /models for the pinned model. Motion Ad supports product_commercial with 1–4 product_source_ids and 0–2 distinct style_reference_source_ids, all ready in-scope direct image uploads. Sources freeze at acceptance; style references are not evidence or output pixels. This mode adds an optional secondary storyboard PNG and scenes in metadata after rendering.",
                       "additionalProperties": true,
                       "x-schema-source": "GET /models.model_options_schema"
                     }
@@ -20387,7 +20387,7 @@
               },
               "model_options": {
                 "type": "object",
-                "description": "Validated by the exact versioned schema returned from GET /models for the pinned model.",
+                "description": "Validated by GET /models for the pinned model. Motion Ad supports product_commercial with 1–4 product_source_ids and 0–2 distinct style_reference_source_ids, all ready in-scope direct image uploads. Sources freeze at acceptance; style references are not evidence or output pixels. This mode adds an optional secondary storyboard PNG and scenes in metadata after rendering.",
                 "additionalProperties": true,
                 "x-schema-source": "GET /models.model_options_schema"
               }
@@ -21122,7 +21122,7 @@
               },
               "model_options": {
                 "type": "object",
-                "description": "Validated by the exact versioned schema returned from GET /models for the pinned model.",
+                "description": "Validated by GET /models for the pinned model. Motion Ad supports product_commercial with 1–4 product_source_ids and 0–2 distinct style_reference_source_ids, all ready in-scope direct image uploads. Sources freeze at acceptance; style references are not evidence or output pixels. This mode adds an optional secondary storyboard PNG and scenes in metadata after rendering.",
                 "additionalProperties": true,
                 "x-schema-source": "GET /models.model_options_schema"
               }
@@ -21859,6 +21859,7 @@
               "model_options": {
                 "type": "object",
                 "additionalProperties": true,
+                "description": "Motion product-commercial edits can pass target_section_id from the selected successful result metadata and instructions for the change. References, output profile, language, other scenes and the exact score remain fixed. The directive is consumed; subsequent edits are whole-film unless targeted again. This is a paid full rerender, not pre-render approval.",
                 "x-schema-source": "GET /models.model_options_schema"
               }
             }
@@ -22595,6 +22596,7 @@
               "model_options": {
                 "type": "object",
                 "additionalProperties": true,
+                "description": "Motion product-commercial edits can pass target_section_id from the selected successful result metadata and instructions for the change. References, output profile, language, other scenes and the exact score remain fixed. The directive is consumed; subsequent edits are whole-film unless targeted again. This is a paid full rerender, not pre-render approval.",
                 "x-schema-source": "GET /models.model_options_schema"
               }
             }
@@ -23322,6 +23324,7 @@
               "model_options": {
                 "type": "object",
                 "additionalProperties": true,
+                "description": "Motion product-commercial edits can pass target_section_id from the selected successful result metadata and instructions for the change. References, output profile, language, other scenes and the exact score remain fixed. The directive is consumed; subsequent edits are whole-film unless targeted again. This is a paid full rerender, not pre-render approval.",
                 "x-schema-source": "GET /models.model_options_schema"
               }
             }

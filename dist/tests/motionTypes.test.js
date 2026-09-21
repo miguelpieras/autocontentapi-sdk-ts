@@ -43,11 +43,11 @@ test('Motion Ads travel through real GenerationDraft, client preview/create and 
             return Response.json({ id: 'gen_ad', total_cost_usd: '5.00' });
         } });
     const ad = { asset_type: 'ad_video', model: 'autocontent-motion-design-v1',
-        options: { duration_seconds: 15, resolution: '1080p', aspect_ratio: '9:16' }, model_options: { music_direction: 'Sparse opening; syncopated return; resolved ending' } };
+        options: { duration_seconds: 15, resolution: '1080p', aspect_ratio: '9:16' }, model_options: { music_direction: 'Sparse opening; syncopated return; resolved ending', product_commercial: { product_source_ids: ['src_photo'], style_reference_source_ids: ['src_style'] } } };
     const value = { project_id: 'prj_one', input: { type: 'knowledge', source_ids: ['src_one'] }, assets: [ad] };
     await client.generations.preview(value);
     await client.generations.create({ ...value, max_cost_usd: '5.00' }, { idempotencyKey: 'motion-ad' });
-    const edit = { asset_id: 'ast_ad', options: { aspect_ratio: '1:1' }, model_options: { refresh_music: true } };
+    const edit = { asset_id: 'ast_ad', instructions: 'Make the bottle larger in the final scene.', model_options: { target_section_id: 'finish' } };
     await client.generations.previewEdit('gen_ad', { assets: [edit] });
     assert.deepEqual(await requests[0].json(), value);
     assert.deepEqual((await requests[1].json()).assets, [ad]);
