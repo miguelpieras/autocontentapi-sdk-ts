@@ -6355,6 +6355,409 @@
         }
       }
     },
+    "/projects/{id}/recording-access": {
+      "post": {
+        "operationId": "createRecordingAccess",
+        "summary": "Save demo login and separate logged-in-content processing permission",
+        "tags": [
+          "projects"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.write"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^prj_[A-Za-z0-9_-]+$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                  },
+                  "origin": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048,
+                    "format": "uri",
+                    "x-max-utf8-bytes": 2048
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "http_basic",
+                      "form"
+                    ]
+                  },
+                  "username": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^[^:\\r\\n]+$"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1024
+                  },
+                  "login_path": {
+                    "default": "/login",
+                    "type": "string",
+                    "maxLength": 500,
+                    "pattern": "^\\/(?!\\/)[^?#\\r\\n\\\\]*$"
+                  },
+                  "success_text": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 120
+                  },
+                  "credential_use_confirmed": {
+                    "type": "boolean",
+                    "const": true
+                  },
+                  "logged_in_content_ai_processing_confirmed": {
+                    "type": "boolean",
+                    "const": true
+                  },
+                  "processors": {
+                    "type": "array",
+                    "prefixItems": [
+                      {
+                        "type": "string",
+                        "const": "openai"
+                      },
+                      {
+                        "type": "string",
+                        "const": "gemini"
+                      },
+                      {
+                        "type": "string",
+                        "const": "elevenlabs"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "origin",
+                  "mode",
+                  "username",
+                  "password",
+                  "login_path",
+                  "success_text",
+                  "credential_use_confirmed",
+                  "logged_in_content_ai_processing_confirmed",
+                  "processors"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordingAccessProfile"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      },
+      "get": {
+        "operationId": "listRecordingAccess",
+        "summary": "List saved demo access without secrets",
+        "tags": [
+          "projects"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          },
+          {
+            "platformApiKey": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.read"
+        ],
+        "x-principal": "oauth_or_api_key",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^prj_[A-Za-z0-9_-]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "next_cursor"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RecordingAccessProfile"
+                      }
+                    },
+                    "next_cursor": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/projects/{id}/recording-access/{access_id}": {
+      "patch": {
+        "operationId": "rotateRecordingAccess",
+        "summary": "Replace demo credentials and revoke prior revision",
+        "tags": [
+          "projects"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.write"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^prj_[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "access_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^racc_[0-9A-HJKMNP-TV-Z]{26}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                  },
+                  "origin": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048,
+                    "format": "uri",
+                    "x-max-utf8-bytes": 2048
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "http_basic",
+                      "form"
+                    ]
+                  },
+                  "username": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^[^:\\r\\n]+$"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1024
+                  },
+                  "login_path": {
+                    "default": "/login",
+                    "type": "string",
+                    "maxLength": 500,
+                    "pattern": "^\\/(?!\\/)[^?#\\r\\n\\\\]*$"
+                  },
+                  "success_text": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 120
+                  },
+                  "credential_use_confirmed": {
+                    "type": "boolean",
+                    "const": true
+                  },
+                  "logged_in_content_ai_processing_confirmed": {
+                    "type": "boolean",
+                    "const": true
+                  },
+                  "processors": {
+                    "type": "array",
+                    "prefixItems": [
+                      {
+                        "type": "string",
+                        "const": "openai"
+                      },
+                      {
+                        "type": "string",
+                        "const": "gemini"
+                      },
+                      {
+                        "type": "string",
+                        "const": "elevenlabs"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "origin",
+                  "mode",
+                  "username",
+                  "password",
+                  "login_path",
+                  "success_text",
+                  "credential_use_confirmed",
+                  "logged_in_content_ai_processing_confirmed",
+                  "processors"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordingAccessProfile"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteRecordingAccess",
+        "summary": "Revoke and erase saved demo credentials",
+        "tags": [
+          "projects"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.write"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^prj_[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "access_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^racc_[0-9A-HJKMNP-TV-Z]{26}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordingAccessRevocation"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
     "/projects": {
       "post": {
         "operationId": "createProject",
@@ -12680,7 +13083,7 @@
         }
       },
       "Model": {
-        "description": "Exact model discovery. When available, autocontent-recorded-demo-v1 supports product_demo_video, launch_video and ad_video from options.website_url (public HTTPS only) plus instructions. AI captures real browser interactions and composes typography, optional narration and original music. It supports 15–60 seconds, 1080p, and 16:9, 9:16 or 1:1. interaction_mode defaults to browse; demo requires demo_environment_confirmed:true for an environment without real external effects. Credentials and saved sessions are unsupported. model_options accepts narration and music_direction. Each generation or edit captures a new journey and score. When available, autocontent-narrated-video-v1 produces Short and Explainer videos with generated artwork, narrated explanatory motion, and optional short H3 clips. It supports faceless presentation, existing Voice selection, captions, all three video aspect ratios, and 720p/1080p. No music is added. Preview returns the maximum price; settlement charges newly incurred work.",
+        "description": "Exact model discovery. When available, autocontent-recorded-demo-v1 supports product_demo_video, launch_video and ad_video from options.website_url (publicly reachable HTTPS) plus instructions. AI plans the audience/value story before capture, records real browser interactions, composes typography, optional narration, original music and measured interaction sounds, and reviews an audiovisual rough before final export. Results include a final-film storyboard and timed scene metadata. It supports 15–120 seconds, 1080p, and 16:9, 9:16 or 1:1. interaction_mode defaults to browse; demo requires demo_environment_confirmed:true for an environment without real external effects. Optional options.recording_access_id references exact-origin Basic or ordinary form login saved through the dedicated Project form. Never put credentials in prompts or generation payloads. SSO, MFA, CAPTCHA and private networks remain unsupported. model_options accepts narration, music_direction and refresh_recording. Compatible visual edits retain verified footage, speech and score; preview.recorded_media states retained/new material. Changed source settings or refresh_recording:true request freshly quoted media. When available, autocontent-narrated-video-v1 produces Short and Explainer videos with generated artwork, narrated explanatory motion, and optional short H3 clips. It supports faceless presentation, existing Voice selection, captions, all three video aspect ratios, and 720p/1080p. No music is added. Preview returns the maximum price; settlement charges newly incurred work.",
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -12870,6 +13273,71 @@
             ]
           }
         }
+      },
+      "RecordingAccessProfile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^racc_[0-9A-HJKMNP-TV-Z]{26}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "origin": {
+            "type": "string",
+            "format": "uri"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "http_basic",
+              "form"
+            ]
+          },
+          "revision": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "origin",
+          "mode",
+          "revision",
+          "created_at",
+          "updated_at"
+        ],
+        "additionalProperties": false
+      },
+      "RecordingAccessRevocation": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "revoked": {
+            "type": "boolean",
+            "const": true
+          }
+        },
+        "required": [
+          "id",
+          "revoked"
+        ]
       },
       "GenerationPreview": {
         "type": "object",
@@ -13746,6 +14214,39 @@
                   "type": "object",
                   "additionalProperties": true,
                   "description": "Present only when the exact model has normalized native options."
+                },
+                "recorded_media": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "recording",
+                    "speech",
+                    "score"
+                  ],
+                  "description": "Verified media retained by a visual edit, or newly captured/generated media included in this quote.",
+                  "properties": {
+                    "recording": {
+                      "type": "string",
+                      "enum": [
+                        "retained",
+                        "new"
+                      ]
+                    },
+                    "speech": {
+                      "type": "string",
+                      "enum": [
+                        "retained",
+                        "new"
+                      ]
+                    },
+                    "score": {
+                      "type": "string",
+                      "enum": [
+                        "retained",
+                        "new"
+                      ]
+                    }
+                  }
                 },
                 "music": {
                   "type": "object",
@@ -14751,6 +15252,39 @@
                   "additionalProperties": true,
                   "description": "Present only when the exact model has normalized native options."
                 },
+                "recorded_media": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "recording",
+                    "speech",
+                    "score"
+                  ],
+                  "description": "Verified media retained by a visual edit, or newly captured/generated media included in this quote.",
+                  "properties": {
+                    "recording": {
+                      "type": "string",
+                      "enum": [
+                        "retained",
+                        "new"
+                      ]
+                    },
+                    "speech": {
+                      "type": "string",
+                      "enum": [
+                        "retained",
+                        "new"
+                      ]
+                    },
+                    "score": {
+                      "type": "string",
+                      "enum": [
+                        "retained",
+                        "new"
+                      ]
+                    }
+                  }
+                },
                 "music": {
                   "type": "object",
                   "additionalProperties": false,
@@ -15080,8 +15614,9 @@
                     "maxLength": 240
                   },
                   "key_facts": {
+                    "description": "Empty for provisional recorded-website topics; final product claims are grounded in the captured website.",
                     "type": "array",
-                    "minItems": 1,
+                    "minItems": 0,
                     "maxItems": 12,
                     "items": {
                       "type": "string",

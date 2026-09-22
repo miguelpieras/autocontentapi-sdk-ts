@@ -2,6 +2,7 @@ import { waitForResource } from '../polling.js';
 import type { Transport } from '../transport.js';
 import type {
   LogoInput,
+  RecordingAccessProfile,
   MutationOptions,
   Page,
   Project,
@@ -34,6 +35,11 @@ export class ProjectsResource {
       naturallyIdempotent: true,
       options: requestOptions
     });
+  }
+
+  listRecordingAccess(projectId: string, options: RequestOptions = {}): Promise<Page<RecordingAccessProfile>> {
+    return this.transport.request({ method: 'GET', path: `/projects/${encodeURIComponent(projectId)}/recording-access`,
+      naturallyIdempotent: true, options });
   }
 
   get(projectId: string, options: RequestOptions = {}): Promise<Project> {

@@ -265,7 +265,7 @@ The default API origin is `https://api.autocontentapi.com/v1`. Use `baseUrl` or
 
 ### Record a public website
 
-When model discovery lists `autocontent-recorded-demo-v1`, use it with `product_demo_video`, `launch_video`, or `ad_video`. Set `options.website_url` to a public HTTPS page and describe the journey in `instructions`. AI records real browser interactions and composes the footage, typography, narration, and an original instrumental. No credentials or saved browser sessions are accepted.
+When model discovery lists `autocontent-recorded-demo-v1`, use it with `product_demo_video`, `launch_video`, or `ad_video`. Set `options.website_url` to a publicly reachable HTTPS page and describe the journey in `instructions`. AI records real browser interactions and composes the footage, typography, narration, and an original instrumental. For an owned protected demo, save Basic or ordinary form access in the Project web form and reference its ID with `options.recording_access_id`. Never include credentials in prompts or generation payloads. SSO, MFA, CAPTCHA and private networks are unsupported. Recorded films support 15–120 seconds. Compatible visual edits retain verified footage, speech and score; the preview identifies retained versus new media. Use `model_options.refresh_recording: true` for a newly quoted journey and sound.
 
 ```ts
 import type { RecordedDemoRequest } from 'autocontentapi';

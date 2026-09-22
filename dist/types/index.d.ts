@@ -344,8 +344,9 @@ export type MotionAdVideoRequest = Omit<MotionLaunchVideoRequest, 'asset_type' |
         product_commercial?: ProductCommercialSources;
     };
 };
-/** AI captures a real public website and composes a 15–60 second product film. */
+/** AI captures a reachable HTTPS website and composes a 15–120 second product film. */
 export type RecordedDemoOptions = {
+    recording_access_id?: string;
     website_url: string;
     duration_seconds?: number;
     aspect_ratio?: '16:9' | '9:16' | '1:1';
@@ -371,6 +372,7 @@ export type RecordedDemoRequest<T extends 'product_demo_video' | 'launch_video' 
     model_options?: {
         narration?: boolean;
         music_direction?: string;
+        refresh_recording?: boolean;
     };
 };
 export type LaunchVideoRequest = VideoRequest<'launch_video'> | MotionLaunchVideoRequest | RecordedDemoRequest<'launch_video'>;
@@ -469,4 +471,14 @@ export interface GenerationCreateRequest extends GenerationDraft {
 }
 export declare const extensionAsset: (assetType: string, fields?: Omit<ExtensionAssetRequest, "asset_type">) => ExtensionAssetRequest;
 export type { components, operations } from './openapi.js';
+/** Non-secret metadata; credentials are entered only in the dedicated web form. */
+export type RecordingAccessProfile = {
+    id: string;
+    name: string;
+    origin: string;
+    mode: 'http_basic' | 'form';
+    revision: number;
+    created_at: string;
+    updated_at: string;
+};
 //# sourceMappingURL=index.d.ts.map

@@ -22,6 +22,10 @@ export class ProjectsResource {
             options: requestOptions
         });
     }
+    listRecordingAccess(projectId, options = {}) {
+        return this.transport.request({ method: 'GET', path: `/projects/${encodeURIComponent(projectId)}/recording-access`,
+            naturallyIdempotent: true, options });
+    }
     get(projectId, options = {}) {
         return this.transport.request({
             method: 'GET',

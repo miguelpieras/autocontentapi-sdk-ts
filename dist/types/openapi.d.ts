@@ -275,6 +275,42 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/projects/{id}/recording-access": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List saved demo access without secrets */
+        get: operations["listRecordingAccess"];
+        put?: never;
+        /** Save demo login and separate logged-in-content processing permission */
+        post: operations["createRecordingAccess"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{id}/recording-access/{access_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Revoke and erase saved demo credentials */
+        delete: operations["deleteRecordingAccess"];
+        options?: never;
+        head?: never;
+        /** Replace demo credentials and revoke prior revision */
+        patch: operations["rotateRecordingAccess"];
+        trace?: never;
+    };
     "/projects": {
         parameters: {
             query?: never;
@@ -1108,7 +1144,7 @@ export interface components {
                 exact_price_via_preview: true;
             };
         };
-        /** @description Exact model discovery. When available, autocontent-recorded-demo-v1 supports product_demo_video, launch_video and ad_video from options.website_url (public HTTPS only) plus instructions. AI captures real browser interactions and composes typography, optional narration and original music. It supports 15–60 seconds, 1080p, and 16:9, 9:16 or 1:1. interaction_mode defaults to browse; demo requires demo_environment_confirmed:true for an environment without real external effects. Credentials and saved sessions are unsupported. model_options accepts narration and music_direction. Each generation or edit captures a new journey and score. When available, autocontent-narrated-video-v1 produces Short and Explainer videos with generated artwork, narrated explanatory motion, and optional short H3 clips. It supports faceless presentation, existing Voice selection, captions, all three video aspect ratios, and 720p/1080p. No music is added. Preview returns the maximum price; settlement charges newly incurred work. */
+        /** @description Exact model discovery. When available, autocontent-recorded-demo-v1 supports product_demo_video, launch_video and ad_video from options.website_url (publicly reachable HTTPS) plus instructions. AI plans the audience/value story before capture, records real browser interactions, composes typography, optional narration, original music and measured interaction sounds, and reviews an audiovisual rough before final export. Results include a final-film storyboard and timed scene metadata. It supports 15–120 seconds, 1080p, and 16:9, 9:16 or 1:1. interaction_mode defaults to browse; demo requires demo_environment_confirmed:true for an environment without real external effects. Optional options.recording_access_id references exact-origin Basic or ordinary form login saved through the dedicated Project form. Never put credentials in prompts or generation payloads. SSO, MFA, CAPTCHA and private networks remain unsupported. model_options accepts narration, music_direction and refresh_recording. Compatible visual edits retain verified footage, speech and score; preview.recorded_media states retained/new material. Changed source settings or refresh_recording:true request freshly quoted media. When available, autocontent-narrated-video-v1 produces Short and Explainer videos with generated artwork, narrated explanatory motion, and optional short H3 clips. It supports faceless presentation, existing Voice selection, captions, all three video aspect ratios, and 720p/1080p. No music is added. Preview returns the maximum price; settlement charges newly incurred work. */
         Model: {
             id: string;
             asset_types: components["schemas"]["AssetType"][];
@@ -1147,6 +1183,24 @@ export interface components {
             shortfall_usd: string;
             /** @enum {string} */
             action: "continue" | "add_funds" | "contact_support";
+        };
+        RecordingAccessProfile: {
+            id: string;
+            name: string;
+            /** Format: uri */
+            origin: string;
+            /** @enum {string} */
+            mode: "http_basic" | "form";
+            revision: number;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        RecordingAccessRevocation: {
+            id: string;
+            /** @constant */
+            revoked: true;
         };
         GenerationPreview: {
             /** @constant */
@@ -1494,6 +1548,15 @@ export interface components {
                 /** @description Present only when the exact model has normalized native options. */
                 normalized_model_options?: {
                     [key: string]: unknown;
+                };
+                /** @description Verified media retained by a visual edit, or newly captured/generated media included in this quote. */
+                recorded_media?: {
+                    /** @enum {string} */
+                    recording: "retained" | "new";
+                    /** @enum {string} */
+                    speech: "retained" | "new";
+                    /** @enum {string} */
+                    score: "retained" | "new";
                 };
                 /** @description Motion Design score policy for this request. Reuse retains the exact accepted audio; generate prices one original replacement. */
                 music?: {
@@ -1866,6 +1929,15 @@ export interface components {
                 normalized_model_options?: {
                     [key: string]: unknown;
                 };
+                /** @description Verified media retained by a visual edit, or newly captured/generated media included in this quote. */
+                recorded_media?: {
+                    /** @enum {string} */
+                    recording: "retained" | "new";
+                    /** @enum {string} */
+                    speech: "retained" | "new";
+                    /** @enum {string} */
+                    score: "retained" | "new";
+                };
                 /** @description Motion Design score policy for this request. Reuse retains the exact accepted audio; generate prices one original replacement. */
                 music?: {
                     /** @enum {string} */
@@ -1921,6 +1993,7 @@ export interface components {
                 topic: string;
                 angle: string;
                 qualification_reason: string;
+                /** @description Empty for provisional recorded-website topics; final product claims are grounded in the captured website. */
                 key_facts: string[];
                 /** @enum {string} */
                 input_type: "trend" | "topic" | "knowledge";
@@ -7187,6 +7260,151 @@ export interface operations {
                             error: string | null;
                         }[];
                     };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    listRecordingAccess: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["RecordingAccessProfile"][];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    createRecordingAccess: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    /** Format: uri */
+                    origin: string;
+                    /** @enum {string} */
+                    mode: "http_basic" | "form";
+                    username: string;
+                    password: string;
+                    /** @default /login */
+                    login_path: string;
+                    success_text: string;
+                    /** @constant */
+                    credential_use_confirmed: true;
+                    /** @constant */
+                    logged_in_content_ai_processing_confirmed: true;
+                    processors: [
+                        "openai",
+                        "gemini",
+                        "elevenlabs"
+                    ];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecordingAccessProfile"];
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    deleteRecordingAccess: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                access_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecordingAccessRevocation"];
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    rotateRecordingAccess: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                access_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    /** Format: uri */
+                    origin: string;
+                    /** @enum {string} */
+                    mode: "http_basic" | "form";
+                    username: string;
+                    password: string;
+                    /** @default /login */
+                    login_path: string;
+                    success_text: string;
+                    /** @constant */
+                    credential_use_confirmed: true;
+                    /** @constant */
+                    logged_in_content_ai_processing_confirmed: true;
+                    processors: [
+                        "openai",
+                        "gemini",
+                        "elevenlabs"
+                    ];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecordingAccessProfile"];
                 };
             };
             default: components["responses"]["AutoContentError"];
