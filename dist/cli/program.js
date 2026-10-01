@@ -36,7 +36,7 @@ export const createProgram = (runtime) => {
     program
         .name('autocontent')
         .description('Create first-class content Assets with AutoContent Platform.')
-        .version('0.1.0')
+        .version('1.0.0')
         .option('--json', 'print canonical JSON')
         .option('--human', 'force human-readable output')
         .option('--quiet', 'print only the created resource ID')

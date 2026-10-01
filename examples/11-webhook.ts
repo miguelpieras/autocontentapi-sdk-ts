@@ -3,7 +3,7 @@ import AutoContent from 'autocontentapi';
 
 createServer(async (request, response) => {
   const chunks: Buffer[] = [];
-  for await (const chunk of request) chunks.push(Buffer.from(chunk));
+  for await (const chunk of request) chunks.push(chunk);
   try {
     const event = AutoContent.webhooks.constructEvent({
       rawBody: Buffer.concat(chunks),
@@ -11,8 +11,7 @@ createServer(async (request, response) => {
       eventId: request.headers['x-autocontent-event-id'],
       secret: process.env.AUTOCONTENT_WEBHOOK_SECRET ?? ''
     });
-    // Deduplicate durable processing by event.id.
-    console.log(event.id, event.type);
+    console.log(event.type, event.data);
     response.writeHead(204).end();
   } catch {
     response.writeHead(400).end();
