@@ -3,6 +3,40 @@
  * Do not make direct changes to the file.
  */
 export interface paths {
+    "/mcp-events/subscribe": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Subscribe to authenticated Generation completion events */
+        post: operations["subscribeMcpEvent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/mcp-events/unsubscribe": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Stop a Generation completion subscription */
+        post: operations["unsubscribeMcpEvent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/agent/browser-actions/result": {
         parameters: {
             query?: never;
@@ -5752,7 +5786,7 @@ export interface components {
         };
         ErrorBody: {
             /** @enum {string} */
-            code: "agent_unavailable" | "invalid_request" | "unknown_asset_type" | "invalid_asset_options" | "invalid_model_options" | "model_not_supported" | "model_retired" | "project_not_ready" | "project_limit_exceeded" | "provider_operation_limit_exceeded" | "source_not_ready" | "source_unreachable" | "source_paywalled" | "product_visual_required" | "no_qualified_trend" | "no_qualified_knowledge" | "input_resolution_failed" | "max_cost_exceeded" | "payment_required" | "content_loop_budget_exceeded" | "content_loop_limit_exceeded" | "idempotency_conflict" | "idempotency_in_progress" | "consent_required" | "voice_not_found" | "voice_not_ready" | "voice_not_supported" | "avatar_not_found" | "avatar_not_ready" | "avatar_not_supported" | "artifact_verification_failed" | "rate_limited" | "webhook_limit_exceeded" | "not_found" | "unauthorized" | "forbidden" | "internal_error";
+            code: "agent_unavailable" | "motion_spend_limit_exceeded" | "invalid_request" | "unknown_asset_type" | "invalid_asset_options" | "invalid_model_options" | "model_not_supported" | "model_retired" | "project_not_ready" | "project_limit_exceeded" | "provider_operation_limit_exceeded" | "source_not_ready" | "source_unreachable" | "source_paywalled" | "product_visual_required" | "no_qualified_trend" | "no_qualified_knowledge" | "input_resolution_failed" | "max_cost_exceeded" | "payment_required" | "content_loop_budget_exceeded" | "content_loop_limit_exceeded" | "idempotency_conflict" | "idempotency_in_progress" | "consent_required" | "voice_not_found" | "voice_not_ready" | "voice_not_supported" | "avatar_not_found" | "avatar_not_ready" | "avatar_not_supported" | "artifact_verification_failed" | "rate_limited" | "webhook_limit_exceeded" | "not_found" | "unauthorized" | "forbidden" | "internal_error";
             message: string;
             details?: components["schemas"]["ErrorDetail"][] | Record<string, never>;
             correlation_id: string;
@@ -5793,6 +5827,90 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    subscribeMcpEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @constant */
+                    name: "generation.finished";
+                    arguments: {
+                        generation_id: string;
+                    };
+                    delivery: {
+                        /** @constant */
+                        mode: "webhook";
+                        /** Format: uri */
+                        url: string;
+                        secret: string;
+                    };
+                    ttlMs?: number | null;
+                    cursor?: null;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        /** Format: date-time */
+                        refreshBefore: string;
+                        cursor: null;
+                        /** @constant */
+                        truncated: false;
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    unsubscribeMcpEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @constant */
+                    name: "generation.finished";
+                    arguments: {
+                        generation_id: string;
+                    };
+                    delivery: {
+                        /** @constant */
+                        mode: "webhook";
+                        /** Format: uri */
+                        url: string;
+                    };
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
     recordAgentBrowserResult: {
         parameters: {
             query?: never;
@@ -5984,6 +6102,7 @@ export interface operations {
                             id: "gpt-5.6-luna" | "gpt-5.6-terra" | "gpt-5.6-sol" | "gpt-6-astra";
                             label: string;
                             description: string;
+                            reasoning_efforts: ("none" | "low" | "medium" | "high" | "xhigh" | "max")[];
                             input_cost_usd_per_million_tokens: string;
                             cached_input_cost_usd_per_million_tokens: string;
                             output_cost_usd_per_million_tokens: string;
@@ -6518,6 +6637,8 @@ export interface operations {
                     };
                     inference_max_cost_usd: string;
                     model?: string;
+                    /** @enum {string} */
+                    reasoning_effort?: "none" | "low" | "medium" | "high" | "xhigh" | "max";
                     /** @enum {string} */
                     runtime?: "managed" | "codex" | "claude";
                     native_connection_revision?: number;
