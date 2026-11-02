@@ -225,12 +225,21 @@ interface AssetRequestBase<TAssetType extends string, TOptions extends JsonObjec
   model_options?: JsonObject;
 }
 
-export type ArticleRequest = AssetRequestBase<'article', { target_words?: number }>;
+export type ArticleRequest = AssetRequestBase<'article', {
+  target_words?: number;
+  /** AI-generated illustrations, 0–2 (default 0: no image charge). Each one adds an image-generation charge. */
+  generated_images?: number;
+}>;
 export type LeadMagnetRequest = AssetRequestBase<
   'lead_magnet',
   { page_count?: number; format?: 'auto' | LeadMagnetFormat }
 >;
-export type EbookRequest = AssetRequestBase<'ebook', { chapter_count?: number; target_pages?: number }>;
+export type EbookRequest = AssetRequestBase<'ebook', {
+  chapter_count?: number;
+  target_pages?: number;
+  /** natural (default): target_pages is a maximum and the book ends at its natural length; fixed: exactly target_pages. */
+  page_count_mode?: 'fixed' | 'natural';
+}>;
 export type SlidesRequest = AssetRequestBase<'slides', { slide_count?: number; aspect_ratio?: '16:9' | '4:3' }>;
 export type InfographicRequest = AssetRequestBase<
   'infographic',
@@ -240,9 +249,16 @@ export type QuizRequest = AssetRequestBase<
   'quiz',
   { question_count?: number; difficulty?: 'beginner' | 'intermediate' | 'advanced' }
 >;
-export type PodcastEpisodeRequest = AssetRequestBase<'podcast_episode', { duration_seconds?: number }> & {
-  voice_id?: string;
-};
+type PodcastEpisodeOptions = { duration_seconds?: number };
+export type PodcastEpisodeRequest =
+  | (AssetRequestBase<'podcast_episode', PodcastEpisodeOptions & { cohost_voice_id?: never }> & { voice_id?: string })
+  | (Omit<AssetRequestBase<'podcast_episode', PodcastEpisodeOptions>, 'model' | 'options'> & {
+    /** The two-host model; other podcast models do not accept cohost_voice_id. */
+    model: 'dialogue-v4';
+    /** dialogue-v4 requires a co-host Voice that differs from voice_id. */
+    options: PodcastEpisodeOptions & { cohost_voice_id: string };
+    voice_id?: string;
+  });
 
 export type CaptionStyle = 'social_bold' | 'social_highlight' | 'clean';
 export type CaptionFont = 'inter' | 'montserrat' | 'oswald';
@@ -295,46 +311,47 @@ export type AvatarNarrationScript =
 type VideoRequestBase<TAssetType extends string, TOptions extends VideoOptions> =
   Omit<AssetRequestBase<TAssetType, TOptions>, 'options'>;
 
-type FacelessVideoOptions<TOptions extends VideoOptions> =
-  Omit<TOptions, 'presentation_mode'> & { presentation_mode?: 'faceless' };
+type PresentationMode = NonNullable<VideoOptions['presentation_mode']>;
 
-type AvatarVideoOptions<TOptions extends VideoOptions> =
-  Omit<TOptions, 'presentation_mode'> & { presentation_mode: 'avatar' };
+/** Ads default to avatar; every other video defaults to faceless. */
+type DefaultPresentationMode<TAssetType extends string> = TAssetType extends 'ad_video' ? 'avatar' : 'faceless';
+
+/** The default mode may omit presentation_mode (and options); the other mode must name it. */
+type PresentationOptions<TAssetType extends string, TOptions extends VideoOptions, TMode extends PresentationMode> =
+  TMode extends DefaultPresentationMode<TAssetType>
+    ? { options?: Omit<TOptions, 'presentation_mode'> & { presentation_mode?: TMode } }
+    : { options: Omit<TOptions, 'presentation_mode'> & { presentation_mode: TMode } };
 
 export type GeneratedVideoRequest<
   TAssetType extends string,
   TOptions extends VideoOptions = VideoOptions
 > = VideoRequestBase<TAssetType, TOptions> & (
-  | {
-    options?: FacelessVideoOptions<TOptions>;
+  | (PresentationOptions<TAssetType, TOptions, 'faceless'> & {
     voice_id?: string;
     avatar_id?: never;
     narration_script?: never;
-  }
-  | {
-    options: AvatarVideoOptions<TOptions>;
+  })
+  | (PresentationOptions<TAssetType, TOptions, 'avatar'> & {
     voice_id?: string;
     avatar_id?: string;
     narration_script?: never;
-  }
+  })
 );
 
 export type ExactVideoRequest<
   TAssetType extends string,
   TOptions extends VideoOptions = VideoOptions
 > = VideoRequestBase<TAssetType, TOptions> & (
-  | {
-    options?: FacelessVideoOptions<TOptions>;
+  | (PresentationOptions<TAssetType, TOptions, 'faceless'> & {
     voice_id?: never;
     avatar_id?: never;
     narration_script: FacelessNarrationScript;
-  }
-  | {
-    options: AvatarVideoOptions<TOptions>;
+  })
+  | (PresentationOptions<TAssetType, TOptions, 'avatar'> & {
     voice_id?: never;
     avatar_id?: never;
     narration_script: AvatarNarrationScript;
-  }
+  })
 );
 
 type VideoRequest<TAssetType extends string, TOptions extends VideoOptions = VideoOptions> =
@@ -422,7 +439,18 @@ export type ProductDemoVideoRequest = VideoRequest<
   'product_demo_video',
   VideoOptions & { product_visual_source_ids?: string[] }
 > | RecordedDemoRequest<'product_demo_video'>;
-export type AdVideoRequest = VideoRequest<'ad_video'> | MotionAdVideoRequest | RecordedDemoRequest<'ad_video'>;
+export type AdVideoOptions = VideoOptions & {
+  /** essential, enhanced (default) or premium; it does not change the duration. */
+  visual_production?: 'essential' | 'enhanced' | 'premium';
+  /** Up to 4 photos of the advertised product; leave empty for a service, brand or general ad. */
+  product_visual_source_ids?: string[];
+};
+/**
+ * Without presentation_mode, an ad is an avatar ad: a presenter (the Project default Avatar, else a stock
+ * presenter) talks on camera. A voice-over ad needs presentation_mode: 'faceless'. A model pinned without
+ * Avatar support, such as Motion Design or Recorded Demo, defaults to faceless.
+ */
+export type AdVideoRequest = VideoRequest<'ad_video', AdVideoOptions> | MotionAdVideoRequest | RecordedDemoRequest<'ad_video'>;
 
 export type KnownAssetRequest =
   | ArticleRequest
@@ -466,6 +494,13 @@ export type ContentLoopUpdateInput = Omit<OpenApiContentLoopUpdateInput, 'assets
   assets?: AssetRequest[];
 };
 
+/** One slide to render again from its current image. */
+export interface SlideEdit {
+  /** 1–30 and inside the deck; name each slide once. */
+  slide_number: number;
+  instructions: string;
+}
+
 interface GenerationAssetEditBase {
   asset_id: string;
   instructions?: string;
@@ -473,6 +508,11 @@ interface GenerationAssetEditBase {
   options?: JsonObject;
   model?: string;
   model_options?: JsonObject;
+  /**
+   * Slides only: 1–30 slides of a succeeded deck of complete slide images. The other slides keep their
+   * images; options and language must stay unchanged.
+   */
+  slide_edits?: SlideEdit[];
 }
 
 export type MotionLaunchVideoEdit = {
