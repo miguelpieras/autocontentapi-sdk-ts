@@ -705,7 +705,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Validate and quote a full Asset edit from frozen Generation context */
+        /** Validate and quote an Asset edit from frozen Generation context */
         post: operations["previewGenerationEdit"];
         delete?: never;
         options?: never;
@@ -722,7 +722,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Reserve USD and fully rerender selected Assets from frozen Generation context */
+        /** Reserve USD and rerender selected Assets, or named slides of a deck, from frozen Generation context */
         post: operations["createGenerationEdit"];
         delete?: never;
         options?: never;
@@ -1024,6 +1024,176 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/projects/{id}/social-connections/authorize": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start connecting a TikTok or Instagram account to a Project */
+        post: operations["authorizeSocialConnection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/social-connections/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Finish connecting an account from the provider callback */
+        post: operations["completeSocialConnection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{id}/social-connections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List the Project social accounts and available platforms */
+        get: operations["listSocialConnections"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/social-connections/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Disconnect a social account and erase its tokens */
+        delete: operations["disconnectSocialConnection"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/social-connections/{id}/creator-info": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read current TikTok posting options for the posting screen */
+        get: operations["getTikTokCreatorInfo"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/assets/{id}/publications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish a finished Asset to a connected social account */
+        post: operations["createPublication"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/publications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List social publications by Project, Asset, or status */
+        get: operations["listPublications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/publications/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a social publication */
+        get: operations["getPublication"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/publications/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve a waiting TikTok post with its posting settings */
+        post: operations["approvePublication"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/publications/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Dismiss a post that is waiting for approval */
+        post: operations["cancelPublication"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1178,7 +1348,7 @@ export interface components {
                 exact_price_via_preview: true;
             };
         };
-        /** @description Exact model discovery. When available, autocontent-recorded-demo-v1 supports product_demo_video, launch_video and ad_video from options.website_url (publicly reachable HTTPS) plus instructions. AI plans the audience/value story before capture, records real browser interactions, composes typography, optional narration, original music and measured interaction sounds, and reviews an audiovisual rough before final export. Results include a final-film storyboard and timed scene metadata. It supports 15–120 seconds, 1080p, and 16:9, 9:16 or 1:1. interaction_mode defaults to browse; demo requires demo_environment_confirmed:true for an environment without real external effects. Optional options.recording_access_id references exact-origin Basic or ordinary form login saved through the dedicated Project form. Never put credentials in prompts or generation payloads. SSO, MFA, CAPTCHA and private networks remain unsupported. model_options accepts narration, music_direction and refresh_recording. Compatible visual edits retain verified footage, speech and score; preview.recorded_media states retained/new material. Changed source settings or refresh_recording:true request freshly quoted media. When available, autocontent-narrated-video-v1 produces Short and Explainer videos with generated artwork, narrated explanatory motion, and optional short H3 clips. It supports faceless presentation, existing Voice selection, captions, all three video aspect ratios, and 720p/1080p. No music is added. Preview returns the maximum price; settlement charges newly incurred work. */
+        /** @description Exact model discovery. When available, autocontent-recorded-demo-v1 supports product_demo_video, launch_video, ad_video and short_video from options.website_url (publicly reachable HTTPS) plus instructions. AI plans the audience/value story before capture, records real browser interactions, composes typography, optional narration, original music and measured interaction sounds, and reviews an audiovisual rough before final export. Results include a final-film storyboard and timed scene metadata. It supports 15–120 seconds, 1080p, and 16:9, 9:16 or 1:1. Recorded Shorts default to 30 seconds and 9:16. interaction_mode defaults to browse; demo requires demo_environment_confirmed:true for an environment without real external effects. Optional options.recording_access_id references exact-origin Basic or ordinary form login saved through the dedicated Project form. Never put credentials in prompts or generation payloads. SSO, MFA, CAPTCHA and private networks remain unsupported. model_options accepts narration, music_direction and refresh_recording. Compatible visual edits retain verified footage, speech and score; preview.recorded_media states retained/new material. Changed source settings or refresh_recording:true request freshly quoted media. When available, autocontent-narrated-video-v1 produces Short and Explainer videos with generated artwork, narrated explanatory motion, and optional short H3 clips. It supports faceless presentation, existing Voice selection, captions, all three video aspect ratios, and 720p/1080p. No music is added. Preview returns the maximum price; settlement charges newly incurred work. */
         Model: {
             id: string;
             asset_types: components["schemas"]["AssetType"][];
@@ -1231,6 +1401,72 @@ export interface components {
             /** Format: date-time */
             updated_at: string;
         };
+        SocialAuthorization: {
+            /** @enum {string} */
+            provider: "tiktok" | "instagram";
+            /** Format: uri */
+            authorization_url: string;
+            /** Format: date-time */
+            expires_at: string;
+        };
+        SocialConnection: {
+            id: string;
+            project_id: string;
+            /** @enum {string} */
+            provider: "tiktok" | "instagram";
+            /** @enum {string} */
+            status: "active" | "reconnect_required";
+            username: string;
+            display_name: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        SocialDisconnection: {
+            id: string;
+            /** @constant */
+            disconnected: true;
+        };
+        TikTokCreatorInfo: {
+            can_post: boolean;
+            message: string | null;
+            nickname: string | null;
+            username: string | null;
+            avatar_url: string | null;
+            privacy_level_options: ("PUBLIC_TO_EVERYONE" | "MUTUAL_FOLLOW_FRIENDS" | "FOLLOWER_OF_CREATOR" | "SELF_ONLY")[];
+            comment_disabled: boolean;
+            duet_disabled: boolean;
+            stitch_disabled: boolean;
+            max_video_post_duration_sec: number;
+        };
+        Publication: {
+            id: string;
+            project_id: string;
+            asset_id: string;
+            social_connection_id: string;
+            /** @enum {string} */
+            provider: "tiktok" | "instagram";
+            /** @enum {string} */
+            format: "video" | "carousel";
+            /** @enum {string} */
+            origin: "manual" | "content_loop";
+            content_loop_run_id: string | null;
+            /** @enum {string} */
+            status: "awaiting_approval" | "queued" | "publishing" | "published" | "failed" | "cancelled" | "unknown";
+            caption: string;
+            permalink: string | null;
+            error: {
+                /** @enum {string} */
+                code: "reconnect_required" | "media_rejected" | "provider_rejected" | "rate_limited" | "provider_unavailable" | "connection_removed" | "outcome_unknown";
+                message: string;
+            } | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            published_at: string | null;
+        };
         RecordingAccessRevocation: {
             id: string;
             /** @constant */
@@ -1272,8 +1508,13 @@ export interface components {
                 normalized_options: {
                     /** @default 1200 */
                     target_words: number;
+                    /**
+                     * @description AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.
+                     * @default 0
+                     */
+                    generated_images: number;
                 } | {
-                    /** @default 10 */
+                    /** @default 6 */
                     page_count: number;
                     /**
                      * @default auto
@@ -1285,6 +1526,11 @@ export interface components {
                     chapter_count: number;
                     /** @default 30 */
                     target_pages: number;
+                    /**
+                     * @default natural
+                     * @enum {string}
+                     */
+                    page_count_mode: "fixed" | "natural";
                 } | {
                     /** @default 12 */
                     slide_count: number;
@@ -1315,6 +1561,7 @@ export interface components {
                 } | {
                     /** @default 600 */
                     duration_seconds: number;
+                    cohost_voice_id?: string;
                 } | {
                     /**
                      * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
@@ -1523,7 +1770,8 @@ export interface components {
                      */
                     caption_position: "top" | "center" | "bottom";
                     /**
-                     * @default faceless
+                     * @description avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.
+                     * @default avatar
                      * @enum {string}
                      */
                     presentation_mode: "faceless" | "avatar";
@@ -1652,8 +1900,13 @@ export interface components {
                 normalized_options: {
                     /** @default 1200 */
                     target_words: number;
+                    /**
+                     * @description AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.
+                     * @default 0
+                     */
+                    generated_images: number;
                 } | {
-                    /** @default 10 */
+                    /** @default 6 */
                     page_count: number;
                     /**
                      * @default auto
@@ -1665,6 +1918,11 @@ export interface components {
                     chapter_count: number;
                     /** @default 30 */
                     target_pages: number;
+                    /**
+                     * @default natural
+                     * @enum {string}
+                     */
+                    page_count_mode: "fixed" | "natural";
                 } | {
                     /** @default 12 */
                     slide_count: number;
@@ -1695,6 +1953,7 @@ export interface components {
                 } | {
                     /** @default 600 */
                     duration_seconds: number;
+                    cohost_voice_id?: string;
                 } | {
                     /**
                      * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
@@ -1903,7 +2162,8 @@ export interface components {
                      */
                     caption_position: "top" | "center" | "bottom";
                     /**
-                     * @default faceless
+                     * @description avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.
+                     * @default avatar
                      * @enum {string}
                      */
                     presentation_mode: "faceless" | "avatar";
@@ -2036,8 +2296,8 @@ export interface components {
                     title: string;
                     /** Format: uri */
                     url: string;
-                    /** Format: date-time */
-                    published_at: string;
+                    /** @description Null for an undated page that supports an evergreen topic (a topic input without lookback_days). */
+                    published_at: string | null;
                     excerpt: string;
                     /** Format: date-time */
                     retrieved_at: string;
@@ -2097,8 +2357,13 @@ export interface components {
             normalized_options?: {
                 /** @default 1200 */
                 target_words: number;
+                /**
+                 * @description AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.
+                 * @default 0
+                 */
+                generated_images: number;
             } | {
-                /** @default 10 */
+                /** @default 6 */
                 page_count: number;
                 /**
                  * @default auto
@@ -2110,6 +2375,11 @@ export interface components {
                 chapter_count: number;
                 /** @default 30 */
                 target_pages: number;
+                /**
+                 * @default natural
+                 * @enum {string}
+                 */
+                page_count_mode: "fixed" | "natural";
             } | {
                 /** @default 12 */
                 slide_count: number;
@@ -2140,6 +2410,7 @@ export interface components {
             } | {
                 /** @default 600 */
                 duration_seconds: number;
+                cohost_voice_id?: string;
             } | {
                 /**
                  * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
@@ -2348,7 +2619,8 @@ export interface components {
                  */
                 caption_position: "top" | "center" | "bottom";
                 /**
-                 * @default faceless
+                 * @description avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.
+                 * @default avatar
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
@@ -2517,8 +2789,13 @@ export interface components {
                 options?: {
                     /** @default 1200 */
                     target_words: number;
+                    /**
+                     * @description AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.
+                     * @default 0
+                     */
+                    generated_images: number;
                 } | {
-                    /** @default 10 */
+                    /** @default 6 */
                     page_count: number;
                     /**
                      * @default auto
@@ -2530,6 +2807,11 @@ export interface components {
                     chapter_count: number;
                     /** @default 30 */
                     target_pages: number;
+                    /**
+                     * @default natural
+                     * @enum {string}
+                     */
+                    page_count_mode: "fixed" | "natural";
                 } | {
                     /** @default 12 */
                     slide_count: number;
@@ -2560,6 +2842,7 @@ export interface components {
                 } | {
                     /** @default 600 */
                     duration_seconds: number;
+                    cohost_voice_id?: string;
                 } | {
                     /**
                      * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
@@ -2768,7 +3051,8 @@ export interface components {
                      */
                     caption_position: "top" | "center" | "bottom";
                     /**
-                     * @default faceless
+                     * @description avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.
+                     * @default avatar
                      * @enum {string}
                      */
                     presentation_mode: "faceless" | "avatar";
@@ -2841,8 +3125,13 @@ export interface components {
                 options?: {
                     /** @default 1200 */
                     target_words: number;
+                    /**
+                     * @description AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.
+                     * @default 0
+                     */
+                    generated_images: number;
                 } | {
-                    /** @default 10 */
+                    /** @default 6 */
                     page_count: number;
                     /**
                      * @default auto
@@ -2854,6 +3143,11 @@ export interface components {
                     chapter_count: number;
                     /** @default 30 */
                     target_pages: number;
+                    /**
+                     * @default natural
+                     * @enum {string}
+                     */
+                    page_count_mode: "fixed" | "natural";
                 } | {
                     /** @default 12 */
                     slide_count: number;
@@ -2884,6 +3178,7 @@ export interface components {
                 } | {
                     /** @default 600 */
                     duration_seconds: number;
+                    cohost_voice_id?: string;
                 } | {
                     /**
                      * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
@@ -3092,7 +3387,8 @@ export interface components {
                      */
                     caption_position: "top" | "center" | "bottom";
                     /**
-                     * @default faceless
+                     * @description avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.
+                     * @default avatar
                      * @enum {string}
                      */
                     presentation_mode: "faceless" | "avatar";
@@ -3158,6 +3454,10 @@ export interface components {
             language?: string | null;
             max_cost_per_run_usd?: string;
             max_cost_per_month_usd?: string;
+            publish_to?: {
+                social_connection_id: string;
+                caption_suffix?: string;
+            }[];
             next_run_at?: string | null;
             pause_reason?: string | null;
             consecutive_no_qualified_runs?: number;
@@ -3237,6 +3537,10 @@ export interface components {
                     language: string | null;
                     max_cost_per_run_usd: string;
                     max_cost_per_month_usd: string;
+                    publish_to?: {
+                        social_connection_id: string;
+                        caption_suffix?: string;
+                    }[];
                 };
                 accepted_quote: {
                     price_usd: string;
@@ -3307,8 +3611,8 @@ export interface components {
                     title: string;
                     /** Format: uri */
                     url: string;
-                    /** Format: date-time */
-                    published_at: string;
+                    /** @description Null for an undated page that supports an evergreen topic (a topic input without lookback_days). */
+                    published_at: string | null;
                     excerpt: string;
                     /** Format: date-time */
                     retrieved_at: string;
@@ -3382,6 +3686,8 @@ export interface components {
             promotion_status: "pending" | "active" | "expired" | "not_applicable";
             promotional_remaining_usd: string;
             promotion_expires_at: string | null;
+            /** @description True while the Sandbox promotion is active and not expired, or is pending and starts on the first Project. A funded prepayment ends it. */
+            promotion_available: boolean;
             prepaid_available_usd: string;
             prepaid_reserved_usd: string;
             prepayment_minimum_usd: string;
@@ -3454,8 +3760,13 @@ export interface components {
             options?: {
                 /** @default 1200 */
                 target_words: number;
+                /**
+                 * @description AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.
+                 * @default 0
+                 */
+                generated_images: number;
             } | {
-                /** @default 10 */
+                /** @default 6 */
                 page_count: number;
                 /**
                  * @default auto
@@ -3467,6 +3778,11 @@ export interface components {
                 chapter_count: number;
                 /** @default 30 */
                 target_pages: number;
+                /**
+                 * @default natural
+                 * @enum {string}
+                 */
+                page_count_mode: "fixed" | "natural";
             } | {
                 /** @default 12 */
                 slide_count: number;
@@ -3497,6 +3813,7 @@ export interface components {
             } | {
                 /** @default 600 */
                 duration_seconds: number;
+                cohost_voice_id?: string;
             } | {
                 /**
                  * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
@@ -3705,7 +4022,8 @@ export interface components {
                  */
                 caption_position: "top" | "center" | "bottom";
                 /**
-                 * @default faceless
+                 * @description avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.
+                 * @default avatar
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
@@ -3778,8 +4096,13 @@ export interface components {
             options?: {
                 /** @default 1200 */
                 target_words: number;
+                /**
+                 * @description AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.
+                 * @default 0
+                 */
+                generated_images: number;
             } | {
-                /** @default 10 */
+                /** @default 6 */
                 page_count: number;
                 /**
                  * @default auto
@@ -3791,6 +4114,11 @@ export interface components {
                 chapter_count: number;
                 /** @default 30 */
                 target_pages: number;
+                /**
+                 * @default natural
+                 * @enum {string}
+                 */
+                page_count_mode: "fixed" | "natural";
             } | {
                 /** @default 12 */
                 slide_count: number;
@@ -3821,6 +4149,7 @@ export interface components {
             } | {
                 /** @default 600 */
                 duration_seconds: number;
+                cohost_voice_id?: string;
             } | {
                 /**
                  * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
@@ -4029,7 +4358,8 @@ export interface components {
                  */
                 caption_position: "top" | "center" | "bottom";
                 /**
-                 * @default faceless
+                 * @description avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.
+                 * @default avatar
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
@@ -4101,8 +4431,13 @@ export interface components {
             options?: {
                 /** @default 1200 */
                 target_words: number;
+                /**
+                 * @description AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.
+                 * @default 0
+                 */
+                generated_images: number;
             } | {
-                /** @default 10 */
+                /** @default 6 */
                 page_count: number;
                 /**
                  * @default auto
@@ -4114,6 +4449,11 @@ export interface components {
                 chapter_count: number;
                 /** @default 30 */
                 target_pages: number;
+                /**
+                 * @default natural
+                 * @enum {string}
+                 */
+                page_count_mode: "fixed" | "natural";
             } | {
                 /** @default 12 */
                 slide_count: number;
@@ -4144,6 +4484,7 @@ export interface components {
             } | {
                 /** @default 600 */
                 duration_seconds: number;
+                cohost_voice_id?: string;
             } | {
                 /**
                  * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
@@ -4352,7 +4693,8 @@ export interface components {
                  */
                 caption_position: "top" | "center" | "bottom";
                 /**
-                 * @default faceless
+                 * @description avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.
+                 * @default avatar
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
@@ -4415,6 +4757,11 @@ export interface components {
             model_options?: {
                 [key: string]: unknown;
             };
+            /** @description Slides only: render again only these slides of a succeeded deck of complete slide images, each from its current image with its own instructions. Every other slide keeps its image, and options and language stay unchanged. The quote covers only these slide images. */
+            slide_edits?: {
+                slide_number: number;
+                instructions: string;
+            }[];
         } | {
             asset_id: string;
             instructions?: string;
@@ -4424,8 +4771,13 @@ export interface components {
             options?: {
                 /** @default 1200 */
                 target_words: number;
+                /**
+                 * @description AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.
+                 * @default 0
+                 */
+                generated_images: number;
             } | {
-                /** @default 10 */
+                /** @default 6 */
                 page_count: number;
                 /**
                  * @default auto
@@ -4437,6 +4789,11 @@ export interface components {
                 chapter_count: number;
                 /** @default 30 */
                 target_pages: number;
+                /**
+                 * @default natural
+                 * @enum {string}
+                 */
+                page_count_mode: "fixed" | "natural";
             } | {
                 /** @default 12 */
                 slide_count: number;
@@ -4467,6 +4824,7 @@ export interface components {
             } | {
                 /** @default 600 */
                 duration_seconds: number;
+                cohost_voice_id?: string;
             } | {
                 /**
                  * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
@@ -4675,7 +5033,8 @@ export interface components {
                  */
                 caption_position: "top" | "center" | "bottom";
                 /**
-                 * @default faceless
+                 * @description avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.
+                 * @default avatar
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
@@ -4740,6 +5099,11 @@ export interface components {
             model_options?: {
                 [key: string]: unknown;
             };
+            /** @description Slides only: render again only these slides of a succeeded deck of complete slide images, each from its current image with its own instructions. Every other slide keeps its image, and options and language stay unchanged. The quote covers only these slide images. */
+            slide_edits?: {
+                slide_number: number;
+                instructions: string;
+            }[];
         } | {
             asset_id: string;
             instructions?: string;
@@ -4749,8 +5113,13 @@ export interface components {
             options?: {
                 /** @default 1200 */
                 target_words: number;
+                /**
+                 * @description AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.
+                 * @default 0
+                 */
+                generated_images: number;
             } | {
-                /** @default 10 */
+                /** @default 6 */
                 page_count: number;
                 /**
                  * @default auto
@@ -4762,6 +5131,11 @@ export interface components {
                 chapter_count: number;
                 /** @default 30 */
                 target_pages: number;
+                /**
+                 * @default natural
+                 * @enum {string}
+                 */
+                page_count_mode: "fixed" | "natural";
             } | {
                 /** @default 12 */
                 slide_count: number;
@@ -4792,6 +5166,7 @@ export interface components {
             } | {
                 /** @default 600 */
                 duration_seconds: number;
+                cohost_voice_id?: string;
             } | {
                 /**
                  * @description Approximate target duration. Generated narration targets this length; exact narration ends at its complete natural speech duration without added trailing padding and may therefore be shorter.
@@ -5000,7 +5375,8 @@ export interface components {
                  */
                 caption_position: "top" | "center" | "bottom";
                 /**
-                 * @default faceless
+                 * @description avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.
+                 * @default avatar
                  * @enum {string}
                  */
                 presentation_mode: "faceless" | "avatar";
@@ -5062,6 +5438,11 @@ export interface components {
             model_options?: {
                 [key: string]: unknown;
             };
+            /** @description Slides only: render again only these slides of a succeeded deck of complete slide images, each from its current image with its own instructions. Every other slide keeps its image, and options and language stay unchanged. The quote covers only these slide images. */
+            slide_edits?: {
+                slide_number: number;
+                instructions: string;
+            }[];
         };
         /** @description One or two speakers and 1-24 exact ordered narration turns. Text is used without model rewriting. */
         NarrationScript: {
@@ -5122,6 +5503,10 @@ export interface components {
         LeadMagnetProvenanceV1: {
             /** @constant */
             schema_version: "lead-magnet-provenance.v1";
+            /** @constant */
+            page_rendering?: "generated_image";
+            /** @description Exact brand names, multiword feature names, UI strings, and field labels that must never break across lines. */
+            protected_terms?: string[];
             title: string;
             offer: {
                 /** @enum {string} */
@@ -5317,7 +5702,8 @@ export interface components {
                 cta: {
                     label: string;
                     action: string;
-                    supporting_text: string | null;
+                    /** @description Name the concrete finished output or observable result the reader receives after the action. Do not list product verbs or access methods. */
+                    supporting_text: string;
                 } | null;
                 generated_visual: {
                     /** @enum {string} */
@@ -5369,6 +5755,12 @@ export interface components {
                     revision_id: string;
                     /** @enum {string} */
                     use: "hero_subject" | "editorial_crop" | "evidence_inset" | "texture" | "background" | "supporting_detail";
+                    /** @description Required for evidence_inset: the exact checklist component, zero-based flattened item index, and supported visible caption. Null for illustration. */
+                    proof?: {
+                        component_id: string;
+                        item_index: number;
+                        caption: string;
+                    } | null;
                     treatment: string;
                     source_id: string;
                     source_revision_id: string;
@@ -5403,6 +5795,10 @@ export interface components {
                     height: number;
                     /** @enum {string} */
                     treatment: "direct" | "contrast_halo";
+                } | null;
+                logo_reference?: {
+                    revision_id: string;
+                    sha256: string;
                 } | null;
                 image_model: {
                     /** @enum {string} */
@@ -5786,7 +6182,7 @@ export interface components {
         };
         ErrorBody: {
             /** @enum {string} */
-            code: "agent_unavailable" | "motion_spend_limit_exceeded" | "invalid_request" | "unknown_asset_type" | "invalid_asset_options" | "invalid_model_options" | "model_not_supported" | "model_retired" | "project_not_ready" | "project_limit_exceeded" | "provider_operation_limit_exceeded" | "source_not_ready" | "source_unreachable" | "source_paywalled" | "product_visual_required" | "no_qualified_trend" | "no_qualified_knowledge" | "input_resolution_failed" | "max_cost_exceeded" | "payment_required" | "content_loop_budget_exceeded" | "content_loop_limit_exceeded" | "idempotency_conflict" | "idempotency_in_progress" | "consent_required" | "voice_not_found" | "voice_not_ready" | "voice_not_supported" | "avatar_not_found" | "avatar_not_ready" | "avatar_not_supported" | "artifact_verification_failed" | "rate_limited" | "webhook_limit_exceeded" | "not_found" | "unauthorized" | "forbidden" | "internal_error";
+            code: "agent_unavailable" | "motion_spend_limit_exceeded" | "invalid_request" | "unknown_asset_type" | "invalid_asset_options" | "invalid_model_options" | "model_not_supported" | "model_retired" | "project_not_ready" | "project_limit_exceeded" | "provider_operation_limit_exceeded" | "source_not_ready" | "source_unreachable" | "source_paywalled" | "product_visual_required" | "no_qualified_trend" | "no_qualified_knowledge" | "input_resolution_failed" | "max_cost_exceeded" | "payment_required" | "content_loop_budget_exceeded" | "content_loop_limit_exceeded" | "idempotency_conflict" | "idempotency_in_progress" | "consent_required" | "voice_not_found" | "voice_not_ready" | "voice_not_supported" | "avatar_not_found" | "avatar_not_ready" | "avatar_not_supported" | "artifact_verification_failed" | "rate_limited" | "webhook_limit_exceeded" | "social_provider_unavailable" | "social_authorization_failed" | "social_account_already_connected" | "social_connection_unavailable" | "publication_not_supported" | "publication_in_progress" | "not_found" | "unauthorized" | "forbidden" | "internal_error";
             message: string;
             details?: components["schemas"]["ErrorDetail"][] | Record<string, never>;
             correlation_id: string;
@@ -7431,9 +7827,8 @@ export interface operations {
                     mode: "http_basic" | "form";
                     username: string;
                     password: string;
-                    /** @default /login */
-                    login_path: string;
-                    success_text: string;
+                    login_path?: string;
+                    success_text?: string;
                     /** @constant */
                     credential_use_confirmed: true;
                     /** @constant */
@@ -7503,9 +7898,8 @@ export interface operations {
                     mode: "http_basic" | "form";
                     username: string;
                     password: string;
-                    /** @default /login */
-                    login_path: string;
-                    success_text: string;
+                    login_path?: string;
+                    success_text?: string;
                     /** @constant */
                     credential_use_confirmed: true;
                     /** @constant */
@@ -8814,6 +9208,10 @@ export interface operations {
                     language?: string;
                     max_cost_per_run_usd: string;
                     max_cost_per_month_usd: string;
+                    publish_to?: {
+                        social_connection_id: string;
+                        caption_suffix?: string;
+                    }[];
                 };
             };
         };
@@ -8943,6 +9341,10 @@ export interface operations {
                     language?: string;
                     max_cost_per_run_usd?: string;
                     max_cost_per_month_usd?: string;
+                    publish_to?: {
+                        social_connection_id: string;
+                        caption_suffix?: string;
+                    }[];
                     /** @enum {string} */
                     status?: "active" | "paused";
                 };
@@ -9306,6 +9708,301 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Webhook"];
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    authorizeSocialConnection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    provider: "tiktok" | "instagram";
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SocialAuthorization"];
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    completeSocialConnection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    state: string;
+                    code: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SocialConnection"];
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    listSocialConnections: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["SocialConnection"][];
+                        next_cursor: null;
+                        available_providers: ("tiktok" | "instagram")[];
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    disconnectSocialConnection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SocialDisconnection"];
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    getTikTokCreatorInfo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TikTokCreatorInfo"];
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    createPublication: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description 1–255 visible ASCII bytes; UUID recommended. */
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    social_connection_id: string;
+                    caption: string;
+                    tiktok?: {
+                        /** @enum {string} */
+                        privacy_level: "PUBLIC_TO_EVERYONE" | "MUTUAL_FOLLOW_FRIENDS" | "FOLLOWER_OF_CREATOR" | "SELF_ONLY";
+                        allow_comment: boolean;
+                        allow_duet: boolean;
+                        allow_stitch: boolean;
+                        commercial_content: {
+                            your_brand: boolean;
+                            branded_content: boolean;
+                        } | null;
+                        auto_add_music: boolean;
+                    };
+                    instagram?: {
+                        share_to_feed: boolean;
+                    };
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Publication"];
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    listPublications: {
+        parameters: {
+            query?: {
+                project_id?: string;
+                asset_id?: string;
+                status?: "awaiting_approval" | "queued" | "publishing" | "published" | "failed" | "cancelled" | "unknown";
+                limit?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Publication"][];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    getPublication: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Publication"];
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    approvePublication: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    caption: string;
+                    tiktok: {
+                        /** @enum {string} */
+                        privacy_level: "PUBLIC_TO_EVERYONE" | "MUTUAL_FOLLOW_FRIENDS" | "FOLLOWER_OF_CREATOR" | "SELF_ONLY";
+                        allow_comment: boolean;
+                        allow_duet: boolean;
+                        allow_stitch: boolean;
+                        commercial_content: {
+                            your_brand: boolean;
+                            branded_content: boolean;
+                        } | null;
+                        auto_add_music: boolean;
+                    };
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Publication"];
+                };
+            };
+            default: components["responses"]["AutoContentError"];
+        };
+    };
+    cancelPublication: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Publication"];
                 };
             };
             default: components["responses"]["AutoContentError"];

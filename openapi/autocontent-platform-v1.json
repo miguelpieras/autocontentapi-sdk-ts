@@ -6672,7 +6672,6 @@
                     "maxLength": 1024
                   },
                   "login_path": {
-                    "default": "/login",
                     "type": "string",
                     "maxLength": 500,
                     "pattern": "^\\/(?!\\/)[^?#\\r\\n\\\\]*$"
@@ -6714,8 +6713,6 @@
                   "mode",
                   "username",
                   "password",
-                  "login_path",
-                  "success_text",
                   "credential_use_confirmed",
                   "logged_in_content_ai_processing_confirmed",
                   "processors"
@@ -6887,7 +6884,6 @@
                     "maxLength": 1024
                   },
                   "login_path": {
-                    "default": "/login",
                     "type": "string",
                     "maxLength": 500,
                     "pattern": "^\\/(?!\\/)[^?#\\r\\n\\\\]*$"
@@ -6929,8 +6925,6 @@
                   "mode",
                   "username",
                   "password",
-                  "login_path",
-                  "success_text",
                   "credential_use_confirmed",
                   "logged_in_content_ai_processing_confirmed",
                   "processors"
@@ -10285,7 +10279,7 @@
     "/generations/{id}/edit/preview": {
       "post": {
         "operationId": "previewGenerationEdit",
-        "summary": "Validate and quote a full Asset edit from frozen Generation context",
+        "summary": "Validate and quote an Asset edit from frozen Generation context",
         "tags": [
           "generations"
         ],
@@ -10374,7 +10368,7 @@
     "/generations/{id}/edit": {
       "post": {
         "operationId": "createGenerationEdit",
-        "summary": "Reserve USD and fully rerender selected Assets from frozen Generation context",
+        "summary": "Reserve USD and rerender selected Assets, or named slides of a deck, from frozen Generation context",
         "tags": [
           "generations"
         ],
@@ -11125,6 +11119,27 @@
                   "max_cost_per_month_usd": {
                     "type": "string",
                     "pattern": "^(0|[1-9][0-9]{0,5})\\.[0-9]{2}$"
+                  },
+                  "publish_to": {
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "social_connection_id": {
+                          "type": "string",
+                          "pattern": "^soc_[0-9A-HJKMNP-TV-Z]{26}$"
+                        },
+                        "caption_suffix": {
+                          "type": "string",
+                          "maxLength": 500
+                        }
+                      },
+                      "required": [
+                        "social_connection_id"
+                      ],
+                      "additionalProperties": false
+                    }
                   }
                 },
                 "required": [
@@ -11605,6 +11620,27 @@
                   "max_cost_per_month_usd": {
                     "type": "string",
                     "pattern": "^(0|[1-9][0-9]{0,5})\\.[0-9]{2}$"
+                  },
+                  "publish_to": {
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "social_connection_id": {
+                          "type": "string",
+                          "pattern": "^soc_[0-9A-HJKMNP-TV-Z]{26}$"
+                        },
+                        "caption_suffix": {
+                          "type": "string",
+                          "maxLength": 500
+                        }
+                      },
+                      "required": [
+                        "social_connection_id"
+                      ],
+                      "additionalProperties": false
+                    }
                   },
                   "status": {
                     "type": "string",
@@ -12545,6 +12581,769 @@
           }
         }
       }
+    },
+    "/projects/{id}/social-connections/authorize": {
+      "post": {
+        "operationId": "authorizeSocialConnection",
+        "summary": "Start connecting a TikTok or Instagram account to a Project",
+        "tags": [
+          "projects"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.write"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^prj_[A-Za-z0-9_-]+$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string",
+                    "enum": [
+                      "tiktok",
+                      "instagram"
+                    ]
+                  }
+                },
+                "required": [
+                  "provider"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SocialAuthorization"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/social-connections/complete": {
+      "post": {
+        "operationId": "completeSocialConnection",
+        "summary": "Finish connecting an account from the provider callback",
+        "tags": [
+          "social-connections"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.write"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]{43}$"
+                  },
+                  "code": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  }
+                },
+                "required": [
+                  "state",
+                  "code"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SocialConnection"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/projects/{id}/social-connections": {
+      "get": {
+        "operationId": "listSocialConnections",
+        "summary": "List the Project social accounts and available platforms",
+        "tags": [
+          "projects"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.read"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^prj_[A-Za-z0-9_-]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "next_cursor",
+                    "available_providers"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SocialConnection"
+                      }
+                    },
+                    "next_cursor": {
+                      "type": "null"
+                    },
+                    "available_providers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "tiktok",
+                          "instagram"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/social-connections/{id}": {
+      "delete": {
+        "operationId": "disconnectSocialConnection",
+        "summary": "Disconnect a social account and erase its tokens",
+        "tags": [
+          "social-connections"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.write"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^soc_[0-9A-HJKMNP-TV-Z]{26}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SocialDisconnection"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/social-connections/{id}/creator-info": {
+      "get": {
+        "operationId": "getTikTokCreatorInfo",
+        "summary": "Read current TikTok posting options for the posting screen",
+        "tags": [
+          "social-connections"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.read"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^soc_[0-9A-HJKMNP-TV-Z]{26}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TikTokCreatorInfo"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/assets/{id}/publications": {
+      "post": {
+        "operationId": "createPublication",
+        "summary": "Publish a finished Asset to a connected social account",
+        "tags": [
+          "assets"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.write"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": true,
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^ast_[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "description": "1–255 visible ASCII bytes; UUID recommended.",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255,
+              "pattern": "^[!-~]+$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "social_connection_id": {
+                    "type": "string",
+                    "pattern": "^soc_[0-9A-HJKMNP-TV-Z]{26}$"
+                  },
+                  "caption": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2200
+                  },
+                  "tiktok": {
+                    "type": "object",
+                    "properties": {
+                      "privacy_level": {
+                        "type": "string",
+                        "enum": [
+                          "PUBLIC_TO_EVERYONE",
+                          "MUTUAL_FOLLOW_FRIENDS",
+                          "FOLLOWER_OF_CREATOR",
+                          "SELF_ONLY"
+                        ]
+                      },
+                      "allow_comment": {
+                        "type": "boolean"
+                      },
+                      "allow_duet": {
+                        "type": "boolean"
+                      },
+                      "allow_stitch": {
+                        "type": "boolean"
+                      },
+                      "commercial_content": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "your_brand": {
+                                "type": "boolean"
+                              },
+                              "branded_content": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "your_brand",
+                              "branded_content"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "auto_add_music": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "privacy_level",
+                      "allow_comment",
+                      "allow_duet",
+                      "allow_stitch",
+                      "commercial_content",
+                      "auto_add_music"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "instagram": {
+                    "type": "object",
+                    "properties": {
+                      "share_to_feed": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "share_to_feed"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "social_connection_id",
+                  "caption"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Publication"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/publications": {
+      "get": {
+        "operationId": "listPublications",
+        "summary": "List social publications by Project, Asset, or status",
+        "tags": [
+          "publications"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.read"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^prj_[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "asset_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^ast_[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "awaiting_approval",
+                "queued",
+                "publishing",
+                "published",
+                "failed",
+                "cancelled",
+                "unknown"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(?:[1-9]|[1-9][0-9]|100)$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "next_cursor"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Publication"
+                      }
+                    },
+                    "next_cursor": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/publications/{id}": {
+      "get": {
+        "operationId": "getPublication",
+        "summary": "Get a social publication",
+        "tags": [
+          "publications"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.read"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^pub_[0-9A-HJKMNP-TV-Z]{26}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Publication"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/publications/{id}/approve": {
+      "post": {
+        "operationId": "approvePublication",
+        "summary": "Approve a waiting TikTok post with its posting settings",
+        "tags": [
+          "publications"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.write"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^pub_[0-9A-HJKMNP-TV-Z]{26}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "caption": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2200
+                  },
+                  "tiktok": {
+                    "type": "object",
+                    "properties": {
+                      "privacy_level": {
+                        "type": "string",
+                        "enum": [
+                          "PUBLIC_TO_EVERYONE",
+                          "MUTUAL_FOLLOW_FRIENDS",
+                          "FOLLOWER_OF_CREATOR",
+                          "SELF_ONLY"
+                        ]
+                      },
+                      "allow_comment": {
+                        "type": "boolean"
+                      },
+                      "allow_duet": {
+                        "type": "boolean"
+                      },
+                      "allow_stitch": {
+                        "type": "boolean"
+                      },
+                      "commercial_content": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "your_brand": {
+                                "type": "boolean"
+                              },
+                              "branded_content": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "your_brand",
+                              "branded_content"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "auto_add_music": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "privacy_level",
+                      "allow_comment",
+                      "allow_duet",
+                      "allow_stitch",
+                      "commercial_content",
+                      "auto_add_music"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "caption",
+                  "tiktok"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Publication"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
+    },
+    "/publications/{id}/cancel": {
+      "post": {
+        "operationId": "cancelPublication",
+        "summary": "Dismiss a post that is waiting for approval",
+        "tags": [
+          "publications"
+        ],
+        "security": [
+          {
+            "platformOAuth": []
+          }
+        ],
+        "x-required-scopes": [
+          "platform.write"
+        ],
+        "x-principal": "oauth",
+        "x-idempotency-required": false,
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^pub_[0-9A-HJKMNP-TV-Z]{26}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Publication"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/AutoContentError"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -13334,7 +14133,7 @@
         }
       },
       "Model": {
-        "description": "Exact model discovery. When available, autocontent-recorded-demo-v1 supports product_demo_video, launch_video and ad_video from options.website_url (publicly reachable HTTPS) plus instructions. AI plans the audience/value story before capture, records real browser interactions, composes typography, optional narration, original music and measured interaction sounds, and reviews an audiovisual rough before final export. Results include a final-film storyboard and timed scene metadata. It supports 15–120 seconds, 1080p, and 16:9, 9:16 or 1:1. interaction_mode defaults to browse; demo requires demo_environment_confirmed:true for an environment without real external effects. Optional options.recording_access_id references exact-origin Basic or ordinary form login saved through the dedicated Project form. Never put credentials in prompts or generation payloads. SSO, MFA, CAPTCHA and private networks remain unsupported. model_options accepts narration, music_direction and refresh_recording. Compatible visual edits retain verified footage, speech and score; preview.recorded_media states retained/new material. Changed source settings or refresh_recording:true request freshly quoted media. When available, autocontent-narrated-video-v1 produces Short and Explainer videos with generated artwork, narrated explanatory motion, and optional short H3 clips. It supports faceless presentation, existing Voice selection, captions, all three video aspect ratios, and 720p/1080p. No music is added. Preview returns the maximum price; settlement charges newly incurred work.",
+        "description": "Exact model discovery. When available, autocontent-recorded-demo-v1 supports product_demo_video, launch_video, ad_video and short_video from options.website_url (publicly reachable HTTPS) plus instructions. AI plans the audience/value story before capture, records real browser interactions, composes typography, optional narration, original music and measured interaction sounds, and reviews an audiovisual rough before final export. Results include a final-film storyboard and timed scene metadata. It supports 15–120 seconds, 1080p, and 16:9, 9:16 or 1:1. Recorded Shorts default to 30 seconds and 9:16. interaction_mode defaults to browse; demo requires demo_environment_confirmed:true for an environment without real external effects. Optional options.recording_access_id references exact-origin Basic or ordinary form login saved through the dedicated Project form. Never put credentials in prompts or generation payloads. SSO, MFA, CAPTCHA and private networks remain unsupported. model_options accepts narration, music_direction and refresh_recording. Compatible visual edits retain verified footage, speech and score; preview.recorded_media states retained/new material. Changed source settings or refresh_recording:true request freshly quoted media. When available, autocontent-narrated-video-v1 produces Short and Explainer videos with generated artwork, narrated explanatory motion, and optional short H3 clips. It supports faceless presentation, existing Voice selection, captions, all three video aspect ratios, and 720p/1080p. No music is added. Preview returns the maximum price; settlement charges newly incurred work.",
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -13573,6 +14372,345 @@
         ],
         "additionalProperties": false
       },
+      "SocialAuthorization": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string",
+            "enum": [
+              "tiktok",
+              "instagram"
+            ]
+          },
+          "authorization_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          }
+        },
+        "required": [
+          "provider",
+          "authorization_url",
+          "expires_at"
+        ],
+        "additionalProperties": false
+      },
+      "SocialConnection": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^soc_[0-9A-HJKMNP-TV-Z]{26}$"
+          },
+          "project_id": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string",
+            "enum": [
+              "tiktok",
+              "instagram"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "reconnect_required"
+            ]
+          },
+          "username": {
+            "type": "string"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          }
+        },
+        "required": [
+          "id",
+          "project_id",
+          "provider",
+          "status",
+          "username",
+          "display_name",
+          "created_at",
+          "updated_at"
+        ],
+        "additionalProperties": false
+      },
+      "SocialDisconnection": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^soc_[0-9A-HJKMNP-TV-Z]{26}$"
+          },
+          "disconnected": {
+            "type": "boolean",
+            "const": true
+          }
+        },
+        "required": [
+          "id",
+          "disconnected"
+        ],
+        "additionalProperties": false
+      },
+      "TikTokCreatorInfo": {
+        "type": "object",
+        "properties": {
+          "can_post": {
+            "type": "boolean"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "nickname": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "username": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "avatar_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "privacy_level_options": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "PUBLIC_TO_EVERYONE",
+                "MUTUAL_FOLLOW_FRIENDS",
+                "FOLLOWER_OF_CREATOR",
+                "SELF_ONLY"
+              ]
+            }
+          },
+          "comment_disabled": {
+            "type": "boolean"
+          },
+          "duet_disabled": {
+            "type": "boolean"
+          },
+          "stitch_disabled": {
+            "type": "boolean"
+          },
+          "max_video_post_duration_sec": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "can_post",
+          "message",
+          "nickname",
+          "username",
+          "avatar_url",
+          "privacy_level_options",
+          "comment_disabled",
+          "duet_disabled",
+          "stitch_disabled",
+          "max_video_post_duration_sec"
+        ],
+        "additionalProperties": false
+      },
+      "Publication": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^pub_[0-9A-HJKMNP-TV-Z]{26}$"
+          },
+          "project_id": {
+            "type": "string"
+          },
+          "asset_id": {
+            "type": "string"
+          },
+          "social_connection_id": {
+            "type": "string",
+            "pattern": "^soc_[0-9A-HJKMNP-TV-Z]{26}$"
+          },
+          "provider": {
+            "type": "string",
+            "enum": [
+              "tiktok",
+              "instagram"
+            ]
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "video",
+              "carousel"
+            ]
+          },
+          "origin": {
+            "type": "string",
+            "enum": [
+              "manual",
+              "content_loop"
+            ]
+          },
+          "content_loop_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "awaiting_approval",
+              "queued",
+              "publishing",
+              "published",
+              "failed",
+              "cancelled",
+              "unknown"
+            ]
+          },
+          "caption": {
+            "type": "string"
+          },
+          "permalink": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "enum": [
+                      "reconnect_required",
+                      "media_rejected",
+                      "provider_rejected",
+                      "rate_limited",
+                      "provider_unavailable",
+                      "connection_removed",
+                      "outcome_unknown"
+                    ]
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "code",
+                  "message"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          },
+          "published_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "project_id",
+          "asset_id",
+          "social_connection_id",
+          "provider",
+          "format",
+          "origin",
+          "content_loop_run_id",
+          "status",
+          "caption",
+          "permalink",
+          "error",
+          "created_at",
+          "updated_at",
+          "published_at"
+        ],
+        "additionalProperties": false
+      },
       "RecordingAccessRevocation": {
         "type": "object",
         "additionalProperties": false,
@@ -13785,10 +14923,18 @@
                           "type": "integer",
                           "minimum": 500,
                           "maximum": 3000
+                        },
+                        "generated_images": {
+                          "default": 0,
+                          "description": "AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.",
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 2
                         }
                       },
                       "required": [
-                        "target_words"
+                        "target_words",
+                        "generated_images"
                       ],
                       "additionalProperties": false
                     },
@@ -13796,7 +14942,7 @@
                       "type": "object",
                       "properties": {
                         "page_count": {
-                          "default": 10,
+                          "default": 6,
                           "type": "integer",
                           "minimum": 4,
                           "maximum": 30
@@ -13841,11 +14987,20 @@
                           "type": "integer",
                           "minimum": 15,
                           "maximum": 60
+                        },
+                        "page_count_mode": {
+                          "default": "natural",
+                          "type": "string",
+                          "enum": [
+                            "fixed",
+                            "natural"
+                          ]
                         }
                       },
                       "required": [
                         "chapter_count",
-                        "target_pages"
+                        "target_pages",
+                        "page_count_mode"
                       ],
                       "additionalProperties": false
                     },
@@ -13934,6 +15089,12 @@
                           "type": "integer",
                           "minimum": 120,
                           "maximum": 14400
+                        },
+                        "cohost_voice_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200,
+                          "pattern": "^[A-Za-z0-9_-]+$"
                         }
                       },
                       "required": [
@@ -14353,7 +15514,8 @@
                           ]
                         },
                         "presentation_mode": {
-                          "default": "faceless",
+                          "default": "avatar",
+                          "description": "avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.",
                           "type": "string",
                           "enum": [
                             "faceless",
@@ -14822,10 +15984,18 @@
                           "type": "integer",
                           "minimum": 500,
                           "maximum": 3000
+                        },
+                        "generated_images": {
+                          "default": 0,
+                          "description": "AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.",
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 2
                         }
                       },
                       "required": [
-                        "target_words"
+                        "target_words",
+                        "generated_images"
                       ],
                       "additionalProperties": false
                     },
@@ -14833,7 +16003,7 @@
                       "type": "object",
                       "properties": {
                         "page_count": {
-                          "default": 10,
+                          "default": 6,
                           "type": "integer",
                           "minimum": 4,
                           "maximum": 30
@@ -14878,11 +16048,20 @@
                           "type": "integer",
                           "minimum": 15,
                           "maximum": 60
+                        },
+                        "page_count_mode": {
+                          "default": "natural",
+                          "type": "string",
+                          "enum": [
+                            "fixed",
+                            "natural"
+                          ]
                         }
                       },
                       "required": [
                         "chapter_count",
-                        "target_pages"
+                        "target_pages",
+                        "page_count_mode"
                       ],
                       "additionalProperties": false
                     },
@@ -14971,6 +16150,12 @@
                           "type": "integer",
                           "minimum": 120,
                           "maximum": 14400
+                        },
+                        "cohost_voice_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200,
+                          "pattern": "^[A-Za-z0-9_-]+$"
                         }
                       },
                       "required": [
@@ -15390,7 +16575,8 @@
                           ]
                         },
                         "presentation_mode": {
-                          "default": "faceless",
+                          "default": "avatar",
+                          "description": "avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.",
                           "type": "string",
                           "enum": [
                             "faceless",
@@ -15912,8 +17098,16 @@
                           "format": "uri"
                         },
                         "published_at": {
-                          "type": "string",
-                          "format": "date-time"
+                          "description": "Null for an undated page that supports an evergreen topic (a topic input without lookback_days).",
+                          "oneOf": [
+                            {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
                         },
                         "excerpt": {
                           "type": "string",
@@ -16209,10 +17403,18 @@
                     "type": "integer",
                     "minimum": 500,
                     "maximum": 3000
+                  },
+                  "generated_images": {
+                    "default": 0,
+                    "description": "AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 2
                   }
                 },
                 "required": [
-                  "target_words"
+                  "target_words",
+                  "generated_images"
                 ],
                 "additionalProperties": false
               },
@@ -16220,7 +17422,7 @@
                 "type": "object",
                 "properties": {
                   "page_count": {
-                    "default": 10,
+                    "default": 6,
                     "type": "integer",
                     "minimum": 4,
                     "maximum": 30
@@ -16265,11 +17467,20 @@
                     "type": "integer",
                     "minimum": 15,
                     "maximum": 60
+                  },
+                  "page_count_mode": {
+                    "default": "natural",
+                    "type": "string",
+                    "enum": [
+                      "fixed",
+                      "natural"
+                    ]
                   }
                 },
                 "required": [
                   "chapter_count",
-                  "target_pages"
+                  "target_pages",
+                  "page_count_mode"
                 ],
                 "additionalProperties": false
               },
@@ -16358,6 +17569,12 @@
                     "type": "integer",
                     "minimum": 120,
                     "maximum": 14400
+                  },
+                  "cohost_voice_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200,
+                    "pattern": "^[A-Za-z0-9_-]+$"
                   }
                 },
                 "required": [
@@ -16777,7 +17994,8 @@
                     ]
                   },
                   "presentation_mode": {
-                    "default": "faceless",
+                    "default": "avatar",
+                    "description": "avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.",
                     "type": "string",
                     "enum": [
                       "faceless",
@@ -17473,10 +18691,18 @@
                               "type": "integer",
                               "minimum": 500,
                               "maximum": 3000
+                            },
+                            "generated_images": {
+                              "default": 0,
+                              "description": "AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.",
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 2
                             }
                           },
                           "required": [
-                            "target_words"
+                            "target_words",
+                            "generated_images"
                           ],
                           "additionalProperties": false
                         },
@@ -17484,7 +18710,7 @@
                           "type": "object",
                           "properties": {
                             "page_count": {
-                              "default": 10,
+                              "default": 6,
                               "type": "integer",
                               "minimum": 4,
                               "maximum": 30
@@ -17529,11 +18755,20 @@
                               "type": "integer",
                               "minimum": 15,
                               "maximum": 60
+                            },
+                            "page_count_mode": {
+                              "default": "natural",
+                              "type": "string",
+                              "enum": [
+                                "fixed",
+                                "natural"
+                              ]
                             }
                           },
                           "required": [
                             "chapter_count",
-                            "target_pages"
+                            "target_pages",
+                            "page_count_mode"
                           ],
                           "additionalProperties": false
                         },
@@ -17622,6 +18857,12 @@
                               "type": "integer",
                               "minimum": 120,
                               "maximum": 14400
+                            },
+                            "cohost_voice_id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200,
+                              "pattern": "^[A-Za-z0-9_-]+$"
                             }
                           },
                           "required": [
@@ -18041,7 +19282,8 @@
                               ]
                             },
                             "presentation_mode": {
-                              "default": "faceless",
+                              "default": "avatar",
+                              "description": "avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.",
                               "type": "string",
                               "enum": [
                                 "faceless",
@@ -18213,10 +19455,18 @@
                               "type": "integer",
                               "minimum": 500,
                               "maximum": 3000
+                            },
+                            "generated_images": {
+                              "default": 0,
+                              "description": "AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.",
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 2
                             }
                           },
                           "required": [
-                            "target_words"
+                            "target_words",
+                            "generated_images"
                           ],
                           "additionalProperties": false
                         },
@@ -18224,7 +19474,7 @@
                           "type": "object",
                           "properties": {
                             "page_count": {
-                              "default": 10,
+                              "default": 6,
                               "type": "integer",
                               "minimum": 4,
                               "maximum": 30
@@ -18269,11 +19519,20 @@
                               "type": "integer",
                               "minimum": 15,
                               "maximum": 60
+                            },
+                            "page_count_mode": {
+                              "default": "natural",
+                              "type": "string",
+                              "enum": [
+                                "fixed",
+                                "natural"
+                              ]
                             }
                           },
                           "required": [
                             "chapter_count",
-                            "target_pages"
+                            "target_pages",
+                            "page_count_mode"
                           ],
                           "additionalProperties": false
                         },
@@ -18362,6 +19621,12 @@
                               "type": "integer",
                               "minimum": 120,
                               "maximum": 14400
+                            },
+                            "cohost_voice_id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200,
+                              "pattern": "^[A-Za-z0-9_-]+$"
                             }
                           },
                           "required": [
@@ -18781,7 +20046,8 @@
                               ]
                             },
                             "presentation_mode": {
-                              "default": "faceless",
+                              "default": "avatar",
+                              "description": "avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.",
                               "type": "string",
                               "enum": [
                                 "faceless",
@@ -18928,6 +20194,27 @@
           "max_cost_per_month_usd": {
             "type": "string",
             "pattern": "^(?:0|[1-9][0-9]{0,5})\\.[0-9]{2}$"
+          },
+          "publish_to": {
+            "maxItems": 4,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "social_connection_id": {
+                  "type": "string",
+                  "pattern": "^soc_[0-9A-HJKMNP-TV-Z]{26}$"
+                },
+                "caption_suffix": {
+                  "type": "string",
+                  "maxLength": 500
+                }
+              },
+              "required": [
+                "social_connection_id"
+              ],
+              "additionalProperties": false
+            }
           },
           "next_run_at": {
             "oneOf": [
@@ -19364,6 +20651,27 @@
                   "max_cost_per_month_usd": {
                     "type": "string",
                     "pattern": "^(0|[1-9][0-9]{0,5})\\.[0-9]{2}$"
+                  },
+                  "publish_to": {
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "social_connection_id": {
+                          "type": "string",
+                          "pattern": "^soc_[0-9A-HJKMNP-TV-Z]{26}$"
+                        },
+                        "caption_suffix": {
+                          "type": "string",
+                          "maxLength": 500
+                        }
+                      },
+                      "required": [
+                        "social_connection_id"
+                      ],
+                      "additionalProperties": false
+                    }
                   }
                 },
                 "required": [
@@ -19805,8 +21113,16 @@
                           "format": "uri"
                         },
                         "published_at": {
-                          "type": "string",
-                          "format": "date-time"
+                          "description": "Null for an undated page that supports an evergreen topic (a topic input without lookback_days).",
+                          "oneOf": [
+                            {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
                         },
                         "excerpt": {
                           "type": "string",
@@ -20100,6 +21416,7 @@
           "promotion_status",
           "promotional_remaining_usd",
           "promotion_expires_at",
+          "promotion_available",
           "prepaid_available_usd",
           "prepaid_reserved_usd",
           "prepayment_minimum_usd",
@@ -20153,6 +21470,10 @@
                 "type": "null"
               }
             ]
+          },
+          "promotion_available": {
+            "type": "boolean",
+            "description": "True while the Sandbox promotion is active and not expired, or is pending and starts on the first Project. A funded prepayment ends it."
           },
           "prepaid_available_usd": {
             "type": "string",
@@ -20482,10 +21803,18 @@
                         "type": "integer",
                         "minimum": 500,
                         "maximum": 3000
+                      },
+                      "generated_images": {
+                        "default": 0,
+                        "description": "AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 2
                       }
                     },
                     "required": [
-                      "target_words"
+                      "target_words",
+                      "generated_images"
                     ],
                     "additionalProperties": false
                   },
@@ -20493,7 +21822,7 @@
                     "type": "object",
                     "properties": {
                       "page_count": {
-                        "default": 10,
+                        "default": 6,
                         "type": "integer",
                         "minimum": 4,
                         "maximum": 30
@@ -20538,11 +21867,20 @@
                         "type": "integer",
                         "minimum": 15,
                         "maximum": 60
+                      },
+                      "page_count_mode": {
+                        "default": "natural",
+                        "type": "string",
+                        "enum": [
+                          "fixed",
+                          "natural"
+                        ]
                       }
                     },
                     "required": [
                       "chapter_count",
-                      "target_pages"
+                      "target_pages",
+                      "page_count_mode"
                     ],
                     "additionalProperties": false
                   },
@@ -20631,6 +21969,12 @@
                         "type": "integer",
                         "minimum": 120,
                         "maximum": 14400
+                      },
+                      "cohost_voice_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "pattern": "^[A-Za-z0-9_-]+$"
                       }
                     },
                     "required": [
@@ -21050,7 +22394,8 @@
                         ]
                       },
                       "presentation_mode": {
-                        "default": "faceless",
+                        "default": "avatar",
+                        "description": "avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.",
                         "type": "string",
                         "enum": [
                           "faceless",
@@ -21222,10 +22567,18 @@
                         "type": "integer",
                         "minimum": 500,
                         "maximum": 3000
+                      },
+                      "generated_images": {
+                        "default": 0,
+                        "description": "AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 2
                       }
                     },
                     "required": [
-                      "target_words"
+                      "target_words",
+                      "generated_images"
                     ],
                     "additionalProperties": false
                   },
@@ -21233,7 +22586,7 @@
                     "type": "object",
                     "properties": {
                       "page_count": {
-                        "default": 10,
+                        "default": 6,
                         "type": "integer",
                         "minimum": 4,
                         "maximum": 30
@@ -21278,11 +22631,20 @@
                         "type": "integer",
                         "minimum": 15,
                         "maximum": 60
+                      },
+                      "page_count_mode": {
+                        "default": "natural",
+                        "type": "string",
+                        "enum": [
+                          "fixed",
+                          "natural"
+                        ]
                       }
                     },
                     "required": [
                       "chapter_count",
-                      "target_pages"
+                      "target_pages",
+                      "page_count_mode"
                     ],
                     "additionalProperties": false
                   },
@@ -21371,6 +22733,12 @@
                         "type": "integer",
                         "minimum": 120,
                         "maximum": 14400
+                      },
+                      "cohost_voice_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "pattern": "^[A-Za-z0-9_-]+$"
                       }
                     },
                     "required": [
@@ -21790,7 +23158,8 @@
                         ]
                       },
                       "presentation_mode": {
-                        "default": "faceless",
+                        "default": "avatar",
+                        "description": "avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.",
                         "type": "string",
                         "enum": [
                           "faceless",
@@ -21953,10 +23322,18 @@
                         "type": "integer",
                         "minimum": 500,
                         "maximum": 3000
+                      },
+                      "generated_images": {
+                        "default": 0,
+                        "description": "AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 2
                       }
                     },
                     "required": [
-                      "target_words"
+                      "target_words",
+                      "generated_images"
                     ],
                     "additionalProperties": false
                   },
@@ -21964,7 +23341,7 @@
                     "type": "object",
                     "properties": {
                       "page_count": {
-                        "default": 10,
+                        "default": 6,
                         "type": "integer",
                         "minimum": 4,
                         "maximum": 30
@@ -22009,11 +23386,20 @@
                         "type": "integer",
                         "minimum": 15,
                         "maximum": 60
+                      },
+                      "page_count_mode": {
+                        "default": "natural",
+                        "type": "string",
+                        "enum": [
+                          "fixed",
+                          "natural"
+                        ]
                       }
                     },
                     "required": [
                       "chapter_count",
-                      "target_pages"
+                      "target_pages",
+                      "page_count_mode"
                     ],
                     "additionalProperties": false
                   },
@@ -22102,6 +23488,12 @@
                         "type": "integer",
                         "minimum": 120,
                         "maximum": 14400
+                      },
+                      "cohost_voice_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "pattern": "^[A-Za-z0-9_-]+$"
                       }
                     },
                     "required": [
@@ -22521,7 +23913,8 @@
                         ]
                       },
                       "presentation_mode": {
-                        "default": "faceless",
+                        "default": "avatar",
+                        "description": "avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.",
                         "type": "string",
                         "enum": [
                           "faceless",
@@ -22647,6 +24040,34 @@
                 "additionalProperties": true,
                 "description": "Motion product-commercial edits can pass target_section_id from the selected successful result metadata and instructions for the change. References, output profile, language, other scenes and the exact score remain fixed. The directive is consumed; subsequent edits are whole-film unless targeted again. This is a paid full rerender, not pre-render approval.",
                 "x-schema-source": "GET /models.model_options_schema"
+              },
+              "slide_edits": {
+                "description": "Slides only: render again only these slides of a succeeded deck of complete slide images, each from its current image with its own instructions. Every other slide keeps its image, and options and language stay unchanged. The quote covers only these slide images.",
+                "minItems": 1,
+                "maxItems": 30,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "slide_number": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 30
+                    },
+                    "instructions": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4000,
+                      "x-max-utf8-bytes": 4000
+                    }
+                  },
+                  "required": [
+                    "slide_number",
+                    "instructions"
+                  ],
+                  "additionalProperties": false
+                },
+                "x-unique-by": "slide_number"
               }
             }
           },
@@ -22686,10 +24107,18 @@
                         "type": "integer",
                         "minimum": 500,
                         "maximum": 3000
+                      },
+                      "generated_images": {
+                        "default": 0,
+                        "description": "AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 2
                       }
                     },
                     "required": [
-                      "target_words"
+                      "target_words",
+                      "generated_images"
                     ],
                     "additionalProperties": false
                   },
@@ -22697,7 +24126,7 @@
                     "type": "object",
                     "properties": {
                       "page_count": {
-                        "default": 10,
+                        "default": 6,
                         "type": "integer",
                         "minimum": 4,
                         "maximum": 30
@@ -22742,11 +24171,20 @@
                         "type": "integer",
                         "minimum": 15,
                         "maximum": 60
+                      },
+                      "page_count_mode": {
+                        "default": "natural",
+                        "type": "string",
+                        "enum": [
+                          "fixed",
+                          "natural"
+                        ]
                       }
                     },
                     "required": [
                       "chapter_count",
-                      "target_pages"
+                      "target_pages",
+                      "page_count_mode"
                     ],
                     "additionalProperties": false
                   },
@@ -22835,6 +24273,12 @@
                         "type": "integer",
                         "minimum": 120,
                         "maximum": 14400
+                      },
+                      "cohost_voice_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "pattern": "^[A-Za-z0-9_-]+$"
                       }
                     },
                     "required": [
@@ -23254,7 +24698,8 @@
                         ]
                       },
                       "presentation_mode": {
-                        "default": "faceless",
+                        "default": "avatar",
+                        "description": "avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.",
                         "type": "string",
                         "enum": [
                           "faceless",
@@ -23384,6 +24829,34 @@
                 "additionalProperties": true,
                 "description": "Motion product-commercial edits can pass target_section_id from the selected successful result metadata and instructions for the change. References, output profile, language, other scenes and the exact score remain fixed. The directive is consumed; subsequent edits are whole-film unless targeted again. This is a paid full rerender, not pre-render approval.",
                 "x-schema-source": "GET /models.model_options_schema"
+              },
+              "slide_edits": {
+                "description": "Slides only: render again only these slides of a succeeded deck of complete slide images, each from its current image with its own instructions. Every other slide keeps its image, and options and language stay unchanged. The quote covers only these slide images.",
+                "minItems": 1,
+                "maxItems": 30,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "slide_number": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 30
+                    },
+                    "instructions": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4000,
+                      "x-max-utf8-bytes": 4000
+                    }
+                  },
+                  "required": [
+                    "slide_number",
+                    "instructions"
+                  ],
+                  "additionalProperties": false
+                },
+                "x-unique-by": "slide_number"
               }
             }
           },
@@ -23423,10 +24896,18 @@
                         "type": "integer",
                         "minimum": 500,
                         "maximum": 3000
+                      },
+                      "generated_images": {
+                        "default": 0,
+                        "description": "AI-generated illustrations (0-2). With 0, the article uses only visuals without an image charge: diagrams, charts and the Project's own images. Each generated image adds an image-generation charge.",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 2
                       }
                     },
                     "required": [
-                      "target_words"
+                      "target_words",
+                      "generated_images"
                     ],
                     "additionalProperties": false
                   },
@@ -23434,7 +24915,7 @@
                     "type": "object",
                     "properties": {
                       "page_count": {
-                        "default": 10,
+                        "default": 6,
                         "type": "integer",
                         "minimum": 4,
                         "maximum": 30
@@ -23479,11 +24960,20 @@
                         "type": "integer",
                         "minimum": 15,
                         "maximum": 60
+                      },
+                      "page_count_mode": {
+                        "default": "natural",
+                        "type": "string",
+                        "enum": [
+                          "fixed",
+                          "natural"
+                        ]
                       }
                     },
                     "required": [
                       "chapter_count",
-                      "target_pages"
+                      "target_pages",
+                      "page_count_mode"
                     ],
                     "additionalProperties": false
                   },
@@ -23572,6 +25062,12 @@
                         "type": "integer",
                         "minimum": 120,
                         "maximum": 14400
+                      },
+                      "cohost_voice_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "pattern": "^[A-Za-z0-9_-]+$"
                       }
                     },
                     "required": [
@@ -23991,7 +25487,8 @@
                         ]
                       },
                       "presentation_mode": {
-                        "default": "faceless",
+                        "default": "avatar",
+                        "description": "avatar (default): a presenter talks on camera and guides the ad: the Project default Avatar, else one of the synthetic stock presenters, with a matching voice. faceless: voice-over on AI footage only. A pinned model without Avatar support defaults to faceless.",
                         "type": "string",
                         "enum": [
                           "faceless",
@@ -24112,6 +25609,34 @@
                 "additionalProperties": true,
                 "description": "Motion product-commercial edits can pass target_section_id from the selected successful result metadata and instructions for the change. References, output profile, language, other scenes and the exact score remain fixed. The directive is consumed; subsequent edits are whole-film unless targeted again. This is a paid full rerender, not pre-render approval.",
                 "x-schema-source": "GET /models.model_options_schema"
+              },
+              "slide_edits": {
+                "description": "Slides only: render again only these slides of a succeeded deck of complete slide images, each from its current image with its own instructions. Every other slide keeps its image, and options and language stay unchanged. The quote covers only these slide images.",
+                "minItems": 1,
+                "maxItems": 30,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "slide_number": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 30
+                    },
+                    "instructions": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4000,
+                      "x-max-utf8-bytes": 4000
+                    }
+                  },
+                  "required": [
+                    "slide_number",
+                    "instructions"
+                  ],
+                  "additionalProperties": false
+                },
+                "x-unique-by": "slide_number"
               }
             }
           }
@@ -24414,6 +25939,20 @@
           "schema_version": {
             "type": "string",
             "const": "lead-magnet-provenance.v1"
+          },
+          "page_rendering": {
+            "type": "string",
+            "const": "generated_image"
+          },
+          "protected_terms": {
+            "description": "Exact brand names, multiword feature names, UI strings, and field labels that must never break across lines.",
+            "maxItems": 40,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            }
           },
           "title": {
             "type": "string",
@@ -25650,16 +27189,10 @@
                           "maxLength": 140
                         },
                         "supporting_text": {
-                          "anyOf": [
-                            {
-                              "type": "string",
-                              "minLength": 1,
-                              "maxLength": 160
-                            },
-                            {
-                              "type": "null"
-                            }
-                          ]
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 160,
+                          "description": "Name the concrete finished output or observable result the reader receives after the action. Do not list product verbs or access methods."
                         }
                       },
                       "required": [
@@ -25972,6 +27505,41 @@
                           "supporting_detail"
                         ]
                       },
+                      "proof": {
+                        "description": "Required for evidence_inset: the exact checklist component, zero-based flattened item index, and supported visible caption. Null for illustration.",
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "component_id": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 200,
+                                "pattern": "^[A-Za-z0-9_-]+$"
+                              },
+                              "item_index": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 31
+                              },
+                              "caption": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 160
+                              }
+                            },
+                            "required": [
+                              "component_id",
+                              "item_index",
+                              "caption"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
                       "treatment": {
                         "type": "string",
                         "minLength": 1,
@@ -26143,6 +27711,33 @@
                         "width",
                         "height",
                         "treatment"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "logo_reference": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "revision_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200,
+                          "pattern": "^[A-Za-z0-9_-]+$"
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      },
+                      "required": [
+                        "revision_id",
+                        "sha256"
                       ],
                       "additionalProperties": false
                     },
@@ -28164,6 +29759,12 @@
               "artifact_verification_failed",
               "rate_limited",
               "webhook_limit_exceeded",
+              "social_provider_unavailable",
+              "social_authorization_failed",
+              "social_account_already_connected",
+              "social_connection_unavailable",
+              "publication_not_supported",
+              "publication_in_progress",
               "not_found",
               "unauthorized",
               "forbidden",
